@@ -1,36 +1,113 @@
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
-## Getting Started
+---
 
-First, run the development server:
+# 🐠 Scuba Traders
+
+**Scuba Traders** is something I’ve been wanting to build for a while — kind of like a social and trading hub for divers.
+It’s a place where people can post, comment, share gear, and eventually buy, sell, or trade scuba stuff.
+
+This repo is the start of it all. The plan is to keep things simple for now — just get the core feed, posts, comments, and auth working — and then build out from there. I’m doing this in a **7-day sprint**, more like a personal challenge to actually _ship_ something instead of sitting on ideas.
+
+---
+
+## 🚀 Stack
+
+- **Next.js 14 + TypeScript**
+- **Tailwind CSS** for styling
+- **Prisma** for database
+- **Supabase** for Postgres + Auth
+- **Shadcn/UI** for the clean component setup
+
+---
+
+## 🗓️ 7-Day Sprint Breakdown
+
+**Day 1:**
+Setup Next.js, Tailwind, Prisma, and Supabase Auth.
+Get connected to the Supabase DB and make sure Prisma can talk to it.
+
+**Day 2:**
+Build out the homepage feed using mock data.
+Create the main `PostCard` component and layout.
+
+**Day 3:**
+Hook up live posts using Prisma queries (SSR or Server Actions).
+
+**Day 4:**
+Add a “Create Post” form that only logged-in users can use.
+Get Supabase Auth working cleanly.
+
+**Day 5:**
+Add a simple comment section with one level of nested comments.
+
+**Day 6:**
+Polish the UI using Shadcn components.
+Add category filters for posts.
+
+**Day 7:**
+Deploy to **Vercel**, connect the production Supabase DB, and test everything end-to-end.
+
+---
+
+## 🧠 Why I’m Building This
+
+I just wanted to move on something real — no overthinking, no tutorial hell.
+This is more than just a test project. I want Scuba Traders to turn into an actual platform where divers can post, trade gear, and eventually connect directly with local dive shops.
+
+For now though, I’m keeping it lean. MVP first. Fancy features later.
+
+---
+
+## 💡 Future Features
+
+- User profiles
+- Image uploads (R2 or Supabase Storage)
+- Gear trading / marketplace
+- Likes + saved posts
+- Admin panel
+- Notifications + messages
+
+---
+
+## 🧰 Setup
+
+Clone and run locally:
+
+```bash
+git clone https://github.com/yourusername/scuba-traders.git
+cd scuba-traders
+npm install
+npm run dev
+```
+
+Set up your `.env`:
+
+```env
+DATABASE_URL="your_supabase_postgres_url"
+NEXT_PUBLIC_SUPABASE_URL="your_supabase_url"
+NEXT_PUBLIC_SUPABASE_ANON_KEY="your_supabase_anon_key"
+```
+
+Then migrate:
+
+```bash
+npx prisma db push
+```
+
+Start the app:
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Now you should see the local version running at `localhost:3000`.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+---
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## ✨ Current Status
 
-## Learn More
+Right now, this project is in **active development**.
+The goal is to have the base version live by the end of this sprint — with real posts, real comments, and real users.
 
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+This is my starting line. From here, I’ll keep improving it piece by piece until it feels like a full platform.
