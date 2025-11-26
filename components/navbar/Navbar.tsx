@@ -2,14 +2,34 @@ import { MdOutlineScubaDiving } from 'react-icons/md';
 import Link from 'next/link';
 import { Button } from '../ui/button';
 import Search from './Search';
+import Notifications from './Notifications';
+import Profile from './Profile';
+import Menu, { LinkType } from './Menu';
+
+import data from '@/lib/data.json';
 
 type DATA = {
 	name: string;
 	url: string;
 };
+const profileLinks: LinkType[] = [
+	{ link: '/account', text: 'account' },
+	{ link: '/profile', text: 'profile' },
+];
+const notifications: LinkType[] = [
+	{
+		link: '/messages/293493wewe402sd9309trt2340923',
+		text: 'Lorem ipsum dolor sit amet consectetur Lorem ipsum dolor sit amet consectetur adipisicing elit....',
+	},
+	{
+		link: '/messages/2934wew93402aassmjt93092340eerer923',
+		text: 'Lorem ipsum dolor sit amet consectetur adipisicing elit....',
+	},
+];
 
 const mockData: DATA[] = [
 	{ name: 'marketplace', url: '/marketplace' },
+	{ name: 'feed', url: '/feed' },
 	{ name: 'community forum', url: '/forum' },
 	{ name: 'messages', url: '/messages' },
 	{ name: 'shop gear', url: '/gear' },
@@ -19,17 +39,17 @@ function Navbar() {
 	return (
 		<nav>
 			<section>
-				<div className='grid grid-cols-2 justify-between w-full border-b-2 border-gray-100 shadow-xs px-8 py-4'>
-					<div className='flex flex-nowrap shrink-0 gap-6'>
+				<div className='bg-white items-center flex justify-between  w-full border-b-2 border-gray-100 shadow-xs px-8 lg:py-4'>
+					<div className='flex flex-nowrap shrink-2 gap-6 '>
 						<Link href={'/'} className='flex flex-nowrap gap-2'>
 							<MdOutlineScubaDiving
 								className='text-3xl text-slate-800'
 								width={20}
 								height={20}
 							/>
-							<h1 className='text-xl text-slate-800 font-bold'>ScubaSwap</h1>
+							<h1 className='lg:text-xl text-slate-800 font-bold'>ScubaSwap</h1>
 						</Link>
-						<ul className='grid grid-flow-col'>
+						<ul className='lg:grid grid-flow-col hidden'>
 							{mockData.map((l) => {
 								return (
 									<li key={l.name}>
@@ -43,8 +63,16 @@ function Navbar() {
 							})}
 						</ul>
 					</div>
-					<div className=''>
-						<Search />
+					<div className='flex flex-nowrap lg:gap-8 gap-6 p-8'>
+						<div className='lg:w-sm w-36'>
+							<Search />
+						</div>
+						<Menu links={notifications}>
+							<Notifications />
+						</Menu>
+						<Menu links={profileLinks}>
+							<Profile />
+						</Menu>
 					</div>
 				</div>
 			</section>
