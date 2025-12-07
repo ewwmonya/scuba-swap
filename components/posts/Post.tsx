@@ -8,22 +8,13 @@ const prisma = new PrismaClient();
 const getFeed = async () => {
 	try {
 		const data = await prisma.diveTestfordev.findMany();
-		return await data;
+		return data;
 	} catch (error) {
-		return error;
+		return [];
 	}
 };
 async function Post() {
-	const data: {
-		id: string;
-		dive_number: number;
-		location: string;
-		dive_date: Date;
-		maximum_depth: number;
-		bottom_time: number;
-		userId: string;
-		content: string;
-	}[] = await getFeed();
+	const data = await getFeed();
 	if (data) {
 	}
 	return (

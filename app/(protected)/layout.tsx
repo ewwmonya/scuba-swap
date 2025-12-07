@@ -1,8 +1,13 @@
+import { ReactNode } from 'react';
 import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
 import { createServerClient } from '@supabase/ssr';
 
-export default async function ProtectedLayout({ children }) {
+export default async function ProtectedLayout({
+	children,
+}: {
+	children: ReactNode;
+}) {
 	const cookieStore = await cookies();
 
 	const supabase = createServerClient(
