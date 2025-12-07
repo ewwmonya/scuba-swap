@@ -8,12 +8,13 @@ export default function SignUpPage() {
 	const supabase = supabaseBrowserClient();
 
 	const [email, setEmail] = useState('');
+	const [username, setUsername] = useState('');
 	const [password, setPassword] = useState('');
 
 	async function handleSignUp(e: React.FormEvent) {
 		e.preventDefault();
 
-		const { error } = await supabase.auth.signUp({
+		const { data, error } = await supabase.auth.signUp({
 			email,
 			password,
 		});
@@ -21,6 +22,15 @@ export default function SignUpPage() {
 		if (error) {
 			alert(error.message);
 		} else {
+			await fetch('/api/create-user', {
+				method: 'POST',
+				body: JSON.stringify({
+					id: data.session?.user.id,
+					email: email,
+					username: username,
+				}),
+			});
+
 			alert('Check your email to confirm your account.');
 		}
 	}
@@ -46,6 +56,21 @@ export default function SignUpPage() {
 					onChange={(e) => setEmail(e.target.value)}
 					className='w-full p-4 bg-transparent border border-gray-200 rounded-lg outline-none'
 					placeholder='Enter your email address...'
+				/>
+			</div>
+			<div className='flex flex-col items-start mb-5 gap-y-3'>
+				<label
+					htmlFor='username'
+					className='text-sm font-medium cursor-pointer'
+				>
+					Username
+				</label>
+				<input
+					id='username'
+					type='email'
+					onChange={(e) => setUsername(e.target.value)}
+					className='w-full p-4 bg-transparent border border-gray-200 rounded-lg outline-none'
+					placeholder='Enter your username...'
 				/>
 			</div>
 			<div className='flex flex-col items-start mb-5 gap-y-3'>

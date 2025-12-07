@@ -9,51 +9,101 @@ datasource db {
 }
 
 model User {
-  id         String    @id         
-  username   String?
-  name       String?
-  email      String?   @unique
-  avatar     Avatar?   
-  posts      Post[]
+  id         String           @id @default(uuid())
+  email      String           @unique
+  createdAt  DateTime         @default(now())
+  username   String           @unique
+  avatar     Avatar?
   comments   Comment[]
+  divesTests DiveTestfordev[]
+  dives      Dives[]
   likes      Like[]
-  createdAt  DateTime  @default(now())
+  posts      Post[]
 }
 
 model Avatar {
-  id        String   @id @default(cuid())
-  url       String   @unique
-  userId    String   @unique
-  user      User     @relation(fields: [userId], references: [id])
+  id     String @id @default(cuid())
+  url    String @unique
+  userId String @unique
+  user   User   @relation(fields: [userId], references: [id])
 }
 
 model Post {
   id        String    @id @default(cuid())
   content   String
+  createdAt DateTime  @default(now())
   imageUrl  String?
-  location  String?
   userId    String
-  user      User      @relation(fields: [userId], references: [id])
   comments  Comment[]
   likes     Like[]
-  createdAt DateTime  @default(now())
+  user      User      @relation(fields: [userId], references: [id])
 }
 
 model Comment {
-  id        String   @id @default(cuid())
+  id        String         @id @default(cuid())
   content   String
   userId    String
   postId    String
-  user      User     @relation(fields: [userId], references: [id])
-  post      Post     @relation(fields: [postId], references: [id])
-  createdAt DateTime @default(now())
+  createdAt DateTime       @default(now())
+  divelogId String
+  divesId   String?
+  divelog   DiveTestfordev @relation(fields: [divelogId], references: [id])
+  dives     Dives?         @relation(fields: [divesId], references: [id])
+  post      Post           @relation(fields: [postId], references: [id])
+  user      User           @relation(fields: [userId], references: [id])
 }
 
 model Like {
-  id        String   @id @default(cuid())
+  id        String         @id @default(cuid())
   userId    String
   postId    String
-  user      User     @relation(fields: [userId], references: [id])
-  post      Post     @relation(fields: [postId], references: [id])
-  createdAt DateTime @default(now())
+  createdAt DateTime       @default(now())
+  divelogId String
+  divesId   String?
+  divelog   DiveTestfordev @relation(fields: [divelogId], references: [id])
+  dives     Dives?         @relation(fields: [divesId], references: [id])
+  post      Post           @relation(fields: [postId], references: [id])
+  user      User           @relation(fields: [userId], references: [id])
+}
+
+model Dives {
+  id                            String    @id @default(cuid())
+  dive_number                   Int       @default(autoincrement())
+  dive_date                     DateTime
+  entry_time                    String
+  exit_time                     String
+  location                      String
+  buddy_instructor              String?
+  maximum_depth                 Int?
+  bottom_time                   String?
+  air_consumption_start_psi_bar Int?
+  air_consumption_end_psi_bar   Int?
+  average_depth                 String?
+  surface_interval              String?
+  water_temperature_surface     String?
+  water_temperature_depth       Float?    @default(0.00)
+  visibility                    Int?
+  currents_conditions           String?
+  equipment_exposure_suit       String?
+  equipment_tank_type_size      String?
+  equipment_additional          String?
+  userId                        String
+  content                       String
+  comments                      Comment[]
+  user                          User      @relation(fields: [userId], references: [id])
+  likes                         Like[]
+}
+
+model DiveTestfordev {
+  id            String    @id @default(cuid())
+  dive_number   Int
+  location      String
+  dive_date     DateTime
+  maximum_depth Int
+  bottom_time   Int
+  userId        String
+  content       String
+  comments      Comment[]
+  user          User      @relation(fields: [userId], references: [id])
+  likes         Like[]
 }

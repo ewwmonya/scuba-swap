@@ -6,8 +6,6 @@ import Notifications from './Notifications';
 import Profile from './Profile';
 import Menu, { LinkType } from './Menu';
 
-import data from '@/lib/data.json';
-
 type DATA = {
 	name: string;
 	url: string;
@@ -39,17 +37,17 @@ function Navbar() {
 	return (
 		<nav>
 			<section>
-				<div className='bg-white items-center flex justify-between  w-full border-b-2 border-gray-100 shadow-xs px-8 lg:py-4'>
-					<div className='flex flex-nowrap shrink-2 gap-6 '>
-						<Link href={'/'} className='flex flex-nowrap gap-2'>
+				<div className='bg-white items-center lg:flex justify-between grid w-full border-b-2 border-gray-100 shadow-xs py-4 px-8'>
+					<div className='lg:flex lg:flex-row lg:flex-wrap shrink-2 gap-6'>
+						<Link href={'/'} className='flex flex-nowrap gap-2 lg:pl-8 pl-2'>
 							<MdOutlineScubaDiving
-								className='text-3xl text-slate-800'
+								className='text-3xl text-slate-800 '
 								width={20}
 								height={20}
 							/>
 							<h1 className='lg:text-xl text-slate-800 font-bold'>ScubaSwap</h1>
 						</Link>
-						<ul className='lg:grid grid-flow-col hidden'>
+						<ul className='grid lg:grid-flow-col grid-cols-3 lg:grid-cols-1'>
 							{mockData.map((l) => {
 								return (
 									<li key={l.name}>
@@ -63,8 +61,8 @@ function Navbar() {
 							})}
 						</ul>
 					</div>
-					<div className='flex flex-nowrap lg:gap-8 gap-6 p-8'>
-						<div className='lg:w-sm w-36'>
+					<div className='flex flex-nowrap lg:gap-8 gap-6  border-2'>
+						<div className='lg:w-sm w-full'>
 							<Search />
 						</div>
 						<Menu links={notifications}>
