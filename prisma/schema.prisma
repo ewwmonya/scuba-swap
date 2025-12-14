@@ -34,6 +34,7 @@ model Post {
   createdAt DateTime  @default(now())
   imageUrl  String?
   userId    String
+  caption   String
   comments  Comment[]
   likes     Like[]
   user      User      @relation(fields: [userId], references: [id])
@@ -90,19 +91,19 @@ model Dives {
   userId                        String
   content                       String
   comments                      Comment[]
-  user                          User      @relation(fields: [userId], references: [id])
+  user                          User      @relation(fields: [userId], references: [username])
   likes                         Like[]
 }
 
 model DiveTestfordev {
   id            String    @id @default(cuid())
-  dive_number   Int
   location      String
+  userId        String
+  content       String
+  dive_number   Int
   dive_date     DateTime
   maximum_depth Int
   bottom_time   Int
-  userId        String
-  content       String
   comments      Comment[]
   user          User      @relation(fields: [userId], references: [id])
   likes         Like[]

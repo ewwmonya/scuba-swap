@@ -1,0 +1,29 @@
+import { PrismaClient } from '@prisma/client';
+
+const prisma = new PrismaClient();
+
+export async function POST(req: Request) {
+	const body = await req.json();
+	console.log(`api: ${body.values}`);
+	try {
+		const resp = await prisma.post.create({
+			data: {
+				userId: body.userId,
+				caption: body?.values?.caption,
+				content: body?.values?.content,
+			},
+		});
+		console.log('Created dive log:', resp);
+
+		return new Response(JSON.stringify(resp), {
+			status: 201,
+			headers: { 'Content-Type': 'application/json' },
+		});
+	} catch (error) {
+		console.error('ERROR creating dive log:', error);
+		return new Response(JSON.stringify({ error: 'Server error' }), {
+			status: 500,
+			headers: { 'Content-Type': 'application/json' },
+		});
+	}
+}

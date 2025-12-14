@@ -15,23 +15,30 @@ import { IoMdPin } from 'react-icons/io';
 import Image from 'next/image';
 import { Button } from '../ui/button';
 
-type PostType = {
+export type PostType = {
 	id: string;
-	user: {
-		name: string;
-		avatar: string;
-	};
-	image: string;
-	caption: string;
-	likes: number;
+	createdAt?: Date | null;
+	dive_number: number;
+	dive_date: Date;
+	entry_time: string;
+	exit_time: string;
 	location: string;
-	comments: {
-		id: string;
-		user: string;
-		text: string;
-	}[];
-	category: string;
-	createdAt: string;
+	buddy_instructor: string | null;
+	maximum_depth: number | null;
+	bottom_time: string | null;
+	air_consumption_start_psi_bar: number | null;
+	air_consumption_end_psi_bar: number | null;
+	average_depth: string | null;
+	surface_interval: string | null;
+	water_temperature_surface: string | null;
+	water_temperature_depth: number | null;
+	visibility: number | null;
+	currents_conditions: string | null;
+	equipment_exposure_suit: string | null;
+	equipment_tank_type_size: string | null;
+	equipment_additional: string | null;
+	userId: string;
+	content: string;
 };
 
 function PostCard({ post }: { post: PostType }) {
@@ -41,10 +48,10 @@ function PostCard({ post }: { post: PostType }) {
 				<CardHeader>
 					<CardTitle className=' grid gap-4 grid-cols-2'>
 						<div className='flex align-middle gap-4'>
-							<PostAvatar src={post.user.avatar} />
+							{/* <PostAvatar src={post.user.avatar} /> */}
 							<div className='grid'>
-								<p>{post.user.name}</p>
-								<p className='font-light'>{post.createdAt}</p>
+								<p>{post.userId}</p>
+								<p className='font-light'>post.createdAt</p>
 							</div>
 						</div>
 					</CardTitle>
@@ -54,19 +61,19 @@ function PostCard({ post }: { post: PostType }) {
 					</CardDescription>
 				</CardHeader>
 				<CardContent>
-					{post.image ? (
-						<Image
-							src={post.image}
-							width={762}
-							height={325}
-							alt={post.caption}
-						/>
-					) : (
-						''
-					)}
 					<p className='max-w-lg my-4 tracking-wide leading-6 font-bold text-lg text-slate-800'>
-						{post.caption}
+						{post?.caption ? post?.caption : <>post.caption</>}
 					</p>
+
+					{post.content ? (
+						<p>{post.content}</p>
+					) : (
+						<p>
+							Lorem ipsum dolor sit amet consectetur adipisicing elit. Unde esse
+							veniam harum blanditiis vel amet quibusdam minus repellat velit
+							quo.
+						</p>
+					)}
 				</CardContent>
 				<CardFooter>
 					<CardAction className='flex justify-between w-full'>

@@ -1,7 +1,6 @@
 import {
 	DropdownMenu,
 	DropdownMenuContent,
-	DropdownMenuItem,
 	DropdownMenuLabel,
 	DropdownMenuSeparator,
 	DropdownMenuTrigger,
@@ -25,19 +24,26 @@ function Menu({
 		<>
 			<DropdownMenu>
 				<DropdownMenuTrigger asChild>{children}</DropdownMenuTrigger>
-				<DropdownMenuContent className='max-w-lg'>
-					{links
-						? links.map((l) => {
-								return (
-									<div key={`linkTo${l.link}`} className='max-w-32'>
-										<DropdownMenuLabel>
-											<Link href={l.link}> {l.text}</Link>
-										</DropdownMenuLabel>
-										<DropdownMenuSeparator />
-									</div>
-								);
-						  })
-						: ''}
+				<DropdownMenuContent className='max-w-lg '>
+					{links ? (
+						links.map((l) => {
+							return (
+								<div
+									key={`linkTo${l.link}`}
+									className='max-w-32 m-2 shadow-2xl'
+								>
+									<DropdownMenuLabel className=' hover:bg-blue-50  rounded-tr-sm '>
+										<Link href={l.link} className='capitalize tracking-wide '>
+											{l.text}
+										</Link>
+									</DropdownMenuLabel>
+									<DropdownMenuSeparator />
+								</div>
+							);
+						})
+					) : (
+						<></>
+					)}
 				</DropdownMenuContent>
 			</DropdownMenu>
 		</>

@@ -13,6 +13,7 @@ type DATA = {
 const profileLinks: LinkType[] = [
 	{ link: '/account', text: 'account' },
 	{ link: '/profile', text: 'profile' },
+	{ link: '/logout', text: 'logout' },
 ];
 const notifications: LinkType[] = [
 	{
@@ -26,18 +27,19 @@ const notifications: LinkType[] = [
 ];
 
 const mockData: DATA[] = [
-	{ name: 'marketplace', url: '/marketplace' },
+	// { name: 'marketplace', url: '/marketplace' },
 	{ name: 'feed', url: '/feed' },
 	{ name: 'community forum', url: '/forum' },
-	{ name: 'messages', url: '/messages' },
-	{ name: 'shop gear', url: '/gear' },
+	{ name: 'policy', url: '/policy' },
+	// { name: 'messages', url: '/messages' },
+	// { name: 'shop gear', url: '/gear' },
 ];
 
 function Navbar() {
 	return (
 		<nav>
 			<section>
-				<div className='bg-white items-center lg:flex justify-between grid w-full border-b-2 border-gray-100 shadow-xs py-4 px-8'>
+				<div className='bg-white items-center lg:flex justify-around grid w-full border-b-2 border-gray-100 shadow-xs py-4 px-8'>
 					<div className='lg:flex lg:flex-row lg:flex-wrap shrink-2 gap-6'>
 						<Link href={'/'} className='flex flex-nowrap gap-2 lg:pl-8 pl-2'>
 							<MdOutlineScubaDiving

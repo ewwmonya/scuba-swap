@@ -1,9 +1,9 @@
 export const dynamic = 'force-dynamic';
 import PageTitle from '@/components/globals/PageTitle';
-import Post from '@/components/posts/Post';
-import { PostFilter } from '@/components/posts/PostFilter';
-import PostAvatar from '@/components/posts/PostAvatar';
-import PostDrawer from '@/components/posts/PostDrawer';
+import Post from '@/components/posts-divelog/Post';
+import { PostFilter } from '@/components/posts-divelog/PostFilter';
+import PostAvatar from '@/components/posts-divelog/PostAvatar';
+import PostDrawer from '@/components/posts-divelog/PostDrawer';
 import {
 	Card,
 	CardAction,

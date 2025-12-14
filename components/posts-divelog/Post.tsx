@@ -1,4 +1,4 @@
-import PostCard from './PostCard';
+import PostCard, { PostType } from './PostCard';
 import { mockPosts } from '../../lib/posts';
 import { Card, CardContent } from '../ui/card';
 import { PrismaClient } from '@prisma/client';
@@ -7,7 +7,7 @@ import { PrismaClient } from '@prisma/client';
 const prisma = new PrismaClient();
 const getFeed = async () => {
 	try {
-		const data = await prisma.diveTestfordev.findMany();
+		const data = await prisma.dives.findMany();
 		return data;
 	} catch (error) {
 		return [];
@@ -20,21 +20,12 @@ async function Post() {
 	return (
 		<article>
 			{/* mock */}
-			{/* 
+
+			{data.map((post) => {
+				return <PostCard key={post.id} post={post} />;
+			})}
 			{mockPosts.map((post) => {
 				return <PostCard key={post.id} post={post} />;
-				})} */}
-			{data?.map((post) => {
-				return (
-					<Card key={post?.id}>
-						<CardContent>
-							<p>{post.dive_number}</p>
-							<p>{post.content}</p>
-							<p>{post.bottom_time}</p>
-							<p>{post.location}</p>
-						</CardContent>
-					</Card>
-				);
 			})}
 		</article>
 	);

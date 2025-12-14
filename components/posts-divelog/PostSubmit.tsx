@@ -43,8 +43,6 @@ function PostSubmit() {
 	});
 
 	const onSubmit = async (values: z.input<typeof diveLogSchema>) => {
-		console.log('Validated form:', { data: values });
-
 		const res = await fetch('/api/create-log', {
 			method: 'POST',
 			headers: { 'Content-Type': 'application/json' },

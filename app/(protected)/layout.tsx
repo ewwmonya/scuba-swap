@@ -1,7 +1,7 @@
 import { ReactNode } from 'react';
+import { createServerClient } from '@supabase/ssr';
 import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
-import { createServerClient } from '@supabase/ssr';
 
 export default async function ProtectedLayout({
 	children,
@@ -15,14 +15,18 @@ export default async function ProtectedLayout({
 		process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
 		{
 			cookies: {
-				get(name) {
-					return cookieStore.get(name)?.value;
+				getAll() {
+					return cookieStore.getAll();
 				},
-				set(name, value) {
+				setAll(cookiesToSet) {
 					try {
-						cookieStore.set(name, value);
+						cookiesToSet.forEach(({ name, value, options }) =>
+							cookieStore.set(name, value, options)
+						);
 					} catch {
-						// safe fallback, server component cannot set cookies client-side
+						// The `setAll` method was called from a Server Component.
+						// This can be ignored if you have middleware refreshing
+						// user sessions.
 					}
 				},
 			},

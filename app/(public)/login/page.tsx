@@ -27,8 +27,13 @@ export default function LoginPage() {
 			alert(error.message);
 			return;
 		}
-		
+
 		console.log('LOGIN SUCCESS:', data);
+
+		localStorage.setItem(
+			'sb-vbfnfpmvijwoxuabvyyr-auth-token',
+			JSON.stringify(data)
+		);
 		router.push('/feed');
 	}
 
