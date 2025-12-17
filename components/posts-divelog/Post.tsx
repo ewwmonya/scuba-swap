@@ -25,7 +25,7 @@ async function Post() {
 				return <PostCard key={post.id} post={post} />;
 			})}
 			{mockPosts.map((post) => {
-				return <PostCard key={post.id} post={post} />;
+				return <PostCard key={post.id} post={post as unknown as PostType} />;
 			})}
 		</article>
 	);
