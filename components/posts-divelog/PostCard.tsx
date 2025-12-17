@@ -39,6 +39,7 @@ export type PostType = {
 	equipment_additional: string | null;
 	userId: string;
 	content: string;
+	caption?: string;
 };
 
 function PostCard({ post }: { post: PostType }) {
