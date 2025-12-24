@@ -30,7 +30,6 @@ function ForumCard({
 	};
 }) {
 	const time = dayjs(data.createdAt).fromNow();
-
 	return (
 		<div className='flex w-full flex-col gap-6 my-4 overflow-hidden '>
 			<Item variant='outline'>

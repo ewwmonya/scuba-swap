@@ -1,3 +1,6 @@
+export const dynamic = 'force-dynamic';
+
+import TimeAgo from '@/components/forum/TimeAgo';
 import {
 	Breadcrumb,
 	BreadcrumbItem,
@@ -6,8 +9,21 @@ import {
 	BreadcrumbPage,
 	BreadcrumbSeparator,
 } from '@/components/ui/breadcrumb';
+import { prisma } from '@/lib/prismaActions';
+
 async function page({ params }: { params: Promise<{ slug: string }> }) {
 	const { slug } = await params;
+	const data = await prisma.post.findFirst({
+		where: {
+			id: slug,
+		},
+	});
+	const user = await prisma.user.findFirst({
+		where: {
+			id: data?.userId,
+		},
+	});
+
 	return (
 		<>
 			<Breadcrumb className='my-8'>
@@ -17,12 +33,21 @@ async function page({ params }: { params: Promise<{ slug: string }> }) {
 					</BreadcrumbItem>
 					<BreadcrumbSeparator />
 					<BreadcrumbItem>
-						<BreadcrumbLink href='/'>Components</BreadcrumbLink>
+						<BreadcrumbLink href='/forum'>Forums</BreadcrumbLink>
 					</BreadcrumbItem>
-					<BreadcrumbSeparator />
-					<BreadcrumbItem>
-						<BreadcrumbPage>Breadcrumb</BreadcrumbPage>
-					</BreadcrumbItem>
+					{user && (
+						<>
+							<BreadcrumbSeparator />
+							<BreadcrumbItem>
+								<BreadcrumbPage className='font-bold'>
+									<span className='tracking-wide opacity-65 font-light'>
+										Forum Post by:
+									</span>
+									{` ${user.username}`}
+								</BreadcrumbPage>
+							</BreadcrumbItem>
+						</>
+					)}
 				</BreadcrumbList>
 			</Breadcrumb>
 			<div className='flex-1 mb-4'>
@@ -30,44 +55,21 @@ async function page({ params }: { params: Promise<{ slug: string }> }) {
 					<div className='flex items-center gap-3'>
 						<div>
 							<p className='font-bold text-slate-800 dark:text-white'>
-								DiveMasterDave
+								{` ${user?.username}`}
 							</p>
-							<p className='text-sm text-slate-500 dark:text-slate-400'>
-								Posted 2 hours ago
-							</p>
+							{data?.createdAt && <TimeAgo data={data?.createdAt} />}
 						</div>
 					</div>
 					<h1 className='mt-4 text-2xl md:text-3xl font-extrabold text-slate-900 dark:text-white'>
-						Best BCD for travel? Looking for lightweight options!
+						{data?.caption}
 					</h1>
 					<div className='mt-4 space-y-4 text-slate-600 dark:text-slate-300 prose prose-slate dark:prose-invert max-w-none'>
-						<p>Hey fellow divers,</p>
-						<p>
-							I&apos;m planning a trip to Indonesia and I&apos;m tired of
-							lugging my heavy BCD around airports and paying extra for baggage
-							fees. I&apos;m looking for recommendations for a solid,
-							lightweight travel BCD.
-						</p>
-						<p>My priorities are:</p>
-						<ul className='list-disc pl-5'>
-							<li>
-								<strong>Lightweight &amp; Packable:</strong> Needs to be easy to
-								fold or roll up.
-							</li>
-							<li>
-								<strong>Durable:</strong> Don&apos;t want something that will
-								fall apart after a few trips.
-							</li>
-							<li>
-								<strong>Comfortable:</strong> Good fit, minimal ride-up.
-							</li>
-						</ul>
-						<p>
-							I&apos;ve been looking at the Aqua Lung Zuma and the Scubapro
-							Litehawk, but I&apos;m open to other suggestions. What are you all
-							using for your dive travels? Any pros/cons I should be aware of?
-							Thanks in advance!
-						</p>
+						{data?.content
+							?.split('\n')
+							?.filter((line) => line.trim() !== '')
+							.map((item, index) => {
+								return <p key={index}>{item}</p>;
+							})}
 					</div>
 				</div>
 			</div>

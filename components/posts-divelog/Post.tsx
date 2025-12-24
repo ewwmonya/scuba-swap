@@ -1,10 +1,9 @@
-import PostCard, { PostType } from './PostCard';
+import PostCard, { PostType } from '@/components/posts-divelog/PostCard';
 import { mockPosts } from '../../lib/posts';
 import { Card, CardContent } from '../ui/card';
-import { PrismaClient } from '@prisma/client';
+import { prisma } from '@/lib/prismaActions';
 
 // temp async / stuff
-const prisma = new PrismaClient();
 const getFeed = async () => {
 	try {
 		const data = await prisma.dives.findMany();
@@ -24,9 +23,9 @@ async function Post() {
 			{data.map((post) => {
 				return <PostCard key={post.id} post={post} />;
 			})}
-			{mockPosts.map((post) => {
+			{/* {mockPosts.map((post) => {
 				return <PostCard key={post.id} post={post as unknown as PostType} />;
-			})}
+			})} */}
 		</article>
 	);
 }

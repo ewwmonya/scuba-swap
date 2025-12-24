@@ -14,6 +14,7 @@ import {
 import { IoMdPin } from 'react-icons/io';
 import Image from 'next/image';
 import { Button } from '../ui/button';
+import { prisma } from '@/lib/prismaActions';
 
 export type PostType = {
 	id: string;
@@ -40,42 +41,78 @@ export type PostType = {
 	userId: string;
 	content: string;
 	caption?: string;
+	diveMeta?: [];
 };
 
-function PostCard({ post }: { post: PostType }) {
+async function PostCard({ post }: { post: PostType }) {
+	const diveMeta = [
+		{ key: 'dive_number', label: 'Dive Number' },
+		{ key: 'entry_time', label: 'Entry Time' },
+		{ key: 'exit_time', label: 'Exit Time' },
+		{ key: 'maximum_depth', label: 'Max Depth', unit: 'ft' },
+		{ key: 'bottom_time', label: 'Bottom Time', unit: 'min' },
+	];
+
+	const data = await prisma.user.findUnique({
+		where: {
+			id: post.userId,
+		},
+	});
 	return (
 		<>
 			<Card className='my-4'>
-				<CardHeader>
-					<CardTitle className=' grid gap-4 grid-cols-2'>
-						<div className='flex align-middle gap-4'>
-							{/* <PostAvatar src={post.user.avatar} /> */}
-							<div className='grid'>
-								<p>{post.userId}</p>
-								<p className='font-light'>post.createdAt</p>
-							</div>
-						</div>
-					</CardTitle>
-					<CardDescription className='flex align-bottom my-2'>
-						<IoMdPin className='text-lg text-primary' />
-						<p className='font-light tracking-wide'>{post.location}</p>
-					</CardDescription>
-				</CardHeader>
-				<CardContent>
-					<p className='max-w-lg my-4 tracking-wide leading-6 font-bold text-lg text-slate-800'>
-						{post?.caption ? post?.caption : <>post.caption</>}
-					</p>
+				<div className='grid grid-cols-4'>
+					<div className='border-r'>
+						<CardHeader>
+							{diveMeta.map((field) => {
+								const value = post[field.key];
+								if (!value) return null;
+								return (
+									<p
+										key={field.key}
+										className='text-gray-600 font-mono tracking-wide'
+									>
+										{field.label}:<br /> {value} {field.unit ?? ''}
+									</p>
+								);
+							})}
+						</CardHeader>
+					</div>
+					<section className='col-span-3 '>
+						<CardHeader>
+							<CardTitle className=' grid gap-4 grid-cols-2'>
+								<div className='flex align-middle gap-4'>
+									{/* <PostAvatar src={post.user.avatar} /> */}
+									<div className='grid'>
+										<p>{data?.username}</p>
+										<p className='font-light'>post.createdAt</p>
+									</div>
+								</div>
+							</CardTitle>
+							<CardDescription className='flex align-bottom my-2'>
+								<IoMdPin className='text-lg text-primary' />
+								<p className='font-light tracking-wide'>{post.location}</p>
+							</CardDescription>
+						</CardHeader>
+						<CardContent>
+							<p className='max-w-lg my-4 tracking-wide leading-6 font-bold text-lg text-slate-800'>
+								{post?.caption ? post?.caption : <>post.caption</>}
+							</p>
 
-					{post.content ? (
-						<p>{post.content}</p>
-					) : (
-						<p>
-							Lorem ipsum dolor sit amet consectetur adipisicing elit. Unde esse
-							veniam harum blanditiis vel amet quibusdam minus repellat velit
-							quo.
-						</p>
-					)}
-				</CardContent>
+							{post.content ? (
+								<p className='truncate'>{post.content}</p>
+							) : (
+								<p>
+									Lorem ipsum dolor sit amet consectetur adipisicing elit. Unde
+									esse veniam harum blanditiis vel amet quibusdam minus repellat
+									velit quo.
+								</p>
+							)}
+						</CardContent>
+					</section>
+				</div>
+				<div className='h-96 w-full bg-gray-100 col-span-2 my-8'></div>
+				{/* card footer */}
 				<CardFooter>
 					<CardAction className='flex justify-between w-full'>
 						<Button variant={'link'}>

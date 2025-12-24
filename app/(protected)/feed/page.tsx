@@ -24,32 +24,26 @@ function page() {
 					<div className='my-10'>
 						<div className='grid gap-4'>
 							<div className='lg:hidden block w-full'>
-								<PostFilter />
+								{/* <PostFilter /> */}
 							</div>
 							<Card>
-								<CardHeader className='text-gray-900 tracking-wide '>
-									<div className='flex gap-4'>
+								<div className='flex gap-4 justify-between items-center'>
+									<CardHeader className='text-gray-900 tracking-wide '>
 										<PostAvatar src='https://github.com/shadcn.png' />
-										<Textarea
-											className='resize-none h-30'
-											placeholder='Post your latest Dive!'
-										/>
-									</div>
-								</CardHeader>
-								<CardContent>
-									<CardAction className=' flex justify-end '>
-										<PostDrawer />
-									</CardAction>
-								</CardContent>
+									</CardHeader>
+									<CardContent>
+										<CardAction className=' flex justify-end '>
+											<PostDrawer />
+										</CardAction>
+									</CardContent>
+								</div>
 							</Card>
 						</div>
 
 						<Post />
 					</div>
 				</div>
-				<div className='lg:block hidden my-10'>
-					<PostFilter />
-				</div>
+				<div className='lg:block hidden my-10'>{/* <PostFilter /> */}</div>
 			</section>
 		</main>
 	);

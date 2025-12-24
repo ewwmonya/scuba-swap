@@ -1,7 +1,6 @@
 import { Button } from '../ui/button';
 import Image from 'next/image';
 function Profile({ src }: { src?: string }) {
-	console.log(src);
 	return (
 		<>
 			<Button

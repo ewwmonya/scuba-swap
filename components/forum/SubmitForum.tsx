@@ -15,7 +15,7 @@ import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { redirect } from 'next/navigation';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 const forumPostSchema = z.object({
 	caption: z.string().min(1, 'Please Enter a Caption'),
@@ -50,7 +50,6 @@ export function SubmitForum({}) {
 		redirect('/forum');
 	};
 	const [captionCount, setCaptionCount] = useState(0);
-	const [contentCount, setContentCount] = useState(0);
 	return (
 		<form onSubmit={handleSubmit(onSubmit)}>
 			<Card>

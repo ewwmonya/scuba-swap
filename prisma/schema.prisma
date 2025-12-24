@@ -91,7 +91,7 @@ model Dives {
   userId                        String
   content                       String
   comments                      Comment[]
-  user                          User      @relation(fields: [userId], references: [username])
+  user                          User      @relation(fields: [userId], references: [id])
   likes                         Like[]
 }
 

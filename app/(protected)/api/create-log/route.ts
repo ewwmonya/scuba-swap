@@ -1,22 +1,23 @@
-import { PrismaClient } from '@prisma/client';
-
-const prisma = new PrismaClient();
+import { prisma } from '@/lib/prismaActions';
 
 export async function POST(req: Request) {
 	try {
 		const body = await req.json();
 
-		const isoDate = new Date(body.dive_date).toISOString();
+		const isoDate = new Date(body?.values?.dive_date).toISOString();
 
-		const resp = await prisma.diveTestfordev.create({
+		const resp = await prisma.dives.create({
 			data: {
-				userId: '801d22d2-6c5a-4c59-b2e7-ac1d03925d53',
-				bottom_time: body.bottom_time,
-				content: body.content,
+				userId: body.userId,
+				bottom_time: body?.values?.bottom_time,
+				content: body?.values?.content,
 				dive_date: isoDate,
-				dive_number: body.dive_number,
-				location: body.location,
-				maximum_depth: body.maximum_depth,
+				dive_number: body?.values?.dive_number,
+				location: body?.values?.location,
+				maximum_depth: body?.values?.maximum_depth,
+				water_temperature_surface: body?.values?.water_temperature_surface,
+				entry_time: body?.values?.entry_time,
+				exit_time: body?.values?.exit_time,
 			},
 		});
 

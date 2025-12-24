@@ -1,9 +1,8 @@
 import { mockPosts } from '@/lib/posts';
 import ForumCard from '@/components/forum/ForumCard';
 import Link from 'next/link';
-import { PrismaClient } from '@prisma/client';
+import { prisma } from '@/lib/prismaActions';
 
-const prisma = new PrismaClient();
 const getFeed = async () => {
 	try {
 		const data = await prisma.post.findMany({
@@ -16,6 +15,7 @@ const getFeed = async () => {
 		return [];
 	}
 };
+
 export async function ForumFeed({}) {
 	const data = await getFeed();
 	return (

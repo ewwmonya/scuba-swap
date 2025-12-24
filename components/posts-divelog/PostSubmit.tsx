@@ -17,8 +17,11 @@ type dataInputs = {
 
 const dataInputs: dataInputs[] = [
 	{ name: 'dive_number', type: 'number' },
-	{ name: 'location', type: 'text' },
 	{ name: 'dive_date', type: 'date' },
+	{ name: 'location', type: 'text' },
+	{ name: 'water_temperature_surface', type: 'number' },
+	{ name: 'entry_time', type: 'time' },
+	{ name: 'exit_time', type: 'time' },
 	{ name: 'maximum_depth', type: 'number' },
 	{ name: 'bottom_time', type: 'number' },
 	{ name: 'content', type: 'text' },
@@ -27,13 +30,19 @@ const dataInputs: dataInputs[] = [
 export const diveLogSchema = z.object({
 	dive_number: z.coerce.number().min(1, 'Dive number is required'),
 	location: z.string().min(1, 'Location is required'),
+	water_temperature_surface: z
+		.string()
+		?.min(1, 'water temperature  is required'),
 	dive_date: z.string().min(1, 'Dive date is required'),
+	entry_time: z.string().min(1, 'Dive entry_time is required'),
+	exit_time: z.string().min(1, 'Dive exit_time is required'),
 	maximum_depth: z.coerce.number().min(1, 'Max depth is required'),
-	bottom_time: z.coerce.number().min(1, 'Bottom time is required'),
+	bottom_time: z.coerce.string().min(1, 'Bottom time is required'),
 	content: z.string().min(1, 'Content is required'),
 });
 
 function PostSubmit() {
+	const storedData = localStorage.getItem('sb-vbfnfpmvijwoxuabvyyr-auth-token');
 	const {
 		handleSubmit,
 		register,
@@ -43,13 +52,16 @@ function PostSubmit() {
 	});
 
 	const onSubmit = async (values: z.input<typeof diveLogSchema>) => {
+		const userId = JSON.parse(storedData as string)?.user?.id;
+
 		const res = await fetch('/api/create-log', {
 			method: 'POST',
 			headers: { 'Content-Type': 'application/json' },
-			body: JSON.stringify(values),
+			body: JSON.stringify({ userId, values }),
 		});
 
 		const data = res;
+		console.log('Submited from form: ', res);
 		console.log('API response:', data);
 		redirect('/feed');
 	};
@@ -73,10 +85,10 @@ function PostSubmit() {
 					</div>
 
 					<DialogFooter className='flex justify-end flex-col'>
-						<DialogClose asChild className='my-12'>
+						<div className='my-12'>
 							<Button type='submit'>Post Log</Button>
-						</DialogClose>
-						<DialogClose asChild>
+						</div>
+						<DialogClose asChild className='my-12'>
 							<Button type='button' variant={'outline'}>
 								Cancel
 							</Button>
