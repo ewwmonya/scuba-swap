@@ -41,7 +41,7 @@ function page() {
 					</div>
 				</div>
 			</div>
-			<div className='bg-linear-to-b from-slate-950 to-sky-950 grid grid-cols-2 rounded-t-2xl p-8'>
+			<div className='bg-linear-to-b from-slate-950 to-sky-950 grid grid-cols-1 lg:grid-cols-2 rounded-t-2xl p-8'>
 				<div className=''>
 					<h3 className='text-primary text-2xl tracking-widest'>
 						Community Forum
