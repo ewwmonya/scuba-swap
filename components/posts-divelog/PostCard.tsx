@@ -41,11 +41,16 @@ export type PostType = {
 	userId: string;
 	content: string;
 	caption?: string;
-	diveMeta?: [];
+};
+
+export type diveMetaType = {
+	key: keyof PostType;
+	label: string;
+	unit?: string;
 };
 
 async function PostCard({ post }: { post: PostType }) {
-	const diveMeta = [
+	const diveMeta: diveMetaType[] = [
 		{ key: 'dive_number', label: 'Dive Number' },
 		{ key: 'entry_time', label: 'Entry Time' },
 		{ key: 'exit_time', label: 'Exit Time' },
@@ -72,7 +77,7 @@ async function PostCard({ post }: { post: PostType }) {
 										key={field.key}
 										className='text-gray-600 font-mono tracking-wide'
 									>
-										{field.label}:<br /> {value} {field.unit ?? ''}
+										{field.label}:<br /> {value as string} {field.unit ?? ''}
 									</p>
 								);
 							})}
