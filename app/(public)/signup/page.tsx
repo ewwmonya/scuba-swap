@@ -18,16 +18,17 @@ export default function SignUpPage() {
 			email,
 			password,
 		});
-
+		console.log('data set from supabase signup', data);
 		if (error) {
 			alert(error.message);
 		} else {
 			await fetch('/api/create-user', {
 				method: 'POST',
 				body: JSON.stringify({
-					id: data.session?.user.id,
+					id: data.user?.id,
 					email: email,
 					username: username,
+					uuID_auth: data.user?.id,
 				}),
 			});
 
@@ -67,7 +68,9 @@ export default function SignUpPage() {
 				</label>
 				<input
 					id='username'
-					type='email'
+					type='text'
+					minLength={5}
+					maxLength={15}
 					onChange={(e) => setUsername(e.target.value)}
 					className='w-full p-4 bg-transparent border border-gray-200 rounded-lg outline-none'
 					placeholder='Enter your username...'

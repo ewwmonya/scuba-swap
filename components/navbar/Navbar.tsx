@@ -5,6 +5,7 @@ import Search from './Search';
 import Notifications from './Notifications';
 import Profile from './Profile';
 import Menu, { LinkType } from './Menu';
+import SignOutButton from './LogoutBtn';
 
 type DATA = {
 	name: string;
@@ -13,7 +14,6 @@ type DATA = {
 const profileLinks: LinkType[] = [
 	{ link: '/account', text: 'account' },
 	{ link: '/profile', text: 'profile' },
-	{ link: '/logout', text: 'logout' },
 ];
 const notifications: LinkType[] = [
 	{
@@ -28,9 +28,9 @@ const notifications: LinkType[] = [
 
 const mockData: DATA[] = [
 	// { name: 'marketplace', url: '/marketplace' },
-	{ name: 'feed', url: '/feed' },
+	// { name: 'feed', url: '/feed' },
 	{ name: 'community forum', url: '/forum' },
-	{ name: 'policy', url: '/policy' },
+	// { name: 'policy', url: '/policy' },
 	// { name: 'messages', url: '/messages' },
 	// { name: 'shop gear', url: '/gear' },
 ];
@@ -67,12 +67,13 @@ function Navbar() {
 						<div className='lg:w-sm w-full'>
 							<Search />
 						</div>
-						<Menu links={notifications}>
+						{/* <Menu links={notifications}>
 							<Notifications />
-						</Menu>
+						</Menu> */}
 						<Menu links={profileLinks}>
 							<Profile />
 						</Menu>
+						<SignOutButton />
 					</div>
 				</div>
 			</section>

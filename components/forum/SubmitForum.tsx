@@ -44,7 +44,7 @@ export function SubmitForum({}) {
 			body: JSON.stringify({ userId, values }),
 		});
 		const data = res;
-
+		console.log(data);
 		reset({ caption: '' });
 		reset({ content: '' });
 		redirect('/forum');

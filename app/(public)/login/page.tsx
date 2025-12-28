@@ -34,7 +34,7 @@ export default function LoginPage() {
 			'sb-vbfnfpmvijwoxuabvyyr-auth-token',
 			JSON.stringify(data)
 		);
-		router.push('/feed');
+		router.push('/forum');
 	}
 
 	return (
