@@ -18,6 +18,7 @@ export async function POST(req: Request) {
 				water_temperature_surface: body?.values?.water_temperature_surface,
 				entry_time: body?.values?.entry_time,
 				exit_time: body?.values?.exit_time,
+				id: '',
 			},
 		});
 

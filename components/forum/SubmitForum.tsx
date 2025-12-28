@@ -19,7 +19,7 @@ import { useState } from 'react';
 
 const forumPostSchema = z.object({
 	caption: z.string().min(1, 'Please Enter a Caption'),
-	content: z.string(),
+	content: z.string().min(1, 'Please Enter Some Content Diver'),
 });
 
 export function SubmitForum({}) {
@@ -37,11 +37,11 @@ export function SubmitForum({}) {
 		const storedData = localStorage.getItem(
 			'sb-vbfnfpmvijwoxuabvyyr-auth-token'
 		);
-		const userId = JSON.parse(storedData as string)?.user?.id;
+		const userEmail = JSON.parse(storedData as string)?.user?.email;
 		const res = await fetch('/api/create-forum', {
 			method: 'POST',
 			headers: { 'Content-Type': 'application/json' },
-			body: JSON.stringify({ userId, values }),
+			body: JSON.stringify({ userEmail, values }),
 		});
 		const data = res;
 		console.log(data);

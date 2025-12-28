@@ -1,4 +1,5 @@
 import { prisma } from '@/lib/prismaActions';
+import { randomUUID } from 'crypto';
 
 export async function POST(req: Request) {
 	const body = await req.json();
@@ -6,9 +7,10 @@ export async function POST(req: Request) {
 	try {
 		const resp = await prisma.post.create({
 			data: {
-				userId: body.userId,
+				userId: body.userEmail,
 				caption: body?.values?.caption,
 				content: body?.values?.content,
+				id: randomUUID().toLocaleString(),
 			},
 		});
 		console.log('Created dive log:', resp);

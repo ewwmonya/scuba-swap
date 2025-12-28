@@ -499,7 +499,7 @@ model Like {
 }
 
 model Post {
-  id        String    @id
+  id        String    @id @default(uuid())
   content   String
   createdAt DateTime  @default(now())
   imageUrl  String?
@@ -507,7 +507,7 @@ model Post {
   caption   String
   Comment   Comment[]
   Like      Like[]
-  User      User      @relation(fields: [userId], references: [id])
+  User      User      @relation(fields: [userId], references: [email])
 
   @@schema("public")
 }
