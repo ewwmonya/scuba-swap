@@ -1,6 +1,12 @@
+'use client';
+
 import { Button } from '../ui/button';
 import Image from 'next/image';
+
 function Profile({ src }: { src?: string }) {
+	const storedData = localStorage.getItem('sb-vbfnfpmvijwoxuabvyyr-auth-token');
+	const userINT = JSON.parse(storedData as string);
+
 	return (
 		<>
 			<Button
@@ -17,7 +23,7 @@ function Profile({ src }: { src?: string }) {
 						alt=''
 					/>
 				) : (
-					'sp'
+					userINT.user.email.slice(0, 2)
 				)}
 			</Button>
 		</>

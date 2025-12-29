@@ -20,10 +20,10 @@ async function page({ params }: { params: Promise<{ slug: string }> }) {
 	});
 	const user = await prisma.user.findFirst({
 		where: {
-			id: data?.userId,
+			email: data?.userId,
 		},
 	});
-
+	console.log(data);
 	return (
 		<>
 			<Breadcrumb className='my-8'>
