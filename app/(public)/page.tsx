@@ -1,6 +1,8 @@
 import Image from 'next/image';
 import hero from '@/public/diver-hero2.jpg';
 import heroMobile from '@/public/diver-hero-mobile.jpg';
+import okayImage from '@/public/a-okay.jpeg';
+import diveBuds from '@/public/scuba-budies.jpeg';
 import {
 	Card,
 	CardContent,
@@ -88,20 +90,34 @@ function page() {
 					<div className='grid-cols-1 lg:grid-cols-2 grid gap-4'>
 						<Card className='bg-linear-to-b from-slate-800 to-slate-700 grid border-none text-white'>
 							<CardContent className=''>
-								<div className='h-40 bg-accent'></div>
+								<div className='h-40 overflow-hidden'>
+									<Image
+										src={okayImage}
+										width={600}
+										height={190}
+										alt='Scuba Swap Dive Talk'
+									/>
+								</div>
 							</CardContent>
 							<CardHeader>
 								<CardTitle>
-									<p>Dive Buddies</p>
+									<p>Find New Gear</p>
 								</CardTitle>
 								<p className='opacity-75 tracking-widest capitalize'>
-									Make new dive buddies from all over the world
+									Discuss what the vendor don&apos;t want to say 🤡
 								</p>
 							</CardHeader>
 						</Card>
 						<Card className='bg-linear-to-b from-slate-800 to-slate-700 grid border-none text-white'>
 							<CardContent>
-								<div className='h-40 bg-accent'></div>
+								<div className='h-40 overflow-hidden '>
+									<Image
+										src={diveBuds}
+										width={600}
+										height={190}
+										alt='Scuba Swap Dive Buddies'
+									/>
+								</div>
 							</CardContent>
 							<CardHeader>
 								<CardTitle>
