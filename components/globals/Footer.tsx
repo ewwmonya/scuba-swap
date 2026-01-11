@@ -3,7 +3,7 @@ import { MdOutlineScubaDiving } from 'react-icons/md';
 
 export function Footer({}) {
 	return (
-		<footer className='w-full bg-background-light dark:bg-background-dark border-t border-gray-200 dark:border-border-dark py-12'>
+		<footer className='w-full bg-background-light dark:bg-background-dark border-t border-gray-200 dark:border-border-dark mt-6 py-12'>
 			<div className='layout-container flex justify-center'>
 				<div className='max-w-[1170px] w-full px-6 flex flex-col md:flex-row justify-between gap-10'>
 					<div className='flex flex-col gap-4'>

@@ -17,7 +17,7 @@ import { ForumFeed } from '@/components/forum/ForumFeed';
 function page() {
 	return (
 		<main className='min-h-[90lvh]  '>
-			<div className='grid w-full  contain-content my-8 p-2'>
+			<div className='grid w-full  contain-content  py-2'>
 				<Image
 					src={hero}
 					alt=''

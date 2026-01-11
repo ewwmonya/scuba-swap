@@ -39,17 +39,17 @@ function Navbar({ username, view }: { username?: string; view: true | false }) {
 	return (
 		<nav>
 			<section>
-				<div className='bg-white items-center lg:flex justify-around grid w-full border-b-2 border-gray-100 shadow-xs py-4 px-8'>
-					<div className='lg:flex lg:flex-row lg:flex-wrap shrink-2 gap-6'>
+				<div className='bg-white items-center lg:flex flex-nowrap justify-around grid w-full border-b-2 border-gray-200 shadow-xs py-4 px-8'>
+					<div className=' grid lg:flex lg:flex-row lg:flex-wrap shrink-2 gap-6'>
 						<Link href={'/'} className='flex flex-nowrap gap-2 lg:pl-8 pl-2'>
 							<MdOutlineScubaDiving
-								className='text-3xl text-slate-800 '
+								className='text-4xl lg:text-3xl text-slate-800 '
 								width={20}
 								height={20}
 							/>
-							<h1 className='lg:text-xl text-slate-800 font-bold'>ScubaSwap</h1>
+							<h1 className='text-3xl text-slate-800 font-bold'>ScubaSwap</h1>
 						</Link>
-						<ul className='grid lg:grid-flow-col grid-cols-3 lg:grid-cols-1'>
+						<ul className='hidden lg:grid lg:grid-flow-col grid-cols-3 lg:grid-cols-1'>
 							{mockData.map((l) => {
 								return (
 									<li key={l.name}>
@@ -63,7 +63,7 @@ function Navbar({ username, view }: { username?: string; view: true | false }) {
 							})}
 						</ul>
 					</div>
-					<div className='flex flex-nowrap lg:gap-8 gap-6 '>
+					<div className='hidden lg:flex flex-wrap lg:flex-nowrap lg:gap-8 gap-6 '>
 						<div className='lg:w-sm w-full'>{/* <Search /> */}</div>
 						{/* <Menu links={notifications}>
 							<Notifications />
@@ -73,7 +73,7 @@ function Navbar({ username, view }: { username?: string; view: true | false }) {
 								<Profile src={username} />
 							</Menu>
 						) : (
-							<div className='grid grid-cols-2 gap-8'>
+							<div className=' grid-cols-2 gap-8 grid'>
 								<Button asChild>
 									<Link href={'/login'}>Login</Link>
 								</Button>

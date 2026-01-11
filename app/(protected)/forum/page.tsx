@@ -15,11 +15,9 @@ function page() {
 			<p className='text-medium-gray text-base font-normal leading-normal'>
 				Talk new gear and issues your are facing.
 			</p>
-			<section className='pt-8 grid grid-cols-1 lg:grid-cols-2 gap-8 mx-auto '>
+			<section className='lg:pt-8 p-0 grid grid-cols-1 lg:grid-cols-2 gap-8 mx-auto '>
 				<div className='col-span-2 w-full'>
-					<div className='block lg:hidden my-10'>
-						<PostFilter />
-					</div>
+					<div className='block lg:hidden my-10'>{/* <PostFilter /> */}</div>
 					<SubmitForum />
 					<ForumFeed />
 				</div>
