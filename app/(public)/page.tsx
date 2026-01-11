@@ -116,6 +116,7 @@ function page() {
 				</div>
 			</div>
 			<div className='min-h-[50lvh]'>
+				<h3 className='pt-10 pl-4 text-xl font-bold'>Recent Posts!</h3>
 				<ForumFeed />
 			</div>
 		</main>

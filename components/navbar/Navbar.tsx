@@ -5,7 +5,7 @@ import Search from './Search';
 import Notifications from './Notifications';
 import Profile from './Profile';
 import Menu, { LinkType } from './Menu';
-import SignOutButton from './LogoutBtn';
+import SignInSignUpSignOut from './LogoutBtn';
 
 type DATA = {
 	name: string;
@@ -35,7 +35,7 @@ const mockData: DATA[] = [
 	// { name: 'shop gear', url: '/gear' },
 ];
 
-function Navbar() {
+function Navbar({ username, view }: { username?: string; view: true | false }) {
 	return (
 		<nav>
 			<section>
@@ -68,10 +68,13 @@ function Navbar() {
 						{/* <Menu links={notifications}>
 							<Notifications />
 						</Menu> */}
-						<Menu links={profileLinks}>
-							<Profile />
-						</Menu>
-						<SignOutButton />
+						{view ? (
+							<Menu links={profileLinks}>
+								<Profile src={username} />
+							</Menu>
+						) : (
+							<></>
+						)}
 					</div>
 				</div>
 			</section>

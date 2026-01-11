@@ -6,6 +6,7 @@ import {
 	DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import Link from 'next/link';
+import SignInSignUpSignOut from './LogoutBtn';
 
 export type LinkType = {
 	link: string;
@@ -44,6 +45,11 @@ function Menu({
 					) : (
 						<></>
 					)}
+					<div className='max-w-32 m-2 shadow-2xl'>
+						<DropdownMenuLabel className=' hover:bg-blue-50  rounded-tr-sm '>
+							<SignInSignUpSignOut />
+						</DropdownMenuLabel>
+					</div>
 				</DropdownMenuContent>
 			</DropdownMenu>
 		</>

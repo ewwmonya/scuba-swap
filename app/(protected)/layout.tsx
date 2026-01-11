@@ -2,6 +2,8 @@ import { ReactNode } from 'react';
 import { createServerClient } from '@supabase/ssr';
 import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
+import NavbarServer from '@/components/navbar/NavbarServer';
+import Container from '@/components/globals/Container';
 
 export default async function ProtectedLayout({
 	children,
@@ -39,5 +41,10 @@ export default async function ProtectedLayout({
 
 	if (!session) redirect('/login');
 
-	return <>{children}</>;
+	return (
+		<>
+			<NavbarServer />
+			<Container>{children}</Container>
+		</>
+	);
 }

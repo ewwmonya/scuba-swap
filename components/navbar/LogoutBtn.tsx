@@ -6,7 +6,7 @@ import { useEffect, useState } from 'react';
 import { Button } from '../ui/button';
 import Link from 'next/link';
 
-const SignOutButton = () => {
+const SignInSignUpSignOut = () => {
 	const supabase = supabaseBrowserClient();
 	const router = useRouter();
 
@@ -21,18 +21,7 @@ const SignOutButton = () => {
 		}
 	};
 
-	return false ? (
-		<button onClick={handleSignOut}>Sign Out</button>
-	) : (
-		<>
-			<Button variant={'secondary'} asChild>
-				<Link href={'/signup'}>Signup Now!</Link>
-			</Button>
-			<Button asChild>
-				<Link href={'/login'}>Login</Link>
-			</Button>
-		</>
-	);
+	return <button onClick={handleSignOut}>Sign Out</button>;
 };
 
-export default SignOutButton;
+export default SignInSignUpSignOut;
