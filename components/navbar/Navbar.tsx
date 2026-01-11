@@ -64,9 +64,7 @@ function Navbar() {
 						</ul>
 					</div>
 					<div className='flex flex-nowrap lg:gap-8 gap-6 '>
-						<div className='lg:w-sm w-full'>
-							<Search />
-						</div>
+						<div className='lg:w-sm w-full'>{/* <Search /> */}</div>
 						{/* <Menu links={notifications}>
 							<Notifications />
 						</Menu> */}

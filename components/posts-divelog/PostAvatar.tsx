@@ -1,6 +1,8 @@
+'use client';
+
 import { Button } from '../ui/button';
 import Image from 'next/image';
-function Profile({ src }: { src?: string }) {
+function Profile({ name }: { name?: string }) {
 	return (
 		<>
 			<Button
@@ -8,17 +10,7 @@ function Profile({ src }: { src?: string }) {
 				variant={'ghost'}
 				className='bg-orange-100 rounded-full uppercase font-semibold font-mono text-md'
 			>
-				{src !== undefined ? (
-					<Image
-						className='rounded-full'
-						src={src}
-						width={200}
-						height={200}
-						alt=''
-					/>
-				) : (
-					'sp'
-				)}
+				{name !== undefined ? name.slice(0, 2) : 'YU'}
 			</Button>
 		</>
 	);

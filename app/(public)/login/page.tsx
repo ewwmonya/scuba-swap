@@ -30,10 +30,8 @@ export default function LoginPage() {
 
 		console.log('LOGIN SUCCESS:', data);
 
-		localStorage.setItem(
-			'sb-vbfnfpmvijwoxuabvyyr-auth-token',
-			JSON.stringify(data)
-		);
+		router.push('/');
+		router.refresh();
 		router.push('/forum');
 	}
 

@@ -7,7 +7,7 @@ import { PostFilter } from '@/components/posts-divelog/PostFilter';
 
 function page() {
 	return (
-		<main className='mt-12'>
+		<main className='mt-12 w-[85vw] max-w-[900px] mx-auto'>
 			<PageTitle
 				text='Dive Community Forum and Issues'
 				textColor='text-slate-800'
@@ -15,7 +15,7 @@ function page() {
 			<p className='text-medium-gray text-base font-normal leading-normal'>
 				Talk new gear and issues your are facing.
 			</p>
-			<section className='grid grid-cols-1 lg:grid-cols-3 w-[85vw] max-w-[1170px] gap-8 mx-auto '>
+			<section className='pt-8 grid grid-cols-1 lg:grid-cols-2 gap-8 mx-auto '>
 				<div className='col-span-2 w-full'>
 					<div className='block lg:hidden my-10'>
 						<PostFilter />
@@ -23,9 +23,9 @@ function page() {
 					<SubmitForum />
 					<ForumFeed />
 				</div>
-				<div className='lg:block hidden my-10'>
+				{/* <div className='lg:block hidden my-10'>
 					<PostFilter />
-				</div>
+				</div> */}
 			</section>
 		</main>
 	);

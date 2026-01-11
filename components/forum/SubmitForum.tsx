@@ -26,36 +26,20 @@ export function SubmitForum({}) {
 	const {
 		handleSubmit,
 		register,
-		formState: { errors, isSubmitted },
-		formState,
+		formState: { isSubmitting },
+
 		reset,
 	} = useForm<z.input<typeof forumPostSchema>>({
 		resolver: zodResolver(forumPostSchema),
 	});
 
-	const onSubmit = async (values: z.input<typeof forumPostSchema>) => {
-		const storedData = localStorage.getItem(
-			'sb-vbfnfpmvijwoxuabvyyr-auth-token'
-		);
-		const userEmail = JSON.parse(storedData as string)?.user?.email;
-		const res = await fetch('/api/create-forum', {
-			method: 'POST',
-			headers: { 'Content-Type': 'application/json' },
-			body: JSON.stringify({ userEmail, values }),
-		});
-		const data = res;
-		console.log(data);
-		reset({ caption: '' });
-		reset({ content: '' });
-		redirect('/forum');
-	};
 	const [captionCount, setCaptionCount] = useState(0);
 	return (
-		<form onSubmit={handleSubmit(onSubmit)}>
+		<form>
 			<Card>
 				<CardContent>
 					<div className='flex gap-4'>
-						<PostAvatar src='https://github.com/shadcn.png' />
+						{/* <PostAvatar src='https://github.com/shadcn.png' /> */}
 						<div className='w-full '>
 							<div className='flex gap-4 overflow-hidden items-center'>
 								<Input
@@ -69,6 +53,7 @@ export function SubmitForum({}) {
 									type='text'
 									className='lg:w-sm my-4'
 									placeholder='Place Caption Here'
+									autoComplete='off'
 								/>
 								<p className='text-xs text-gray-400'>{captionCount}/200</p>
 							</div>
@@ -83,7 +68,9 @@ export function SubmitForum({}) {
 				</CardContent>
 				<CardFooter>
 					<CardAction className=' flex justify-end w-full'>
-						<Button>Post</Button>
+						<Button type='submit' disabled={isSubmitting}>
+							Post
+						</Button>
 					</CardAction>
 				</CardFooter>
 			</Card>

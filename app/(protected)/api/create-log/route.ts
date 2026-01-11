@@ -22,8 +22,6 @@ export async function POST(req: Request) {
 			},
 		});
 
-		console.log('Created dive log:', resp);
-
 		return new Response(JSON.stringify(resp), {
 			status: 201,
 			headers: { 'Content-Type': 'application/json' },

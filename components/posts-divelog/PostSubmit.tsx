@@ -42,7 +42,6 @@ export const diveLogSchema = z.object({
 });
 
 function PostSubmit() {
-	const storedData = localStorage.getItem('sb-vbfnfpmvijwoxuabvyyr-auth-token');
 	const {
 		handleSubmit,
 		register,
@@ -52,12 +51,10 @@ function PostSubmit() {
 	});
 
 	const onSubmit = async (values: z.input<typeof diveLogSchema>) => {
-		const userId = JSON.parse(storedData as string)?.user?.id;
-
 		const res = await fetch('/api/create-log', {
 			method: 'POST',
 			headers: { 'Content-Type': 'application/json' },
-			body: JSON.stringify({ userId, values }),
+			// body: JSON.stringify({ userId, values }),
 		});
 
 		const data = res;

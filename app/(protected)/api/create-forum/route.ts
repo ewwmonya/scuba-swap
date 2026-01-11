@@ -3,7 +3,6 @@ import { randomUUID } from 'crypto';
 
 export async function POST(req: Request) {
 	const body = await req.json();
-	console.log(`api: ${body.values}`);
 	try {
 		const resp = await prisma.post.create({
 			data: {
@@ -13,7 +12,6 @@ export async function POST(req: Request) {
 				id: randomUUID().toLocaleString(),
 			},
 		});
-		console.log('Created dive log:', resp);
 
 		return new Response(JSON.stringify(resp), {
 			status: 201,

@@ -23,7 +23,6 @@ async function page({ params }: { params: Promise<{ slug: string }> }) {
 			email: data?.userId,
 		},
 	});
-	console.log(data);
 	return (
 		<>
 			<Breadcrumb className='my-8'>
