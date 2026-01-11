@@ -31,7 +31,7 @@ function page() {
 								<Card>
 									<div className='flex gap-4 justify-between items-center'>
 										<CardHeader className='text-gray-900 tracking-wide '>
-											<PostAvatar src='https://github.com/shadcn.png' />
+											<PostAvatar />
 										</CardHeader>
 										<CardContent>
 											<CardAction className=' flex justify-end '>

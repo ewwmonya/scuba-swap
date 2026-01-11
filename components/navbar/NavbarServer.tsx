@@ -2,6 +2,7 @@ import { prisma } from '@/lib/prismaActions';
 import { createServerClient } from '@supabase/ssr';
 import { cookies } from 'next/headers';
 import Navbar from './Navbar';
+import { redirect } from 'next/navigation';
 
 export default async function NavbarServer() {
 	const cookieStore = await cookies();
@@ -28,6 +29,6 @@ export default async function NavbarServer() {
 			user && user.username && <Navbar username={user.username} view={true} />
 		);
 	} else {
-		return <Navbar username={'No name ass'} view={false} />;
+		redirect('/login');
 	}
 }

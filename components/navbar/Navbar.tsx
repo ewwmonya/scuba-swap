@@ -12,8 +12,8 @@ type DATA = {
 	url: string;
 };
 const profileLinks: LinkType[] = [
-	{ link: '/account', text: 'account' },
-	{ link: '/profile', text: 'profile' },
+	// { link: '/account', text: 'account' },
+	// { link: '/profile', text: 'profile' },
 ];
 const notifications: LinkType[] = [
 	{
@@ -68,12 +68,19 @@ function Navbar({ username, view }: { username?: string; view: true | false }) {
 						{/* <Menu links={notifications}>
 							<Notifications />
 						</Menu> */}
-						{view ? (
+						{username ? (
 							<Menu links={profileLinks}>
 								<Profile src={username} />
 							</Menu>
 						) : (
-							<></>
+							<div className='grid grid-cols-2 gap-8'>
+								<Button asChild>
+									<Link href={'/login'}>Login</Link>
+								</Button>
+								<Button variant={'secondary'} asChild>
+									<Link href={'/signup'}>Signup Now!</Link>
+								</Button>
+							</div>
 						)}
 					</div>
 				</div>

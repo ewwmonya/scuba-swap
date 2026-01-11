@@ -1,19 +1,30 @@
+import Link from 'next/link';
+import { MdOutlineScubaDiving } from 'react-icons/md';
+
 export function Footer({}) {
 	return (
 		<footer className='w-full bg-background-light dark:bg-background-dark border-t border-gray-200 dark:border-border-dark py-12'>
 			<div className='layout-container flex justify-center'>
-				<div className='max-w-[1280px] w-full px-6 flex flex-col md:flex-row justify-between gap-10'>
+				<div className='max-w-[1170px] w-full px-6 flex flex-col md:flex-row justify-between gap-10'>
 					<div className='flex flex-col gap-4'>
 						<div className='flex items-center gap-2 text-primary'>
-							<span className='material-symbols-outlined text-2xl'>
-								scuba_diving
-							</span>
-							<span className='text-[#111618] dark:text-white font-bold text-lg'>
-								ScubaMarket
-							</span>
+							<Link href={'/'} className='flex flex-nowrap gap-2 lg:pl-8 pl-2'>
+								<MdOutlineScubaDiving
+									className='text-3xl text-slate-800 '
+									width={20}
+									height={20}
+								/>
+								<h1 className='lg:text-xl text-slate-800 font-bold'>
+									ScubaSwap
+								</h1>
+							</Link>
 						</div>
 						<p className='text-[#637588] dark:text-[#9db2b9] text-sm max-w-[300px]'>
-							The world&apos;s largest underwater community and marketplace.
+							The world&apos;s Newest underwater community and future
+							marketplace.
+						</p>
+						<p className='text-xs tracking-widest text-gray-300'>
+							Like for real I just launched this in January
 						</p>
 					</div>
 					<div className='flex gap-16 flex-wrap'>
@@ -21,70 +32,71 @@ export function Footer({}) {
 							<h4 className='text-[#111618] dark:text-white font-bold text-sm'>
 								Community
 							</h4>
-							<a
+							<Link
 								className='text-[#637588] dark:text-[#9db2b9] text-sm hover:text-primary transition-colors'
 								href='#'
 							>
 								Forum
-							</a>
-							<a
+							</Link>
+							{/* <Link
 								className='text-[#637588] dark:text-[#9db2b9] text-sm hover:text-primary transition-colors'
 								href='#'
 							>
 								Events
-							</a>
-							<a
+							</Link>
+							<Link
 								className='text-[#637588] dark:text-[#9db2b9] text-sm hover:text-primary transition-colors'
 								href='#'
 							>
 								Leaderboard
-							</a>
+							</Link>
 						</div>
 						<div className='flex flex-col gap-3'>
 							<h4 className='text-[#111618] dark:text-white font-bold text-sm'>
 								Features
 							</h4>
-							<a
+							<Link
 								className='text-[#637588] dark:text-[#9db2b9] text-sm hover:text-primary transition-colors'
 								href='#'
 							>
 								Dive Logs
-							</a>
-							<a
+							</Link>
+							<Link
 								className='text-[#637588] dark:text-[#9db2b9] text-sm hover:text-primary transition-colors'
 								href='#'
 							>
 								Marketplace
-							</a>
-							<a
+							</Link>
+							<Link
 								className='text-[#637588] dark:text-[#9db2b9] text-sm hover:text-primary transition-colors'
 								href='#'
 							>
 								Gear Tracker
-							</a>
+							</Link>
 						</div>
 						<div className='flex flex-col gap-3'>
 							<h4 className='text-[#111618] dark:text-white font-bold text-sm'>
 								Support
 							</h4>
-							<a
+							<Link
 								className='text-[#637588] dark:text-[#9db2b9] text-sm hover:text-primary transition-colors'
 								href='#'
 							>
 								Help Center
-							</a>
-							<a
+							</Link>
+							<Link
 								className='text-[#637588] dark:text-[#9db2b9] text-sm hover:text-primary transition-colors'
 								href='#'
 							>
 								Safety
-							</a>
-							<a
+							</Link>
+							<Link
 								className='text-[#637588] dark:text-[#9db2b9] text-sm hover:text-primary transition-colors'
 								href='#'
 							>
 								Contact
-							</a>
+							</Link>
+							*/}
 						</div>
 					</div>
 				</div>
@@ -92,18 +104,8 @@ export function Footer({}) {
 			<div className='layout-container flex justify-center mt-12'>
 				<div className='max-w-[1280px] w-full px-6 border-t border-gray-200 dark:border-border-dark pt-8 flex flex-col sm:flex-row justify-between items-center gap-4'>
 					<p className='text-[#637588] dark:text-[#5d6c74] text-xs'>
-						© 2023 ScubaMarket Inc. All rights reserved.
+						©2026 Scuba-Swap All rights reserved.
 					</p>
-					<div className='flex gap-4 text-[#637588] dark:text-[#5d6c74]'>
-						<a className='hover:text-primary transition-colors' href='#'>
-							<span className='material-symbols-outlined text-lg'>public</span>
-						</a>
-						<a className='hover:text-primary transition-colors' href='#'>
-							<span className='material-symbols-outlined text-lg'>
-								photo_camera
-							</span>
-						</a>
-					</div>
 				</div>
 			</div>
 		</footer>
