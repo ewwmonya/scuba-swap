@@ -19,7 +19,8 @@ export default async function NavbarServer() {
 		}
 	);
 	const l = await supabase.auth.getUser();
-	if (l) {
+
+	if (l.data.user) {
 		const user = await prisma?.user.findUnique({
 			where: {
 				uuID_auth: l.data?.user?.id,
@@ -29,6 +30,6 @@ export default async function NavbarServer() {
 			user && user.username && <Navbar username={user.username} view={true} />
 		);
 	} else {
-		redirect('/login');
+		return <Navbar view={false} />;
 	}
 }

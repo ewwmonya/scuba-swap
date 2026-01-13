@@ -1,5 +1,5 @@
 import Container from '@/components/globals/Container';
-import Navbar from '@/components/navbar/Navbar';
+import NavbarServer from '@/components/navbar/NavbarServer';
 import { ReactNode } from 'react';
 
 export default async function PublicLayout({
@@ -9,7 +9,7 @@ export default async function PublicLayout({
 }) {
 	return (
 		<>
-			<Navbar view={false} />
+			<NavbarServer />
 			<Container>{children}</Container>
 		</>
 	);

@@ -507,7 +507,7 @@ model Post {
   caption   String
   Comment   Comment[]
   Like      Like[]
-  User      User      @relation(fields: [userId], references: [email])
+  User      User      @relation(fields: [userId], references: [id])
 
   @@schema("public")
 }

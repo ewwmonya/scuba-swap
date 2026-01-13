@@ -1,15 +1,10 @@
+export const dynamic = 'force-dynamic';
 import Image from 'next/image';
 import hero from '@/public/diver-hero2.jpg';
 import heroMobile from '@/public/diver-hero-mobile.jpg';
 import okayImage from '@/public/a-okay.jpeg';
 import diveBuds from '@/public/scuba-budies.jpeg';
-import {
-	Card,
-	CardContent,
-	CardFooter,
-	CardHeader,
-	CardTitle,
-} from '@/components/ui/card';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { MdOutlineScubaDiving } from 'react-icons/md';
 import { GiScubaTanks } from 'react-icons/gi';

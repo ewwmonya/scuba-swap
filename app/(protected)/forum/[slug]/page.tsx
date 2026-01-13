@@ -20,9 +20,10 @@ async function page({ params }: { params: Promise<{ slug: string }> }) {
 	});
 	const user = await prisma.user.findFirst({
 		where: {
-			email: data?.userId,
+			uuID_auth: data?.userId,
 		},
 	});
+	console.log(user);
 	return (
 		<>
 			<Breadcrumb className='my-8'>
@@ -49,7 +50,7 @@ async function page({ params }: { params: Promise<{ slug: string }> }) {
 					)}
 				</BreadcrumbList>
 			</Breadcrumb>
-			<div className='flex-1 mb-4'>
+			<div className='flex-1 mb-4 h-screen'>
 				<div className='p-6 bg-white dark:bg-slate-800 rounded-xl shadow-sm'>
 					<div className='flex items-center gap-3'>
 						<div>
@@ -70,6 +71,11 @@ async function page({ params }: { params: Promise<{ slug: string }> }) {
 								return <p key={index}>{item}</p>;
 							})}
 					</div>
+				</div>
+				<div className='h-1/3 w-full bg-sky-100 rounded-xl my-10 opacity-35 p-8'>
+					<p className='text-xl tracking-widest'>
+						Comments Coming Soon<span className='animate-pulse'>...</span>
+					</p>
 				</div>
 			</div>
 		</>

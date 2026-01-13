@@ -1,7 +1,5 @@
 'use client';
 
-import PostAvatar from '@/components/posts-divelog/PostAvatar';
-import { Label } from '@/components/ui/label';
 import {
 	Card,
 	CardAction,
@@ -14,8 +12,8 @@ import { Input } from '../ui/input';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
-import { redirect } from 'next/navigation';
 import { useState } from 'react';
+import { redirect } from 'next/navigation';
 
 const forumPostSchema = z.object({
 	caption: z.string().min(1, 'Please Enter a Caption'),
@@ -27,15 +25,28 @@ export function SubmitForum({}) {
 		handleSubmit,
 		register,
 		formState: { isSubmitting },
-
+		getValues,
 		reset,
 	} = useForm<z.input<typeof forumPostSchema>>({
 		resolver: zodResolver(forumPostSchema),
+		// Need to add api route here
 	});
+
+	async function onSubmit() {
+		const { caption, content } = getValues();
+		await fetch('/api/create-forum', {
+			method: 'POST',
+			headers: { 'Content-Type': 'application/json' },
+			body: JSON.stringify({ caption, content }),
+		});
+		reset({ content });
+		reset({ caption });
+		redirect('/');
+	}
 
 	const [captionCount, setCaptionCount] = useState(0);
 	return (
-		<form>
+		<form onSubmit={handleSubmit(onSubmit)}>
 			<Card>
 				<CardContent>
 					<div className='flex gap-4'>
