@@ -31,7 +31,7 @@ function page() {
 				/>
 				<div className='absolute place-self-center text-white  grid grid-cols-1 lg:grid-cols-2 text-center'>
 					<p></p>
-					<div className='max-w-xl flex flex-col p-2 mt-6'>
+					<div className='max-w-xl flex flex-col p-6 lg:mt-6 mt-2'>
 						<div className='flex flex-nowrap gap-2 justify-center '>
 							<MdOutlineScubaDiving
 								className='text-5xl '
@@ -40,11 +40,11 @@ function page() {
 							/>
 							<h1 className='text-5xl font-bold'>ScubaSwap</h1>
 						</div>
-						<p className='font-semibold tracking-wider my-4 px-8'>
+						<p className='font-semibold tracking-wider lg:my-4 my-1 px-2 lg:px-8'>
 							The ultimate community for scuba enthusiasts. Log your dives, ask
 							the experts, and discover your next underwater adventure.
 						</p>
-						<div className='grid grid-cols-2 p-8 gap-8'>
+						<div className='grid grid-cols-2 lg:p-8 gap-8'>
 							<Button asChild>
 								<Link href={'/login'}>Login</Link>
 							</Button>
@@ -126,7 +126,7 @@ function page() {
 					</div>
 				</div>
 			</div>
-			<div className='min-h-[50lvh]'>
+			<div className='min-h-[50lvh] lg:px-0 px-2'>
 				<h3 className='pt-10 pl-4 text-xl font-bold'>Recent Posts!</h3>
 				<ForumFeed />
 			</div>

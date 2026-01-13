@@ -50,7 +50,7 @@ async function page({ params }: { params: Promise<{ slug: string }> }) {
 					)}
 				</BreadcrumbList>
 			</Breadcrumb>
-			<div className='flex-1 mb-4 h-screen'>
+			<div className='flex-1 mb-4 min-h-screen'>
 				<div className='p-6 bg-white dark:bg-slate-800 rounded-xl shadow-sm'>
 					<div className='flex items-center gap-3'>
 						<div>

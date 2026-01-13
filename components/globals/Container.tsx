@@ -9,7 +9,7 @@ function Container({
 }) {
 	return (
 		<div
-			className={cn('mx-auto max-w-6xl xl:max-w-7xl px-1.5 lg:px-8', className)}
+			className={cn('mx-auto max-w-6xl xl:max-w-7xl px-2 lg:px-8', className)}
 		>
 			{children}
 		</div>

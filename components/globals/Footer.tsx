@@ -101,7 +101,7 @@ export function Footer({}) {
 					</div>
 				</div>
 			</div>
-			<div className='layout-container flex justify-center mt-12'>
+			<div className=' flex justify-center mt-12'>
 				<div className='max-w-[1280px] w-full px-6 border-t border-gray-200 dark:border-border-dark pt-8 flex flex-col sm:flex-row justify-between items-center gap-4'>
 					<p className='text-[#637588] dark:text-[#5d6c74] text-xs'>
 						©2026 Scuba-Swap All rights reserved.
