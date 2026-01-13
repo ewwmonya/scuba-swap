@@ -2,9 +2,6 @@
 import { supabaseBrowserClient } from '@/lib/supabaseClient';
 
 import { useRouter } from 'next/navigation';
-import { useEffect, useState } from 'react';
-import { Button } from '../ui/button';
-import Link from 'next/link';
 
 const SignInSignUpSignOut = () => {
 	const supabase = supabaseBrowserClient();

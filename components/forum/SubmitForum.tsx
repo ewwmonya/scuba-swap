@@ -41,7 +41,7 @@ export function SubmitForum({}) {
 		});
 		reset({ content });
 		reset({ caption });
-		redirect('/');
+		redirect('/forum');
 	}
 
 	const [captionCount, setCaptionCount] = useState(0);
