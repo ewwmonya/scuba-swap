@@ -7,6 +7,7 @@ import { prisma } from '@/lib/prismaActions';
 const getFeed = async () => {
 	try {
 		const data = await prisma.dives.findMany();
+		console.log(data);
 		return data;
 	} catch (error) {
 		return [];
@@ -14,19 +15,21 @@ const getFeed = async () => {
 };
 async function Post() {
 	const data = await getFeed();
-	if (data) {
-	}
-	return (
-		<article>
-			{/* mock */}
+	if (data.length > 1) {
+		return (
+			<article>
+				{/* mock */}
 
-			{data.map((post) => {
-				return <PostCard key={post.id} post={post} />;
-			})}
-			{/* {mockPosts.map((post) => {
+				{data.map((post) => {
+					return <PostCard key={post.id} post={post} />;
+				})}
+				{/* {mockPosts.map((post) => {
 				return <PostCard key={post.id} post={post as unknown as PostType} />;
-			})} */}
-		</article>
-	);
+				})} */}
+			</article>
+		);
+	} else {
+		return <p>Refresh and try again later...</p>;
+	}
 }
 export default Post;

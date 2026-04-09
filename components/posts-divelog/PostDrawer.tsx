@@ -25,8 +25,7 @@ function PostDrawer() {
 					<DialogHeader>
 						<DialogTitle>Post Dive Log</DialogTitle>
 						<DialogDescription>
-							Make changes to your profile here. Click save when you&apos;re
-							done.
+							Lorem ipsum dolor, sit amet consectetur adipisicing elit.
 						</DialogDescription>
 					</DialogHeader>
 					<PostSubmit />

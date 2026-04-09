@@ -7,6 +7,7 @@ import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { redirect } from 'next/navigation';
 import { DialogClose, DialogFooter } from '../ui/dialog';
+import { prisma } from '@/lib/prismaActions';
 
 type FieldName = keyof z.infer<typeof diveLogSchema>;
 
@@ -54,12 +55,12 @@ function PostSubmit() {
 		const res = await fetch('/api/create-log', {
 			method: 'POST',
 			headers: { 'Content-Type': 'application/json' },
-			// body: JSON.stringify({ userId, values }),
+			body: JSON.stringify({ values }),
 		});
 
-		const data = res;
-		console.log('Submited from form: ', res);
-		console.log('API response:', data);
+		// const data = res;
+		console.log(res);
+
 		redirect('/feed');
 	};
 
@@ -75,7 +76,12 @@ function PostSubmit() {
 									<label htmlFor={textSplit} className='capitalize'>
 										{textSplit}
 									</label>
-									<Input {...register(i.name)} id={textSplit} type={i?.type} />
+									<Input
+										{...register(i.name)}
+										id={textSplit}
+										type={i?.type}
+										placeholder='Required'
+									/>
 								</div>
 							);
 						})}

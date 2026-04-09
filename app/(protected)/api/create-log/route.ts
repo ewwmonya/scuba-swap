@@ -8,7 +8,7 @@ export async function POST(req: Request) {
 
 		const resp = await prisma.dives.create({
 			data: {
-				userId: body.userId,
+				userId: '24a851de-6c59-4611-a9d5-2739f335775c',
 				bottom_time: body?.values?.bottom_time,
 				content: body?.values?.content,
 				dive_date: isoDate,
@@ -18,17 +18,19 @@ export async function POST(req: Request) {
 				water_temperature_surface: body?.values?.water_temperature_surface,
 				entry_time: body?.values?.entry_time,
 				exit_time: body?.values?.exit_time,
-				id: '',
+				id: ((await prisma.dives.findMany()).length + 9999).toString(),
 			},
 		});
 
-		return new Response(JSON.stringify(resp), {
+		console.log('Ran');
+
+		return new Response(JSON.stringify({ resp, isoDate }), {
 			status: 201,
 			headers: { 'Content-Type': 'application/json' },
 		});
 	} catch (error) {
 		console.error('ERROR creating dive log:', error);
-		return new Response(JSON.stringify({ error: 'Server error' }), {
+		return new Response(JSON.stringify({ error: 'Server error', msg: error }), {
 			status: 500,
 			headers: { 'Content-Type': 'application/json' },
 		});

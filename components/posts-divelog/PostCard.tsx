@@ -66,24 +66,8 @@ async function PostCard({ post }: { post: PostType }) {
 	return (
 		<>
 			<Card className='my-4'>
-				<div className='grid grid-cols-4'>
-					<div className='border-r'>
-						<CardHeader>
-							{diveMeta.map((field) => {
-								const value = post[field.key];
-								if (!value) return null;
-								return (
-									<p
-										key={field.key}
-										className='text-gray-600 font-mono tracking-wide'
-									>
-										{field.label}:<br /> {value as string} {field.unit ?? ''}
-									</p>
-								);
-							})}
-						</CardHeader>
-					</div>
-					<section className='col-span-3 '>
+				<div className=''>
+					<section className='min-w-4xl:col-span-3 lg:border-r max-sm:border-b pb-8'>
 						<CardHeader>
 							<CardTitle className=' grid gap-4 grid-cols-2'>
 								<div className='flex align-middle gap-4'>
@@ -99,24 +83,47 @@ async function PostCard({ post }: { post: PostType }) {
 								<p className='font-light tracking-wide'>{post.location}</p>
 							</CardDescription>
 						</CardHeader>
-						<CardContent>
-							<p className='max-w-lg my-4 tracking-wide leading-6 font-bold text-lg text-slate-800'>
-								{post?.caption ? post?.caption : <>post.caption</>}
-							</p>
 
-							{post.content ? (
-								<p className='truncate'>{post.content}</p>
-							) : (
-								<p>
-									Lorem ipsum dolor sit amet consectetur adipisicing elit. Unde
-									esse veniam harum blanditiis vel amet quibusdam minus repellat
-									velit quo.
-								</p>
-							)}
-						</CardContent>
+						<CardHeader className='flex flex-col gap-4 '>
+							{diveMeta.map((field) => {
+								const value = post[field.key];
+								if (!value) return null;
+								return (
+									<p key={field.key} className='text-gray-600 tracking-wide'>
+										<span className='font-black'>{field.label}:</span>
+										<br />
+										<span className='font-mono'>
+											{value as string} {field.unit ?? ''}
+										</span>
+									</p>
+								);
+							})}
+						</CardHeader>
 					</section>
 				</div>
-				<div className='h-96 w-full bg-gray-100 col-span-2 my-8'></div>
+				<div className='h-96 w-full bg-gray-100 col-span-2 my-8'>
+					<Image
+						width={1000}
+						height={500}
+						className='h-96 overflow-hidden'
+						src={'https://images.unsplash.com/photo-1544551763-46a013bb70d5'}
+						alt='foo foo'
+					/>
+				</div>
+				<CardContent>
+					<p className='max-w-lg my-4 tracking-wide leading-6 font-bold text-lg text-slate-800'>
+						{post?.caption ? post?.caption : <>post.caption</>}
+					</p>
+
+					{post.content ?
+						<p className='truncate'>{post.content}</p>
+					:	<p>
+							Lorem ipsum dolor sit amet consectetur adipisicing elit. Unde esse
+							veniam harum blanditiis vel amet quibusdam minus repellat velit
+							quo.
+						</p>
+					}
+				</CardContent>
 				{/* card footer */}
 				<CardFooter>
 					<CardAction className='flex justify-between w-full'>

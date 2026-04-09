@@ -11,12 +11,12 @@ import {
 	CardHeader,
 } from '@/components/ui/card';
 import { Textarea } from '@/components/ui/textarea';
-const published = false;
+const published = true;
 
 function page() {
 	if (published) {
 		return (
-			<main className='mt-12'>
+			<main className='mt-12 min-h-lvh'>
 				<PageTitle text='Dive Log Feed' textColor='text-slate-800' />
 				<p className='text-medium-gray text-base font-normal leading-normal'>
 					Share and discover amazing dive sites from around the world.

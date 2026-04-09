@@ -26,9 +26,9 @@ const notifications: LinkType[] = [
 	},
 ];
 
-const mockData: DATA[] = [
+const navLink: DATA[] = [
 	// { name: 'marketplace', url: '/marketplace' },
-	// { name: 'feed', url: '/feed' },
+	{ name: 'feed', url: '/feed' },
 	{ name: 'community forum', url: '/forum' },
 	// { name: 'policy', url: '/policy' },
 	// { name: 'messages', url: '/messages' },
@@ -38,7 +38,7 @@ const mockData: DATA[] = [
 function Navbar({ username, view }: { username?: string; view: true | false }) {
 	return (
 		<nav>
-			<section>
+			<header>
 				<div className='bg-white items-center lg:flex flex-nowrap justify-around grid w-full border-b-2 border-gray-200 shadow-xs py-4 px-8'>
 					<div className=' grid lg:flex lg:flex-row lg:flex-wrap shrink-2 gap-6'>
 						<Link href={'/'} className='flex flex-nowrap gap-2 lg:pl-8 pl-2'>
@@ -49,10 +49,13 @@ function Navbar({ username, view }: { username?: string; view: true | false }) {
 							/>
 							<h1 className='text-3xl text-slate-800 font-bold'>ScubaSwap</h1>
 						</Link>
-						<ul className='hidden lg:grid lg:grid-flow-col grid-cols-3 lg:grid-cols-1'>
-							{mockData.map((l) => {
+						<ul className='flex gap-4 lg:grid lg:grid-flow-col grid-cols-3 lg:grid-cols-1'>
+							{navLink.map((l) => {
 								return (
-									<li key={l.name}>
+									<li
+										key={l.name}
+										className='border-b hover:border-b-0 transition-all duration-100'
+									>
 										<Button asChild variant={'ghost'}>
 											<Link href={l.url} className='capitalize font-bold'>
 												{l.name}
@@ -68,12 +71,11 @@ function Navbar({ username, view }: { username?: string; view: true | false }) {
 						{/* <Menu links={notifications}>
 							<Notifications />
 						</Menu> */}
-						{username ? (
+						{username ?
 							<Menu links={profileLinks}>
 								<Profile src={username} />
 							</Menu>
-						) : (
-							<div className=' grid-cols-2 gap-8 grid'>
+						:	<div className=' grid-cols-2 gap-8 grid'>
 								<Button asChild>
 									<Link href={'/login'}>Login</Link>
 								</Button>
@@ -81,10 +83,10 @@ function Navbar({ username, view }: { username?: string; view: true | false }) {
 									<Link href={'/signup'}>Signup Now!</Link>
 								</Button>
 							</div>
-						)}
+						}
 					</div>
 				</div>
-			</section>
+			</header>
 		</nav>
 	);
 }

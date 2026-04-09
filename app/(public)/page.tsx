@@ -3,6 +3,7 @@ import Image from 'next/image';
 import hero from '@/public/diver-hero2.jpg';
 import heroMobile from '@/public/diver-hero-mobile.jpg';
 import okayImage from '@/public/a-okay.jpeg';
+import okayImageSm from '@/public/a-okay-sm.jpg';
 import diveBuds from '@/public/scuba-budies.jpeg';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -72,7 +73,7 @@ function page() {
 						<Link href='/forum'>Go to Forum</Link>
 					</Button>
 				</div>
-				<div className='flex gap-4 flex-col'>
+				<div className='flex gap-4 flex-col justify-center'>
 					<Card className='bg-linear-to-b from-slate-800 to-slate-700 grid border-none text-white'>
 						<CardHeader className='flex items-center gap-2'>
 							<GiScubaTanks className='text-4xl ' width={20} height={20} />
@@ -85,10 +86,18 @@ function page() {
 					<div className='grid-cols-1 lg:grid-cols-2 grid gap-4'>
 						<Card className='bg-linear-to-b from-slate-800 to-slate-700 grid border-none text-white'>
 							<CardContent className=''>
-								<div className='h-40 overflow-hidden'>
+								<div className='overflow-hidden'>
 									<Image
+										className='lg:block hidden'
 										src={okayImage}
-										width={600}
+										width={1170}
+										height={190}
+										alt='Scuba Swap Dive Talk'
+									/>
+									<Image
+										className='lg:hidden block '
+										src={okayImageSm}
+										width={1170}
 										height={190}
 										alt='Scuba Swap Dive Talk'
 									/>
@@ -108,7 +117,7 @@ function page() {
 								<div className='h-40 overflow-hidden '>
 									<Image
 										src={diveBuds}
-										width={600}
+										width={1170}
 										height={190}
 										alt='Scuba Swap Dive Buddies'
 									/>

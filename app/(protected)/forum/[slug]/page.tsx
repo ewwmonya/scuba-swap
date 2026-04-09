@@ -1,5 +1,6 @@
 export const dynamic = 'force-dynamic';
 
+import ForumCard from '@/components/forum/ForumCard';
 import TimeAgo from '@/components/forum/TimeAgo';
 import {
 	Breadcrumb,
@@ -9,6 +10,7 @@ import {
 	BreadcrumbPage,
 	BreadcrumbSeparator,
 } from '@/components/ui/breadcrumb';
+
 import { prisma } from '@/lib/prismaActions';
 
 async function page({ params }: { params: Promise<{ slug: string }> }) {
@@ -18,12 +20,16 @@ async function page({ params }: { params: Promise<{ slug: string }> }) {
 			id: slug,
 		},
 	});
+	const comments = await prisma.comment.findMany({
+		where: {
+			postId: slug,
+		},
+	});
 	const user = await prisma.user.findFirst({
 		where: {
 			uuID_auth: data?.userId,
 		},
 	});
-	console.log(user);
 	return (
 		<>
 			<Breadcrumb className='my-8'>
@@ -72,11 +78,24 @@ async function page({ params }: { params: Promise<{ slug: string }> }) {
 							})}
 					</div>
 				</div>
-				<div className='h-1/3 w-full bg-sky-100 rounded-xl my-10 opacity-35 p-8'>
-					<p className='text-xl tracking-widest'>
-						Comments Coming Soon<span className='animate-pulse'>...</span>
-					</p>
-				</div>
+				<div className=''></div>
+				{comments.length <= 0 ?
+					<div className='h-1/3 w-full bg-sky-100 rounded-xl my-10 opacity-35 p-8'>
+						<p className='text-xl tracking-widest'>
+							This Forum Has No Comments Yet
+							<span className='animate-pulse'>...</span>
+						</p>
+					</div>
+				:	<>
+						{comments?.map((c) => {
+							return (
+								<section key={c.id}>
+									<ForumCard data={c} longDes={true} />
+								</section>
+							);
+						})}
+					</>
+				}
 			</div>
 		</>
 	);

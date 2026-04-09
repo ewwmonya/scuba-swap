@@ -22,11 +22,11 @@ type UserDataType = {
 	uuID_auth: string;
 };
 dayjs.extend(relativeTime);
-const getuser = async (name: string): Promise<UserDataType | null> => {
+const getuser = async (uID: string): Promise<UserDataType | null> => {
 	try {
 		const data = await prisma.user.findFirst({
 			where: {
-				email: name,
+				id: uID,
 			},
 		});
 		return data || null;
@@ -35,17 +35,17 @@ const getuser = async (name: string): Promise<UserDataType | null> => {
 	}
 };
 async function ForumCard({
+	longDes = false,
 	data,
 }: {
-	//! Temp remove this later!!
 	data: {
-		caption: string;
+		caption?: string;
 		id: string;
 		content: string;
 		createdAt: Date;
-		imageUrl: string | null;
 		userId: string;
 	};
+	longDes?: boolean;
 }) {
 	const userData = await getuser(data?.userId);
 	const time = dayjs(data.createdAt).fromNow();
@@ -59,16 +59,21 @@ async function ForumCard({
 							<ItemTitle className='font-bold'>{userData.username}</ItemTitle>
 						)}
 					</div>
-					<ItemTitle className=''>{data?.caption}</ItemTitle>
+					{data?.caption && <ItemTitle className=''>{data?.caption}</ItemTitle>}
 
 					{time && (
 						<ItemTitle className='tracking-widest text-xm text-gray-400'>
 							{time}
 						</ItemTitle>
 					)}
-					<ItemDescription className='m-2 lg:max-w-[650px] max-w-[500px]'>
-						{data?.content}
-					</ItemDescription>
+					{longDes == false ?
+						<ItemDescription className='mx-2 leading-normal line-clamp-4'>
+							{data?.content}
+						</ItemDescription>
+					:	<ItemDescription className='mx-2 leading-8'>
+							{data?.content}
+						</ItemDescription>
+					}
 				</ItemContent>
 				<ItemActions>
 					<div className='flex gap-4 justify-between'>
