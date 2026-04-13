@@ -10,6 +10,7 @@ import {
 	DialogTrigger,
 } from '@/components/ui/dialog';
 import PostSubmit from './PostSubmit';
+import { ScrollArea, ScrollBar } from '@/components/ui/scroll-area';
 
 function PostDrawer() {
 	return (
@@ -19,13 +20,13 @@ function PostDrawer() {
 					<Button variant='outline'>Make Dive Log</Button>
 				</DialogTrigger>
 				<DialogContent
-					className='sm:max-w-screen min-h-screen lg:max-w-6xl lg:min-h-[300px] mx-auto py-4'
+					className=' lg:max-w-6xl mx-auto py-4'
 					showCloseButton={false}
 				>
 					<DialogHeader>
 						<DialogTitle>Post Dive Log</DialogTitle>
 						<DialogDescription>
-							Lorem ipsum dolor, sit amet consectetur adipisicing elit.
+							Lorem ipsum dolor, sit amet consectetur adipisicing elit.ssss
 						</DialogDescription>
 					</DialogHeader>
 					<PostSubmit />

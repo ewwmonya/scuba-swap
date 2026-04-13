@@ -15,7 +15,7 @@ const getFeed = async () => {
 };
 async function Post() {
 	const data = await getFeed();
-	if (data.length > 1) {
+	if (data.length > 0) {
 		return (
 			<article>
 				{/* mock */}
@@ -23,13 +23,10 @@ async function Post() {
 				{data.map((post) => {
 					return <PostCard key={post.id} post={post} />;
 				})}
-				{/* {mockPosts.map((post) => {
-				return <PostCard key={post.id} post={post as unknown as PostType} />;
-				})} */}
 			</article>
 		);
 	} else {
-		return <p>Refresh and try again later...</p>;
+		return <p className='mt-20'>Zero Post Found or Made...</p>;
 	}
 }
 export default Post;

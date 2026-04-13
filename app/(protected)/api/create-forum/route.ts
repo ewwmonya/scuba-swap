@@ -1,6 +1,5 @@
 import { prisma } from '@/lib/prismaActions';
 import { createServerClient } from '@supabase/ssr';
-import { randomUUID } from 'crypto';
 import { cookies } from 'next/headers';
 
 export async function POST(req: Request) {
@@ -15,7 +14,7 @@ export async function POST(req: Request) {
 					return cookieStore.getAll();
 				},
 			},
-		}
+		},
 	);
 
 	const {
@@ -25,12 +24,14 @@ export async function POST(req: Request) {
 		const body = await req.json();
 		console.log(body, user.id);
 		try {
+			const newIdNumber = (await prisma.post.count()) + 1000;
+			console.log(newIdNumber);
 			const resp = await prisma.post.create({
 				data: {
 					userId: user.id.toString(),
 					caption: body?.caption,
 					content: body?.content,
-					id: randomUUID().toLocaleString(),
+					id: newIdNumber.toLocaleString(),
 				},
 			});
 			return new Response(JSON.stringify(resp), {

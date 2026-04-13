@@ -93,7 +93,7 @@ export default function SignUpPage() {
 			</div>
 			<div className='flex gap-2 items-center justify-end mb-5 text-slate-400'>
 				<p>Already have an account?</p>
-				<a href='#' className='text-orange-500 underline'>
+				<a href='/login' className='text-orange-500 underline'>
 					Sign In
 				</a>
 			</div>

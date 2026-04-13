@@ -5,6 +5,7 @@ import Container from '@/components/globals/Container';
 import { Footer } from '@/components/globals/Footer';
 import Navbar from '@/components/navbar/Navbar';
 import NavbarServer from '@/components/navbar/NavbarServer';
+import { Suspense } from 'react';
 
 const geistSans = Geist({
 	variable: '--font-geist-sans',
@@ -31,7 +32,9 @@ export default function RootLayout({
 			<body
 				className={`${geistSans.variable} ${geistMono.variable} antialiased  bg-gray-100`}
 			>
-				<main className='px-2'>{children}</main>
+				<main className='px-2'>
+					<Suspense fallback={'Loading...'}>{children}</Suspense>
+				</main>
 				<Footer />
 			</body>
 		</html>

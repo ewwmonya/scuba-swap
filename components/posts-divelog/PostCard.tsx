@@ -15,6 +15,7 @@ import { IoMdPin } from 'react-icons/io';
 import Image from 'next/image';
 import { Button } from '../ui/button';
 import { prisma } from '@/lib/prismaActions';
+import TimeAgo from '../forum/TimeAgo';
 
 export type PostType = {
 	id: string;
@@ -51,12 +52,16 @@ export type diveMetaType = {
 
 async function PostCard({ post }: { post: PostType }) {
 	const diveMeta: diveMetaType[] = [
+		{ key: 'caption', label: 'Caption' },
 		{ key: 'dive_number', label: 'Dive Number' },
 		{ key: 'entry_time', label: 'Entry Time' },
 		{ key: 'exit_time', label: 'Exit Time' },
 		{ key: 'maximum_depth', label: 'Max Depth', unit: 'ft' },
 		{ key: 'bottom_time', label: 'Bottom Time', unit: 'min' },
 	];
+	const caption = `Dive at ${post.location}, at Max Depth of ${post.maximum_depth}`;
+
+	const time: Date | null | undefined = post?.createdAt;
 
 	const data = await prisma.user.findUnique({
 		where: {
@@ -67,41 +72,41 @@ async function PostCard({ post }: { post: PostType }) {
 		<>
 			<Card className='my-4'>
 				<div className=''>
-					<section className='min-w-4xl:col-span-3 lg:border-r max-sm:border-b pb-8'>
+					<section className=' min-w-4xl:col-span-3 lg:border-r max-sm:border-b pb-8'>
 						<CardHeader>
 							<CardTitle className=' grid gap-4 grid-cols-2'>
 								<div className='flex align-middle gap-4'>
 									{/* <PostAvatar src={post.user.avatar} /> */}
-									<div className='grid'>
+									<div className='grid pl-1'>
 										<p>{data?.username}</p>
-										<p className='font-light'>post.createdAt</p>
 									</div>
 								</div>
 							</CardTitle>
-							<CardDescription className='flex align-bottom my-2'>
-								<IoMdPin className='text-lg text-primary' />
+							<CardDescription className=' flex align-bottom my-2'>
+								<IoMdPin className=' text-lg text-primary' />
 								<p className='font-light tracking-wide'>{post.location}</p>
 							</CardDescription>
 						</CardHeader>
-
-						<CardHeader className='flex flex-col gap-4 '>
-							{diveMeta.map((field) => {
-								const value = post[field.key];
-								if (!value) return null;
-								return (
-									<p key={field.key} className='text-gray-600 tracking-wide'>
-										<span className='font-black'>{field.label}:</span>
-										<br />
-										<span className='font-mono'>
-											{value as string} {field.unit ?? ''}
-										</span>
-									</p>
-								);
-							})}
+						<CardHeader>
+							<div className='grid grid-cols-1 md:grid-cols-3 gap-4 pl-1'>
+								{diveMeta.map((field) => {
+									const value = post[field.key];
+									if (!value) return null;
+									return (
+										<p key={field.key} className='text-gray-600 tracking-wide'>
+											<span className='font-black'>{field.label}:</span>
+											<br />
+											<span className='font-mono'>
+												{value as string} {field.unit ?? ''}
+											</span>
+										</p>
+									);
+								})}
+							</div>
 						</CardHeader>
 					</section>
 				</div>
-				<div className='h-96 w-full bg-gray-100 col-span-2 my-8'>
+				{/* <div className='h-96 w-full bg-gray-100 col-span-2 my-8'>
 					<Image
 						width={1000}
 						height={500}
@@ -109,14 +114,14 @@ async function PostCard({ post }: { post: PostType }) {
 						src={'https://images.unsplash.com/photo-1544551763-46a013bb70d5'}
 						alt='foo foo'
 					/>
-				</div>
+				</div> */}
 				<CardContent>
 					<p className='max-w-lg my-4 tracking-wide leading-6 font-bold text-lg text-slate-800'>
-						{post?.caption ? post?.caption : <>post.caption</>}
+						{caption.length > 0 ? caption : <>post.caption</>}
 					</p>
 
 					{post.content ?
-						<p className='truncate'>{post.content}</p>
+						<p className=''>{post.content}</p>
 					:	<p>
 							Lorem ipsum dolor sit amet consectetur adipisicing elit. Unde esse
 							veniam harum blanditiis vel amet quibusdam minus repellat velit

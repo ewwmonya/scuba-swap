@@ -19,7 +19,7 @@ const getFeed = async () => {
 export async function ForumFeed({}) {
 	const data = await getFeed();
 	return (
-		<div className='my-10'>
+		<div className='my-10 min-h-full'>
 			{data.map((p) => {
 				return (
 					<Link key={`${p.id}`} href={`forum/${p.id}`}>

@@ -1,4 +1,4 @@
-import { ReactNode } from 'react';
+import { ReactNode, Suspense } from 'react';
 import { createServerClient } from '@supabase/ssr';
 import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
@@ -23,7 +23,7 @@ export default async function ProtectedLayout({
 				setAll(cookiesToSet) {
 					try {
 						cookiesToSet.forEach(({ name, value, options }) =>
-							cookieStore.set(name, value, options)
+							cookieStore.set(name, value, options),
 						);
 					} catch {
 						// The `setAll` method was called from a Server Component.
@@ -32,7 +32,7 @@ export default async function ProtectedLayout({
 					}
 				},
 			},
-		}
+		},
 	);
 
 	const {
@@ -44,7 +44,9 @@ export default async function ProtectedLayout({
 	return (
 		<>
 			<NavbarServer />
-			<Container>{children}</Container>
+			<Container>
+				<Suspense fallback={'Loading...'}>{children}</Suspense>
+			</Container>
 		</>
 	);
 }
