@@ -45,10 +45,9 @@ function page() {
 							<Post />
 						</div>
 					</div>
-					<div className='w-full h-full animate-pulse bg-gray-200 col-span-2'>
-						foofoo
-					</div>
-					<div className='lg:block hidden my-10'>{/* <PostFilter /> */}</div>
+					{/* <div className='w-full h-full animate-pulse bg-gray-200 col-span-2'>
+					<div className='lg:block hidden my-10'><PostFilter /> </div>
+					</div> */}
 				</section>
 			</main>
 		);
