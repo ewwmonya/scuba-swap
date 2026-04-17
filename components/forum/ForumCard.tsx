@@ -22,14 +22,14 @@ type UserDataType = {
 	uuID_auth: string;
 };
 dayjs.extend(relativeTime);
-const getuser = async (uID: string): Promise<UserDataType | null> => {
+const getuser = async (uID: string) => {
 	try {
 		const data = await prisma.user.findFirst({
 			where: {
 				id: uID,
 			},
 		});
-		return data || null;
+		if (data) return data;
 	} catch (error) {
 		return null;
 	}
