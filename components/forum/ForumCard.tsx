@@ -62,7 +62,7 @@ async function ForumCard({
 					{data?.caption && <ItemTitle className=''>{data?.caption}</ItemTitle>}
 
 					{time && (
-						<ItemTitle className='tracking-widest text-xm text-gray-400'>
+						<ItemTitle className='tracking-widest text-sm text-gray-400'>
 							{time}
 						</ItemTitle>
 					)}
