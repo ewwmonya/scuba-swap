@@ -1,14 +1,18 @@
 import { prisma } from '@/lib/prismaActions';
+import { getCurrentUserProfile } from '@/lib/supabase/getCurrentUserProfile';
 
 export async function POST(req: Request) {
+	const user = await getCurrentUserProfile();
 	try {
 		const body = await req.json();
 
 		const isoDate = new Date(body?.values?.dive_date).toISOString();
-
+		if (!user) {
+			throw new Error('NO No');
+		}
 		const resp = await prisma.dives.create({
 			data: {
-				userId: '24a851de-6c59-4611-a9d5-2739f335775c',
+				userId: user?.id,
 				bottom_time: body?.values?.bottom_time,
 				content: body?.values?.content,
 				dive_date: isoDate,
@@ -18,7 +22,6 @@ export async function POST(req: Request) {
 				water_temperature_surface: body?.values?.water_temperature_surface,
 				entry_time: body?.values?.entry_time,
 				exit_time: body?.values?.exit_time,
-				id: ((await prisma.dives.findMany()).length + 9999).toString(),
 			},
 		});
 

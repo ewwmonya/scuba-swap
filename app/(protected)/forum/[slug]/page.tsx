@@ -20,14 +20,14 @@ async function page({ params }: { params: Promise<{ slug: string }> }) {
 			id: slug,
 		},
 	});
-	const comments = await prisma.comment.findMany({
+	const comments = await prisma.postComment.findMany({
 		where: {
 			postId: slug,
 		},
 	});
 	const user = await prisma.user.findFirst({
 		where: {
-			uuID_auth: data?.userId,
+			id: data?.userId,
 		},
 	});
 	return (

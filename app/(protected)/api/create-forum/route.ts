@@ -1,37 +1,27 @@
 import { prisma } from '@/lib/prismaActions';
-import { createServerClient } from '@supabase/ssr';
-import { cookies } from 'next/headers';
+import { getCurrentUserProfile } from '@/lib/supabase/getCurrentUserProfile';
 
 export async function POST(req: Request) {
-	const cookieStore = await cookies();
+	// Get user logged in
+	const resp = await getCurrentUserProfile();
+	// Set user variable
+	const user = resp;
 
-	const supabase = createServerClient(
-		process.env.NEXT_PUBLIC_SUPABASE_URL!,
-		process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
-		{
-			cookies: {
-				getAll() {
-					return cookieStore.getAll();
-				},
-			},
-		},
-	);
-
-	const {
-		data: { user },
-	} = await supabase.auth.getUser();
+	// if the user is defined do below
 	if (user != null) {
 		const body = await req.json();
-		console.log(body, user.id);
+		console.log(body, user);
+
 		try {
+			// set new user count. Later in life this will need to scale
 			const newIdNumber = (await prisma.post.count()) + 1000;
 			console.log(newIdNumber);
+
 			const resp = await prisma.post.create({
 				data: {
-					userId: user.id.toString(),
+					userId: user?.id,
 					caption: body?.caption,
 					content: body?.content,
-					id: newIdNumber.toLocaleString(),
 				},
 			});
 			return new Response(JSON.stringify(resp), {

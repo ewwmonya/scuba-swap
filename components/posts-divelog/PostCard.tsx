@@ -1,3 +1,4 @@
+import { LikeBtn } from './LikeBtn';
 import { MdOutlineMessage } from 'react-icons/md';
 import { MdThumbUpOffAlt } from 'react-icons/md';
 import { MdIosShare } from 'react-icons/md';
@@ -42,6 +43,13 @@ export type PostType = {
 	userId: string;
 	content: string;
 	caption?: string;
+	likes?: [];
+};
+
+export type UserType = {
+	id: string;
+	email: string;
+	username: string;
 };
 
 export type diveMetaType = {
@@ -50,7 +58,13 @@ export type diveMetaType = {
 	unit?: string;
 };
 
-async function PostCard({ post }: { post: PostType }) {
+async function PostCard({
+	post,
+	currentUser,
+}: {
+	post: PostType;
+	currentUser: UserType;
+}) {
 	const diveMeta: diveMetaType[] = [
 		{ key: 'caption', label: 'Caption' },
 		{ key: 'dive_number', label: 'Dive Number' },
@@ -63,13 +77,19 @@ async function PostCard({ post }: { post: PostType }) {
 
 	const time: Date | null | undefined = post?.createdAt;
 
-	const data = await prisma.user.findUnique({
+	const userData = await prisma.user.findUnique({
 		where: {
 			id: post.userId,
 		},
 	});
+	const diveLikes = await prisma.diveLike.findMany({
+		where: {
+			diveId: post.id,
+		},
+	});
+
 	return (
-		<>
+		<section>
 			<Card className='my-4'>
 				<div className=''>
 					<section className=' min-w-4xl:col-span-3 lg:border-r max-sm:border-b pb-8'>
@@ -78,7 +98,7 @@ async function PostCard({ post }: { post: PostType }) {
 								<div className='flex align-middle gap-4'>
 									{/* <PostAvatar src={post.user.avatar} /> */}
 									<div className='grid pl-1'>
-										<p>{data?.username}</p>
+										<p>{userData?.username}</p>
 									</div>
 								</div>
 							</CardTitle>
@@ -106,9 +126,10 @@ async function PostCard({ post }: { post: PostType }) {
 						</CardHeader>
 					</section>
 				</div>
-				{/* <div className='h-96 w-full bg-gray-100 col-span-2 my-8'>
+				{/* <div className='h-96 w-full bg-gray-100 col-span-2 my-8 mx-auto'>
 					<Image
-						width={1000}
+						loading='lazy'
+						width={1170}
 						height={500}
 						className='h-96 overflow-hidden'
 						src={'https://images.unsplash.com/photo-1544551763-46a013bb70d5'}
@@ -132,9 +153,13 @@ async function PostCard({ post }: { post: PostType }) {
 				{/* card footer */}
 				<CardFooter>
 					<CardAction className='flex justify-between w-full'>
-						<Button variant={'link'}>
-							<MdThumbUpOffAlt /> Like
-						</Button>
+						{currentUser ?
+							<LikeBtn
+								postId={post.id}
+								inintLikesCount={diveLikes.length}
+								currentUserId={currentUser.id}
+							/>
+						:	''}
 						<Button variant={'link'}>
 							<MdOutlineMessage /> Comments
 						</Button>
@@ -144,7 +169,7 @@ async function PostCard({ post }: { post: PostType }) {
 					</CardAction>
 				</CardFooter>
 			</Card>
-		</>
+		</section>
 	);
 }
 export default PostCard;

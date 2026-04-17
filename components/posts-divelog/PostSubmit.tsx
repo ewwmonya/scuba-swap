@@ -60,10 +60,9 @@ function PostSubmit() {
 		});
 		console.log(res);
 		// if(res.status == ){}
-		// redirect('/feed');
+		redirect('/feed');
 
 		// const data = res;
-		console.log(res);
 	};
 
 	return (

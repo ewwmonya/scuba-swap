@@ -1,5 +1,6 @@
 'use client';
 
+import { getUserName } from '@/lib/prisma/getTableUserName';
 import { supabaseBrowserClient } from '@/lib/supabaseClient';
 import { useState } from 'react';
 import { MdOutlineScubaDiving } from 'react-icons/md';
@@ -10,28 +11,26 @@ export default function SignUpPage() {
 	const [email, setEmail] = useState('');
 	const [username, setUsername] = useState('');
 	const [password, setPassword] = useState('');
-
 	async function handleSignUp(e: React.FormEvent) {
 		e.preventDefault();
+		getUserName('foo');
 
 		const { data, error } = await supabase.auth.signUp({
 			email,
 			password,
 		});
-		console.log('data set from supabase signup', data);
 		if (error) {
 			alert(error.message);
+			console.log(error);
 		} else {
-			await fetch('/api/create-user', {
+			const foofoo = await fetch('/api/create-user', {
 				method: 'POST',
 				body: JSON.stringify({
-					id: data.user?.id,
 					email: email,
 					username: username,
-					uuID_auth: data.user?.id,
+					authId: data.user?.id,
 				}),
 			});
-
 			alert('Check your email to confirm your account.');
 		}
 	}
