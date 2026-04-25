@@ -1,4 +1,4 @@
-import { GearType } from './trendingHero';
+import { GearType } from './TrendingHero';
 
 export default function GearQuickStats({ gear }: { gear: GearType }) {
 	return (
