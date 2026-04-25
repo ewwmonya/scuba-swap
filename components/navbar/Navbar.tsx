@@ -30,6 +30,7 @@ const navLink: DATA[] = [
 	// { name: 'marketplace', url: '/marketplace' },
 	{ name: 'feed', url: '/feed' },
 	{ name: 'community forum', url: '/forum' },
+	{ name: 'Dive Gear Blogs', url: '/blogs' },
 	// { name: 'policy', url: '/policy' },
 	// { name: 'messages', url: '/messages' },
 	// { name: 'shop gear', url: '/gear' },

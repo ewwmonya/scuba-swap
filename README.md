@@ -27,27 +27,6 @@ This repo is the start of it all. The plan is to keep things simple for now — 
 Setup Next.js, Tailwind, Prisma, and Supabase Auth.
 Get connected to the Supabase DB and make sure Prisma can talk to it.
 
-**Day 2:**
-Build out the homepage feed using mock data.
-Create the main `PostCard` component and layout.
-
-**Day 3:**
-Hook up live posts using Prisma queries (SSR or Server Actions).
-
-**Day 4:**
-Add a “Create Post” form that only logged-in users can use.
-Get Supabase Auth working cleanly.
-
-**Day 5:**
-Add a simple comment section with one level of nested comments.
-
-**Day 6:**
-Polish the UI using Shadcn components.
-Add category filters for posts.
-
-**Day 7:**
-Deploy to **Vercel**, connect the production Supabase DB, and test everything end-to-end.
-
 ---
 
 ## 🧠 Why I’m Building This
