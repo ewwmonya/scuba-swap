@@ -6,6 +6,7 @@ import { Footer } from '@/components/globals/Footer';
 import Navbar from '@/components/navbar/Navbar';
 import NavbarServer from '@/components/navbar/NavbarServer';
 import { Suspense } from 'react';
+import Script from 'next/script';
 
 const geistSans = Geist({
 	variable: '--font-geist-sans',
@@ -36,10 +37,10 @@ export default function RootLayout({
 					<Suspense fallback={'Loading...'}>{children}</Suspense>
 				</main>
 				<Footer />
-				<script
-					type='text/javascript'
+				<Script
+					strategy='afterInteractive'
 					src='http://classic.avantlink.com/affiliate_app_confirm.php?mode=js&authResponse=5b1d16afa62496d744376c3343f4c41d41a4dba9'
-				></script>
+				/>
 			</body>
 		</html>
 	);
