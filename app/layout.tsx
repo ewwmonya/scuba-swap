@@ -6,7 +6,6 @@ import { Footer } from '@/components/globals/Footer';
 import Navbar from '@/components/navbar/Navbar';
 import NavbarServer from '@/components/navbar/NavbarServer';
 import { Suspense } from 'react';
-import Script from 'next/script';
 
 const geistSans = Geist({
 	variable: '--font-geist-sans',
@@ -30,10 +29,6 @@ export default function RootLayout({
 }>) {
 	return (
 		<html lang='en'>
-			<Script
-				strategy='beforeInteractive'
-				src='https://classic.avantlink.com/affiliate_app_confirm.php?mode=js&authResponse=5b1d16afa62496d744376c3343f4c41d41a4dba9'
-			/>
 			<body
 				className={`${geistSans.variable} ${geistMono.variable} antialiased  bg-gray-100`}
 			>
