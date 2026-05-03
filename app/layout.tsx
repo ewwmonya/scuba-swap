@@ -30,12 +30,10 @@ export default function RootLayout({
 }>) {
 	return (
 		<html lang='en'>
-			<head>
-				<Script
-					strategy='beforeInteractive'
-					src='https://classic.avantlink.com/affiliate_app_confirm.php?mode=js&authResponse=5b1d16afa62496d744376c3343f4c41d41a4dba9'
-				/>
-			</head>
+			<Script
+				strategy='beforeInteractive'
+				src='https://classic.avantlink.com/affiliate_app_confirm.php?mode=js&authResponse=5b1d16afa62496d744376c3343f4c41d41a4dba9'
+			/>
 			<body
 				className={`${geistSans.variable} ${geistMono.variable} antialiased  bg-gray-100`}
 			>
