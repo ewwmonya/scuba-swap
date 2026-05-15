@@ -17,6 +17,7 @@ import Image from 'next/image';
 import { Button } from '../ui/button';
 import { prisma } from '@/lib/prismaActions';
 import TimeAgo from '../forum/TimeAgo';
+import Link from 'next/link';
 
 export type PostType = {
 	id: string;
@@ -161,7 +162,8 @@ async function PostCard({
 							/>
 						:	''}
 						<Button variant={'link'}>
-							<MdOutlineMessage /> Comments
+							<MdOutlineMessage />{' '}
+							<Link href={`/feed/${post.id}`}>Comments</Link>
 						</Button>
 						<Button variant={'link'}>
 							<MdIosShare /> Share

@@ -21,8 +21,9 @@ export async function ForumFeed({}) {
 	return (
 		<div className='my-10 min-h-full'>
 			{data.map((p) => {
+				const slug = p.caption.replaceAll(' ', '-');
 				return (
-					<Link key={`${p.id}`} href={`forum/${p.id}`}>
+					<Link key={`${p.id}`} href={`forum/${slug}`}>
 						<ForumCard data={p} />
 					</Link>
 				);

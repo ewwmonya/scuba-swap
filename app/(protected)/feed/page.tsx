@@ -22,7 +22,7 @@ function page() {
 					Share and discover amazing dive sites from around the world.
 				</p>
 				<section className='grid grid-cols-1 lg:grid-cols-6 w-[85vw]  gap-8 mx-auto my-10'>
-					<div className='col-span-4'>
+					<div className='col-span-4 bg-gray-50 p-2 min-h-screen rounded-xl'>
 						<div className=''>
 							<div className='grid gap-4'>
 								<div className='lg:hidden block w-full'>
@@ -45,9 +45,11 @@ function page() {
 							<Post />
 						</div>
 					</div>
-					{/* <div className='w-full h-full animate-pulse bg-gray-200 col-span-2'>
-					<div className='lg:block hidden my-10'><PostFilter /> </div>
-					</div> */}
+					<div className='w-full h-full animate-pulse  col-span-2'>
+						<div className='lg:block hidden'>
+							<PostFilter />
+						</div>
+					</div>
 				</section>
 			</main>
 		);
