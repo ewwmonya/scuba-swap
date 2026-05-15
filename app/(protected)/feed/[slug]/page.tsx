@@ -33,7 +33,14 @@ async function page({ params }: { params: Promise<{ slug: string }> }) {
 		},
 	});
 	const caption = `Dive at ${data?.location}, at Max Depth of ${data?.maximum_depth}`;
-	const diveMeta: diveMetaType[] = [
+	const computedValues: Record<string, string> = {
+		caption: caption,
+	};
+	const diveMeta: Array<{
+		key: string;
+		label: string;
+		unit?: string;
+	}> = [
 		{ key: 'caption', label: 'Caption' },
 		{ key: 'dive_number', label: 'Dive Number' },
 		{ key: 'entry_time', label: 'Entry Time' },
@@ -81,14 +88,14 @@ async function page({ params }: { params: Promise<{ slug: string }> }) {
 					</h1>
 					<div className='mt-4 space-y-4 text-slate-600 dark:text-slate-300 prose prose-slate dark:prose-invert max-w-none'>
 						{diveMeta.map((field) => {
-							const value = data?.[field.key];
+							const value = data?.[field?.key as keyof typeof data];
 							if (!value) return null;
 							return (
 								<p key={field.key} className='text-gray-600 tracking-wide'>
 									<span className='font-black'>{field.label}:</span>
 									<br />
 									<span className='font-mono'>
-										{value} {field.unit ?? ''}
+										{String(value)} {field.unit ?? ''}
 									</span>
 								</p>
 							);
