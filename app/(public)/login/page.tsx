@@ -4,6 +4,7 @@ import { supabaseBrowserClient } from '@/lib/supabaseClient';
 import { useState } from 'react';
 import { MdOutlineScubaDiving } from 'react-icons/md';
 import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 
 export default function LoginPage() {
 	const supabase = supabaseBrowserClient();
@@ -15,24 +16,18 @@ export default function LoginPage() {
 	async function handleLogin(e: React.FormEvent) {
 		e.preventDefault();
 
-		console.log('Attempting login with:', email);
-
-		const { data, error } = await supabase.auth.signInWithPassword({
+		const { error } = await supabase.auth.signInWithPassword({
 			email,
 			password,
 		});
 
 		if (error) {
-			console.error('LOGIN ERROR:', error);
 			alert(error.message);
 			return;
 		}
 
-		console.log('LOGIN SUCCESS:', data);
-
-		router.push('/');
-		router.refresh();
 		router.push('/forum');
+		router.refresh();
 	}
 
 	return (
@@ -55,13 +50,15 @@ export default function LoginPage() {
 					<input
 						id='email'
 						type='email'
+						value={email}
 						onChange={(e) => setEmail(e.target.value)}
 						className='w-full p-4 bg-transparent border border-gray-200 rounded-lg outline-none'
 						placeholder='Enter your email address...'
+						required
 					/>
 				</div>
 
-				<div className='flex flex-col items-start mb-5 gap-y-3'>
+				<div className='flex flex-col items-start mb-2 gap-y-3'>
 					<label
 						htmlFor='password'
 						className='text-sm font-medium cursor-pointer'
@@ -71,17 +68,25 @@ export default function LoginPage() {
 					<input
 						id='password'
 						type='password'
+						value={password}
 						onChange={(e) => setPassword(e.target.value)}
 						className='w-full p-4 bg-transparent border border-gray-200 rounded-lg outline-none'
 						placeholder='Enter your password'
+						required
 					/>
+				</div>
+
+				<div className='mb-5 text-right'>
+					<Link href='/forgot-password' className='text-sm text-slate-500 underline'>
+						Forgot password?
+					</Link>
 				</div>
 
 				<div className='flex gap-2 items-center justify-end mb-5 text-slate-400'>
 					<p>Don&apos;t have an account?</p>
-					<a href='/signup' className='text-slate-500 underline'>
+					<Link href='/signup' className='text-slate-500 underline'>
 						Signup
-					</a>
+					</Link>
 				</div>
 
 				<button
