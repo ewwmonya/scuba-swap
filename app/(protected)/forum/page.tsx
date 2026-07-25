@@ -1,6 +1,6 @@
 export const dynamic = 'force-dynamic';
-import { ForumFeed } from './../../../components/forum/ForumFeed';
-import { SubmitForum } from './../../../components/forum/SubmitForum';
+import { ForumFeed } from '../../../components/forum/ForumFeed';
+import { SubmitForum } from '../../../components/forum/SubmitForum';
 import PageTitle from '@/components/globals/PageTitle';
 
 import { PostFilter } from '@/components/posts-divelog/PostFilter';
