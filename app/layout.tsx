@@ -29,9 +29,6 @@ export const metadata: Metadata = {
 	},
 	description:
 		'A social community for scuba divers to share dive logs, discuss gear, and connect with other divers.',
-	verification: {
-		google: 'MG6iiaxhipyuKTPbXa3WMYKPhZ2Bx_rj_M-oUr8kWZA',
-	},
 	robots: {
 		index: true,
 		follow: true,
