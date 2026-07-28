@@ -17,9 +17,29 @@ const geistMono = Geist_Mono({
 	subsets: ['latin'],
 });
 
+const siteUrl = (
+	process.env.NEXT_PUBLIC_SITE_URL || 'https://scuba-swap.vercel.app'
+).replace(/\/$/, '');
+
 export const metadata: Metadata = {
-	title: 'Scuba-Swap',
-	description: 'Next Day and Age Scuba Forum',
+	metadataBase: new URL(siteUrl),
+	title: {
+		default: 'Scuba Traders',
+		template: '%s | Scuba Traders',
+	},
+	description:
+		'A social community for scuba divers to share dive logs, discuss gear, and connect with other divers.',
+	robots: {
+		index: true,
+		follow: true,
+		googleBot: {
+			index: true,
+			follow: true,
+			'max-image-preview': 'large',
+			'max-snippet': -1,
+			'max-video-preview': -1,
+		},
+	},
 };
 
 export default function RootLayout({
