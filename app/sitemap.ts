@@ -7,7 +7,7 @@ const siteUrl = (
 export default function sitemap(): MetadataRoute.Sitemap {
 	const routes = ['', '/about', '/feed', '/login', '/signup'];
 
-	return routes.map((route) => ({
+	return routes.map<MetadataRoute.Sitemap[number]>((route) => ({
 		url: `${siteUrl}${route}`,
 		lastModified: new Date(),
 		changeFrequency: route === '' || route === '/feed' ? 'daily' : 'monthly',
