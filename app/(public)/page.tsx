@@ -1,4 +1,5 @@
 export const dynamic = 'force-dynamic';
+
 import Image from 'next/image';
 import hero from '@/public/diver-hero2.jpg';
 import heroMobile from '@/public/diver-hero-mobile.jpg';
@@ -12,10 +13,10 @@ import { GiScubaTanks } from 'react-icons/gi';
 import Link from 'next/link';
 import { ForumFeed } from '@/components/forum/ForumFeed';
 
-function page() {
+function DevelopmentHomepage() {
 	return (
-		<main className='min-h-[90lvh]  '>
-			<div className='grid w-full  contain-content  py-2'>
+		<main className='min-h-[90lvh]'>
+			<div className='grid w-full contain-content py-2'>
 				<Image
 					src={hero}
 					alt=''
@@ -30,15 +31,11 @@ function page() {
 					width={726}
 					className='w-full lg:hidden block rounded-xl shadow relative'
 				/>
-				<div className='absolute place-self-center text-white  grid grid-cols-1 lg:grid-cols-2 text-center'>
+				<div className='absolute place-self-center text-white grid grid-cols-1 lg:grid-cols-2 text-center'>
 					<p></p>
 					<div className='max-w-xl flex flex-col p-6 lg:mt-6 mt-2'>
-						<div className='flex flex-nowrap gap-2 justify-center '>
-							<MdOutlineScubaDiving
-								className='text-5xl '
-								width={20}
-								height={20}
-							/>
+						<div className='flex flex-nowrap gap-2 justify-center'>
+							<MdOutlineScubaDiving className='text-5xl' width={20} height={20} />
 							<h1 className='text-5xl font-bold'>ScubaSwap</h1>
 						</div>
 						<p className='font-semibold tracking-wider lg:my-4 my-1 px-2 lg:px-8'>
@@ -47,20 +44,18 @@ function page() {
 						</p>
 						<div className='grid grid-cols-2 lg:p-8 gap-8'>
 							<Button asChild>
-								<Link href={'/login'}>Login</Link>
+								<Link href='/login'>Login</Link>
 							</Button>
-							<Button variant={'secondary'} asChild>
-								<Link href={'/signup'}>Signup Now!</Link>
+							<Button variant='secondary' asChild>
+								<Link href='/signup'>Signup Now!</Link>
 							</Button>
 						</div>
 					</div>
 				</div>
 			</div>
 			<div className='bg-linear-to-b from-slate-950 to-sky-950 grid grid-cols-1 lg:grid-cols-2 rounded-t-2xl p-8 items-center'>
-				<div className=''>
-					<h3 className='text-primary text-2xl tracking-widest'>
-						Community Forum
-					</h3>
+				<div>
+					<h3 className='text-primary text-2xl tracking-widest'>Community Forum</h3>
 					<h2 className='text-white text-3xl md:text-5xl font-bold leading-tight tracking-tight'>
 						The Diver&apos;s Forum
 					</h2>
@@ -76,7 +71,7 @@ function page() {
 				<div className='flex gap-4 flex-col justify-center'>
 					<Card className='bg-linear-to-b from-slate-800 to-slate-700 grid border-none text-white'>
 						<CardHeader className='flex items-center gap-2'>
-							<GiScubaTanks className='text-4xl ' width={20} height={20} />
+							<GiScubaTanks className='text-4xl' width={20} height={20} />
 							<CardTitle className='text-2xl'>Gear Talk</CardTitle>
 						</CardHeader>
 						<CardContent className='capitalize'>
@@ -85,28 +80,14 @@ function page() {
 					</Card>
 					<div className='grid-cols-1 lg:grid-cols-2 grid gap-4'>
 						<Card className='bg-linear-to-b from-slate-800 to-slate-700 grid border-none text-white'>
-							<CardContent className=''>
+							<CardContent>
 								<div className='overflow-hidden'>
-									<Image
-										className='lg:block hidden'
-										src={okayImage}
-										width={1170}
-										height={190}
-										alt='Scuba Swap Dive Talk'
-									/>
-									<Image
-										className='lg:hidden block '
-										src={okayImageSm}
-										width={1170}
-										height={190}
-										alt='Scuba Swap Dive Talk'
-									/>
+									<Image className='lg:block hidden' src={okayImage} width={1170} height={190} alt='Scuba Swap Dive Talk' />
+									<Image className='lg:hidden block' src={okayImageSm} width={1170} height={190} alt='Scuba Swap Dive Talk' />
 								</div>
 							</CardContent>
 							<CardHeader>
-								<CardTitle>
-									<p>Find New Gear</p>
-								</CardTitle>
+								<CardTitle><p>Find New Gear</p></CardTitle>
 								<p className='opacity-75 tracking-widest capitalize'>
 									Discuss what the vendor don&apos;t want to say 🤡
 								</p>
@@ -114,19 +95,12 @@ function page() {
 						</Card>
 						<Card className='bg-linear-to-b from-slate-800 to-slate-700 grid border-none text-white'>
 							<CardContent>
-								<div className='h-40 overflow-hidden '>
-									<Image
-										src={diveBuds}
-										width={1170}
-										height={190}
-										alt='Scuba Swap Dive Buddies'
-									/>
+								<div className='h-40 overflow-hidden'>
+									<Image src={diveBuds} width={1170} height={190} alt='Scuba Swap Dive Buddies' />
 								</div>
 							</CardContent>
 							<CardHeader>
-								<CardTitle>
-									<p>Dive Buddies</p>
-								</CardTitle>
+								<CardTitle><p>Dive Buddies</p></CardTitle>
 								<p className='opacity-75 tracking-widest capitalize'>
 									Make new dive buddies from all over the world
 								</p>
@@ -142,4 +116,13 @@ function page() {
 		</main>
 	);
 }
+
+function page() {
+	if (process.env.NODE_ENV === 'production') {
+		return <main className='min-h-[90lvh]' aria-label='ScubaSwap development homepage' />;
+	}
+
+	return <DevelopmentHomepage />;
+}
+
 export default page;
