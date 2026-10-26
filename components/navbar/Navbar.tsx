@@ -40,9 +40,9 @@ function Navbar({ username, view }: { username?: string; view: true | false }) {
 	return (
 		<nav>
 			<header>
-				<div className='bg-white items-center lg:flex flex-nowrap justify-around grid w-full border-b-2 border-gray-200 shadow-xs py-4 px-8'>
-					<div className=' grid lg:flex lg:flex-row lg:flex-wrap shrink-2 gap-6'>
-						<Link href={'/'} className='flex flex-nowrap gap-2 lg:pl-8 pl-2'>
+				<div className='bg-white grid-cols-7 grid w-full border-b-2 border-gray-200 shadow-xs py-8 px-8'>
+					<div className=' grid lg:flex lg:flex-row lg:flex-wrap shrink-2 content-center gap-6 col-span-5'>
+						<Link href={'/'} className='flex flex-nowrap gap-2 '>
 							<MdOutlineScubaDiving
 								className='text-4xl lg:text-3xl text-slate-800 '
 								width={20}

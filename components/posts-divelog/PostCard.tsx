@@ -45,12 +45,14 @@ export type PostType = {
 	content: string;
 	caption?: string;
 	likes?: [];
+	dive_image_url: string;
 };
 
 export type UserType = {
 	id: string;
 	email: string;
 	username: string;
+	userImageURL: '';
 };
 
 export type diveMetaType = {
@@ -88,16 +90,26 @@ async function PostCard({
 			diveId: post.id,
 		},
 	});
-
+	console.log(post);
 	return (
 		<section>
-			<Card className='my-4'>
+			<Card className='my-4 pt-0 rounded-2xl'>
 				<div className=''>
-					<section className=' min-w-4xl:col-span-3 lg:border-r max-sm:border-b pb-8'>
+					<Image
+						loading='eager'
+						width={1170}
+						height={500}
+						className='h-96 overflow-hidden rounded-t-2xl'
+						src={
+							post.dive_image_url ?? 'https://picsum.photos/600/300/?random=1'
+						}
+						alt='foo foo'
+					/>
+					<section className=' min-w-4xl:col-span-3 lg:border-r max-sm:border-b py-8'>
 						<CardHeader>
 							<CardTitle className=' grid gap-4 grid-cols-2'>
-								<div className='flex align-middle gap-4'>
-									{/* <PostAvatar src={post.user.avatar} /> */}
+								<div className='flex items-center gap-4 '>
+									<PostAvatar name={currentUser?.userImageURL} />
 									<div className='grid pl-1'>
 										<p>{userData?.username}</p>
 									</div>

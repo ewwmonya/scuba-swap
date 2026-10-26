@@ -44,9 +44,9 @@ export default async function ProtectedLayout({
 	return (
 		<>
 			<NavbarServer />
-			<div className='grid grid-cols-6 mt-2'>
+			<div className='grid grid-cols-6 '>
 				<FeedSidebar />
-				<Container className='col-span-5'>
+				<Container className='col-span-5 m-2'>
 					<Suspense fallback={'Loading...'}>{children}</Suspense>
 				</Container>
 			</div>

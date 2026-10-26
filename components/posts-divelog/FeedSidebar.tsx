@@ -18,7 +18,7 @@ export default function FeedSidebar() {
 	return (
 		<aside
 			aria-label='Feed sidebar'
-			className='hidden w-full space-y-4 lg:block'
+			className='hidden w-full space-y-4 lg:block bg-slate-50 p-4'
 		>
 			<section className='rounded-2xl border border-slate-200 bg-white p-5 shadow-sm'>
 				<h2 className='mb-4 text-sm font-semibold uppercase tracking-wider text-slate-500'>
