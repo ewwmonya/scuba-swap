@@ -4,7 +4,7 @@ import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
 import NavbarServer from '@/components/navbar/NavbarServer';
 import Container from '@/components/globals/Container';
-
+import FeedSidebar from '@/components/posts-divelog/FeedSidebar';
 export default async function ProtectedLayout({
 	children,
 }: {
@@ -44,9 +44,12 @@ export default async function ProtectedLayout({
 	return (
 		<>
 			<NavbarServer />
-			<Container>
-				<Suspense fallback={'Loading...'}>{children}</Suspense>
-			</Container>
+			<div className='grid grid-cols-6 mt-2'>
+				<FeedSidebar />
+				<Container className='col-span-5'>
+					<Suspense fallback={'Loading...'}>{children}</Suspense>
+				</Container>
+			</div>
 		</>
 	);
 }

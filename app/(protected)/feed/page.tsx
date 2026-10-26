@@ -16,13 +16,13 @@ const published = true;
 function page() {
 	if (published) {
 		return (
-			<main className='mt-12 min-h-lvh max-w-[1170px]'>
+			<main className='p-12 min-h-lvh w-full bg-gray-50 rounded-2xl border border-slate-200 shadow-sm'>
 				<PageTitle text='Dive Log Feed' textColor='text-slate-800' />
 				<p className='text-medium-gray text-base font-normal leading-normal'>
 					Share and discover amazing dive sites from around the world.
 				</p>
-				<section className='grid grid-cols-1 lg:grid-cols-6 w-[85vw]  gap-8 mx-auto my-10'>
-					<div className='col-span-4 bg-gray-50 p-2 min-h-screen rounded-xl'>
+				<section className='grid grid-cols-1 lg:grid-cols-6 w-full  gap-8 mx-auto my-10'>
+					<div className='col-span-4  p-2 min-h-screen rounded-xl'>
 						<div className=''>
 							<div className='grid gap-4'>
 								<div className='lg:hidden block w-full'>
@@ -31,7 +31,7 @@ function page() {
 								<Card>
 									<div className='flex gap-4 justify-between items-center'>
 										<CardHeader className='text-gray-900 tracking-wide '>
-											<PostAvatar />
+											{/* <PostAvatar /> */}
 										</CardHeader>
 										<CardContent>
 											<CardAction className=' flex justify-end '>
