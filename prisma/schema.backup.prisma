@@ -1,0 +1,151 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+  schemas   = ["public"]
+}
+
+model Avatar {
+  id     String @id @default(uuid())
+  url    String @unique
+  userId String @unique
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@schema("public")
+}
+
+model User {
+  id        String   @id @default(uuid())
+  email     String   @unique
+  createdAt DateTime @default(now())
+  username  String   @unique
+  authId    String   @unique @db.Uuid
+
+  avatar         Avatar?
+  posts          Post[]
+  dives          Dives[]
+  postComments   PostComment[]
+  diveComments   DiveComment[]
+  postLikes      PostLike[]
+  diveLikes      DiveLike[]
+  diveTestfordev DiveTestfordev[]
+
+  @@schema("public")
+}
+
+model Post {
+  id        String   @id @default(uuid())
+  content   String
+  caption   String
+  imageUrl  String?
+  createdAt DateTime @default(now())
+  userId    String
+
+  user     User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  comments PostComment[]
+  likes    PostLike[]
+
+  @@schema("public")
+}
+
+model Dives {
+  id                            String   @id @default(uuid())
+  dive_number                   Int
+  dive_date                     DateTime
+  entry_time                    String
+  exit_time                     String
+  location                      String
+  buddy_instructor              String?
+  maximum_depth                 Int?
+  bottom_time                   String?
+  air_consumption_start_psi_bar Int?
+  air_consumption_end_psi_bar   Int?
+  average_depth                 String?
+  surface_interval              String?
+  water_temperature_surface     String?
+  water_temperature_depth       Float?   @default(0.00)
+  visibility                    Int?
+  currents_conditions           String?
+  equipment_exposure_suit       String?
+  equipment_tank_type_size      String?
+  equipment_additional          String?
+  content                       String
+  userId                        String
+
+  user     User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  comments DiveComment[]
+  likes    DiveLike[]
+
+  @@schema("public")
+}
+
+model PostComment {
+  id        String   @id @default(uuid())
+  content   String
+  userId    String
+  postId    String
+  createdAt DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  post Post @relation(fields: [postId], references: [id], onDelete: Cascade)
+
+  @@schema("public")
+}
+
+model DiveComment {
+  id        String   @id @default(uuid())
+  content   String
+  userId    String
+  diveId    String
+  createdAt DateTime @default(now())
+
+  user User  @relation(fields: [userId], references: [id], onDelete: Cascade)
+  dive Dives @relation(fields: [diveId], references: [id], onDelete: Cascade)
+
+  @@schema("public")
+}
+
+model PostLike {
+  id        String   @id @default(uuid())
+  userId    String
+  postId    String
+  createdAt DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  post Post @relation(fields: [postId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, postId])
+  @@schema("public")
+}
+
+model DiveLike {
+  id        String   @id @default(uuid())
+  userId    String
+  diveId    String
+  createdAt DateTime @default(now())
+
+  user User  @relation(fields: [userId], references: [id], onDelete: Cascade)
+  dive Dives @relation(fields: [diveId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, diveId])
+  @@schema("public")
+}
+
+model DiveTestfordev {
+  id            String   @id @default(uuid())
+  location      String
+  userId        String
+  content       String
+  dive_number   Int
+  dive_date     DateTime
+  maximum_depth Int
+  bottom_time   Int
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@schema("public")
+}

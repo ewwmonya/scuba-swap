@@ -19,41 +19,39 @@ model Avatar {
 }
 
 model User {
-  id        String   @id @default(uuid())
-  email     String   @unique
-  createdAt DateTime @default(now())
-  username  String   @unique
-  authId    String   @unique @db.Uuid
-
+  id             String           @id @default(uuid())
+  email          String           @unique
+  createdAt      DateTime         @default(now())
+  username       String           @unique
+  authId         String           @unique @db.Uuid
   avatar         Avatar?
-  posts          Post[]
-  dives          Dives[]
-  postComments   PostComment[]
   diveComments   DiveComment[]
-  postLikes      PostLike[]
   diveLikes      DiveLike[]
   diveTestfordev DiveTestfordev[]
+  dives          Dives[]
+  posts          Post[]
+  postComments   PostComment[]
+  postLikes      PostLike[]
 
   @@schema("public")
 }
 
 model Post {
-  id        String   @id @default(uuid())
+  id        String        @id @default(uuid())
   content   String
-  caption   String
+  createdAt DateTime      @default(now())
   imageUrl  String?
-  createdAt DateTime @default(now())
   userId    String
-
-  user     User          @relation(fields: [userId], references: [id], onDelete: Cascade)
-  comments PostComment[]
-  likes    PostLike[]
+  caption   String
+  user      User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  comments  PostComment[]
+  likes     PostLike[]
 
   @@schema("public")
 }
 
 model Dives {
-  id                            String   @id @default(uuid())
+  id                            String        @id @default(uuid())
   dive_number                   Int
   dive_date                     DateTime
   entry_time                    String
@@ -67,18 +65,18 @@ model Dives {
   average_depth                 String?
   surface_interval              String?
   water_temperature_surface     String?
-  water_temperature_depth       Float?   @default(0.00)
+  water_temperature_depth       Float?        @default(0.00)
   visibility                    Int?
   currents_conditions           String?
   equipment_exposure_suit       String?
   equipment_tank_type_size      String?
   equipment_additional          String?
-  content                       String
   userId                        String
-
-  user     User          @relation(fields: [userId], references: [id], onDelete: Cascade)
-  comments DiveComment[]
-  likes    DiveLike[]
+  content                       String
+  dive_image_url                String?
+  comments                      DiveComment[]
+  likes                         DiveLike[]
+  user                          User          @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@schema("public")
 }
@@ -89,9 +87,8 @@ model PostComment {
   userId    String
   postId    String
   createdAt DateTime @default(now())
-
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
-  post Post @relation(fields: [postId], references: [id], onDelete: Cascade)
+  post      Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@schema("public")
 }
@@ -102,9 +99,8 @@ model DiveComment {
   userId    String
   diveId    String
   createdAt DateTime @default(now())
-
-  user User  @relation(fields: [userId], references: [id], onDelete: Cascade)
-  dive Dives @relation(fields: [diveId], references: [id], onDelete: Cascade)
+  dive      Dives    @relation(fields: [diveId], references: [id], onDelete: Cascade)
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@schema("public")
 }
@@ -114,9 +110,8 @@ model PostLike {
   userId    String
   postId    String
   createdAt DateTime @default(now())
-
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
-  post Post @relation(fields: [postId], references: [id], onDelete: Cascade)
+  post      Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([userId, postId])
   @@schema("public")
@@ -127,9 +122,8 @@ model DiveLike {
   userId    String
   diveId    String
   createdAt DateTime @default(now())
-
-  user User  @relation(fields: [userId], references: [id], onDelete: Cascade)
-  dive Dives @relation(fields: [diveId], references: [id], onDelete: Cascade)
+  dive      Dives    @relation(fields: [diveId], references: [id], onDelete: Cascade)
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([userId, diveId])
   @@schema("public")
@@ -144,8 +138,7 @@ model DiveTestfordev {
   dive_date     DateTime
   maximum_depth Int
   bottom_time   Int
-
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user          User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@schema("public")
 }
