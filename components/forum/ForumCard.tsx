@@ -35,7 +35,7 @@ const getuser = async (uID: string) => {
 	}
 };
 async function ForumCard({
-	longDes = false,
+	longDes = false || true,
 	data,
 }: {
 	data: {
@@ -50,10 +50,7 @@ async function ForumCard({
 	const userData = await getuser(data?.userId);
 	const time = dayjs(data.createdAt).fromNow();
 	return (
-		<div
-			id={data?.id}
-			className='flex w-full flex-col gap-6 my-4 overflow-hidden'
-		>
+		<div id={data?.id} className='flex  flex-col gap-6 my-4'>
 			<Item variant='outline' className=' bg-white'>
 				<ItemContent className='mx-2'>
 					<div className='flex gap-4'>
@@ -70,10 +67,10 @@ async function ForumCard({
 						</ItemTitle>
 					)}
 					{longDes == false ?
-						<ItemDescription className=' leading-normal line-clamp-4'>
+						<ItemDescription className='  leading-8'>
 							{data?.content}
 						</ItemDescription>
-					:	<ItemDescription className=' leading-8'>
+					:	<ItemDescription className=' wrap-anywhere'>
 							{data?.content}
 						</ItemDescription>
 					}

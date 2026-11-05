@@ -75,7 +75,7 @@ async function page({ params }: { params: Promise<{ slug: string }> }) {
 				</BreadcrumbList>
 			</Breadcrumb>
 			<div className='flex-1 mb-4 min-h-screen grid grid-cols-1 lg:grid-cols-8'>
-				<div className='col-span-6 p-6 bg-white dark:bg-slate-800 rounded-xl shadow-sm '>
+				<div className='col-span-7 p-6 bg-white dark:bg-slate-800 rounded-xl shadow-sm '>
 					<div className='flex items-center gap-3'>
 						<div>
 							<p className='font-bold text-slate-800 dark:text-white'>
@@ -86,7 +86,7 @@ async function page({ params }: { params: Promise<{ slug: string }> }) {
 					<h1 className='mt-4 text-lg md:text-xl font-extrabold text-slate-900 dark:text-white'>
 						{caption}
 					</h1>
-					<div className='mt-4 space-y-4 text-slate-600 dark:text-slate-300 prose prose-slate dark:prose-invert max-w-none'>
+					<div className='my-4 space-y-4 text-slate-600 dark:text-slate-300 prose prose-slate dark:prose-invert max-w-none'>
 						{diveMeta.map((field) => {
 							const value = data?.[field?.key as keyof typeof data];
 							if (!value) return null;
@@ -101,26 +101,25 @@ async function page({ params }: { params: Promise<{ slug: string }> }) {
 							);
 						})}
 					</div>
-
-					{comments.length <= 0 ?
-						<div className='h-1/3 w-full bg-sky-100 rounded-xl my-10 opacity-35 p-8'>
-							<p className='text-xl tracking-widest'>
-								This Forum Has No Comments Yet
-								<span className='animate-pulse'>...</span>
-							</p>
-						</div>
-					:	<>
-							{comments?.map((c) => {
-								return (
-									<section key={c.id}>
-										<ForumCard data={c} longDes={true} />
-									</section>
-								);
-							})}
-						</>
-					}
 				</div>
-				<div className=''></div>
+
+				{comments.length <= 0 ?
+					<div className='h-1/3 w-full bg-sky-100 rounded-xl my-10 opacity-35 p-8'>
+						<p className='text-xl tracking-widest'>
+							This Forum Has No Comments Yet
+							<span className='animate-pulse'>...</span>
+						</p>
+					</div>
+				:	<>
+						{comments?.map((c) => {
+							return (
+								<section key={c.id} className='col-span-7'>
+									<ForumCard data={c} longDes={true} />
+								</section>
+							);
+						})}
+					</>
+				}
 			</div>
 		</>
 	);

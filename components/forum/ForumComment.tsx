@@ -6,6 +6,7 @@ import {
 	CardContent,
 	CardFooter,
 } from '@/components/ui/card';
+import PostAvatar from '@/components/posts-divelog/PostAvatar';
 import { Textarea } from '@/components/ui/textarea';
 import { Button } from '@/components/ui/button';
 import { Input } from '../ui/input';
@@ -48,7 +49,7 @@ export function ForumComment({ postId }: { postId: string }) {
 			<Card>
 				<CardContent>
 					<div className='flex gap-4'>
-						{/* <PostAvatar src='https://github.com/shadcn.png' /> */}
+						<PostAvatar name='' />
 						<div className='w-full '>
 							<Textarea
 								minLength={10}

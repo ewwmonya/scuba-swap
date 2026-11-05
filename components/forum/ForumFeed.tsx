@@ -24,7 +24,7 @@ export async function ForumFeed({}) {
 				const slug = p.caption.replaceAll(' ', '-');
 				return (
 					<Link key={`${p.id}`} href={`forum/${slug}`}>
-						<ForumCard data={p} />
+						<ForumCard data={p} longDes={true} />
 					</Link>
 				);
 			})}

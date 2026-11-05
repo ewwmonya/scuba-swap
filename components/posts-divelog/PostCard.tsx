@@ -93,9 +93,9 @@ async function PostCard({
 	console.log(post);
 	return (
 		<section>
-			<Card className='my-4 pt-0 rounded-2xl'>
+			<Card className='my-4 pt-0 rounded-2xl gap-2'>
 				<div className=''>
-					<Image
+					{/* <Image
 						loading='eager'
 						width={1170}
 						height={500}
@@ -104,35 +104,56 @@ async function PostCard({
 							post.dive_image_url ?? 'https://picsum.photos/600/300/?random=1'
 						}
 						alt='foo foo'
-					/>
-					<section className=' min-w-4xl:col-span-3 lg:border-r max-sm:border-b py-8'>
+					/> */}
+					<section className=' min-w-4xl:col-span-3 lg:border-r max-sm:border-b pt-8'>
 						<CardHeader>
 							<CardTitle className=' grid gap-4 grid-cols-2'>
 								<div className='flex items-center gap-4 '>
 									<PostAvatar name={currentUser?.userImageURL} />
-									<div className='grid pl-1'>
-										<p>{userData?.username}</p>
+									<div className='grid '>
+										<p className='pl-1'>{userData?.username}</p>
+										<CardDescription className=' flex align-bottom my-2'>
+											<IoMdPin className=' text-lg text-primary' />
+											<p className='font-light tracking-wide'>
+												{post.location}
+											</p>
+										</CardDescription>
 									</div>
 								</div>
 							</CardTitle>
-							<CardDescription className=' flex align-bottom my-2'>
-								<IoMdPin className=' text-lg text-primary' />
-								<p className='font-light tracking-wide'>{post.location}</p>
-							</CardDescription>
 						</CardHeader>
+						<CardContent>
+							<p className='max-w-lg my-1 tracking-wide leading-6 font-bold text-lg text-slate-800'>
+								{caption.length > 0 ? caption : <>post.caption</>}
+							</p>
+
+							{post.content ?
+								<p className=''>{post.content}</p>
+							:	<p>
+									Lorem ipsum dolor sit amet consectetur adipisicing elit. Unde
+									esse veniam harum blanditiis vel amet quibusdam minus repellat
+									velit quo.
+								</p>
+							}
+						</CardContent>
 						<CardHeader>
-							<div className='grid grid-cols-1 md:grid-cols-3 gap-4 pl-1'>
+							<div className='grid grid-cols-1 md:grid-cols-3 gap-4 pt-2 pl-1 '>
 								{diveMeta.map((field) => {
 									const value = post[field.key];
 									if (!value) return null;
 									return (
-										<p key={field.key} className='text-gray-600 tracking-wide'>
-											<span className='font-black'>{field.label}:</span>
-											<br />
-											<span className='font-mono'>
-												{value as string} {field.unit ?? ''}
-											</span>
-										</p>
+										<div
+											key={field.key}
+											className='bg-slate-100 border border-slate-400 p-4 rounded-lg flex flex-col items-center text-center'
+										>
+											<p className='text-gray-600 tracking-wide '>
+												<span className='font-mono'>{field.label}:</span>
+												<br />
+												<span className='font-black'>
+													{value as string} {field.unit ?? ''}
+												</span>
+											</p>
+										</div>
 									);
 								})}
 							</div>
@@ -149,20 +170,7 @@ async function PostCard({
 						alt='foo foo'
 					/>
 				</div> */}
-				<CardContent>
-					<p className='max-w-lg my-4 tracking-wide leading-6 font-bold text-lg text-slate-800'>
-						{caption.length > 0 ? caption : <>post.caption</>}
-					</p>
 
-					{post.content ?
-						<p className=''>{post.content}</p>
-					:	<p>
-							Lorem ipsum dolor sit amet consectetur adipisicing elit. Unde esse
-							veniam harum blanditiis vel amet quibusdam minus repellat velit
-							quo.
-						</p>
-					}
-				</CardContent>
 				{/* card footer */}
 				<CardFooter>
 					<CardAction className='flex justify-between w-full'>
