@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#071d28" />
+  <meta name="description" content="A private ScubaSwap project progress and admin dashboard." />
+  <title>ScubaSwap · Project Desk</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="./styles.css" />
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar">
+      <a class="brand" href="#overview" aria-label="ScubaSwap Project Desk home">
+        <span class="brand-mark"><svg viewBox="0 0 40 40" aria-hidden="true"><path d="M6 23c5-8 10-8 15 0s10 8 15 0M6 30c5-8 10-8 15 0s10 8 15 0"/><circle cx="20" cy="10" r="4"/></svg></span>
+        <span><strong>ScubaSwap</strong><small>PROJECT DESK</small></span>
+      </a>
+      <div class="workspace-label">WORKSPACE <span class="live-dot"></span></div>
+      <nav class="side-nav" aria-label="Main navigation">
+        <button class="nav-item active" data-view="overview"><span class="nav-icon">◫</span> Overview</button>
+        <button class="nav-item" data-view="posts"><span class="nav-icon">▤</span> Posts <span class="nav-count" id="postNavCount">—</span></button>
+        <button class="nav-item" data-view="progress"><span class="nav-icon">◷</span> Progress</button>
+        <button class="nav-item" data-view="connection"><span class="nav-icon">⌘</span> Supabase setup</button>
+      </nav>
+      <div class="sidebar-bottom">
+        <div class="connection-card" id="sidebarConnection">
+          <span class="connection-orb"><span></span></span>
+          <div><strong>Supabase</strong><small id="sidebarConnText">Not connected</small></div>
+          <span class="connection-state" id="sidebarConnState"></span>
+        </div>
+        <div class="profile"><div class="avatar">SS</div><div><strong>ScubaSwap</strong><small>Admin workspace</small></div><span class="profile-more">···</span></div>
+      </div>
+    </aside>
+
+    <main class="main-area">
+      <header class="topbar">
+        <div class="breadcrumbs"><span>Workspace</span><b>/</b><strong id="crumbTitle">Overview</strong></div>
+        <div class="top-actions"><span class="local-label"><span class="tiny-lock">⌑</span> Private workspace</span><button class="icon-button" id="refreshBtn" aria-label="Refresh data" title="Refresh">↻</button><button class="avatar avatar-small" aria-label="Admin account">SS</button></div>
+      </header>
+
+      <section class="view active-view" id="view-overview">
+        <div class="welcome-row"><div><p class="eyebrow">S C U B A S W A P&nbsp; / &nbsp;BUILD LOG</p><h1>Good to see you, <span>Monya.</span></h1><p class="subhead">Your project, posts, and next steps in one place.</p></div><button class="button button-quiet" data-goto="progress">＋ <span>Update progress</span></button></div>
+        <div class="notice" id="connectNotice"><div class="notice-icon">⌘</div><div class="notice-copy"><strong>Connect your Supabase project to bring the workspace to life.</strong><span>Add your project URL and publishable key to load posts and live project data.</span></div><button class="button button-dark" data-goto="connection">Connect project <span>→</span></button></div>
+        <div class="stats-grid">
+          <article class="stat-card"><div class="stat-head"><span>PROJECT COMPLETION</span><span class="stat-glyph teal">◷</span></div><div class="stat-value" id="completionValue">0<span>%</span></div><div class="progress-track"><span id="completionBar" style="width:0%"></span></div><div class="stat-foot"><span id="completionFoot">0 of 8 milestones complete</span><button data-goto="progress">View plan ↗</button></div></article>
+          <article class="stat-card"><div class="stat-head"><span>LIVE POSTS</span><span class="stat-glyph blue">▤</span></div><div class="stat-value" id="postsValue">—</div><div class="stat-foot"><span id="postsFoot">Connect Supabase to load</span><button data-goto="posts">Open posts ↗</button></div></article>
+          <article class="stat-card"><div class="stat-head"><span>PROJECT STATUS</span><span class="stat-glyph amber">✦</span></div><div class="status-value"><span class="status-pulse"></span><span id="projectStatus">In progress</span></div><div class="stat-foot"><span>Keep your next move visible</span><button data-goto="progress">Edit status ↗</button></div></article>
+        </div>
+        <div class="content-grid">
+          <article class="panel milestone-panel"><div class="panel-heading"><div><p class="eyebrow">THE BUILD</p><h2>Milestones</h2></div><button class="text-link" data-goto="progress">See all <span>→</span></button></div><div class="milestone-list" id="overviewMilestones"></div></article>
+          <article class="panel recent-panel"><div class="panel-heading"><div><p class="eyebrow">COMMUNITY</p><h2>Latest posts</h2></div><button class="text-link" data-goto="posts">View posts <span>→</span></button></div><div id="recentPosts" class="recent-posts"><div class="empty-state small"><span class="empty-icon">▤</span><strong>Your posts will show here</strong><p>Connect Supabase to pull in the latest activity.</p></div></div></article>
+        </div>
+        <footer class="page-footer"><span>Built for the next dive.</span><span>SCUBASWAP · PROJECT DESK</span></footer>
+      </section>
+
+      <section class="view" id="view-posts">
+        <div class="page-title-row"><div><p class="eyebrow">COMMUNITY CONTENT</p><h1>Posts <span class="title-count" id="postsTitleCount">—</span></h1><p class="subhead">A live read-only view of posts in your Supabase table.</p></div><button class="button button-quiet" id="postsRefresh">↻ <span>Refresh posts</span></button></div>
+        <div class="toolbar"><div class="search-wrap"><span>⌕</span><input id="postSearch" type="search" placeholder="Search posts..." aria-label="Search posts" /></div><div class="toolbar-right"><span class="table-indicator"><span class="tiny-dot"></span><span id="postsTableName">posts</span></span><select id="postSort" aria-label="Sort posts"><option value="newest">Newest first</option><option value="oldest">Oldest first</option></select></div></div>
+        <div class="posts-grid" id="postsGrid"><div class="empty-state"><span class="empty-icon">▤</span><strong>Connect Supabase to see your posts</strong><p>Use your project URL and publishable key. Your posts will appear here as soon as access is set up.</p><button class="button button-dark" data-goto="connection">Set up connection <span>→</span></button></div></div>
+        <div class="load-more-row" id="loadMoreRow" hidden><button class="button button-quiet" id="loadMorePosts">Load more posts <span>↓</span></button><span id="loadedCount"></span></div>
+      </section>
+
+      <section class="view" id="view-progress">
+        <div class="page-title-row"><div><p class="eyebrow">YOUR BUILD, AT A GLANCE</p><h1>Project progress</h1><p class="subhead">Track what you’ve finished and what needs attention next.</p></div><button class="button button-dark" id="addMilestone">＋ <span>Add milestone</span></button></div>
+        <div class="progress-summary panel"><div><span class="summary-label">OVERALL COMPLETION</span><strong id="progressSummaryValue">0%</strong><span class="summary-note" id="progressSummaryNote">Your progress saves on this device.</span></div><div class="summary-track"><span id="progressSummaryBar" style="width:0%"></span></div><div class="summary-status"><span class="status-pulse"></span><span id="progressSummaryStatus">In progress</span></div></div>
+        <div class="progress-layout"><div class="panel milestone-full"><div class="panel-heading"><div><p class="eyebrow">MILESTONE BOARD</p><h2>Build milestones</h2></div><span class="muted-count" id="milestoneCount">8 items</span></div><div id="fullMilestones" class="full-milestone-list"></div></div><aside class="panel next-panel"><p class="eyebrow">UP NEXT</p><h2 id="nextTitle">Choose your next milestone</h2><p id="nextDescription">As you update progress, the next unfinished item will appear here.</p><div class="next-divider"></div><label class="field-label" for="projectStatusSelect">PROJECT STATUS</label><select id="projectStatusSelect"><option>In progress</option><option>Planning</option><option>On hold</option><option>Launched</option></select><button class="button button-dark full-width" id="saveStatus">Save status <span>→</span></button><div class="save-note" id="statusSaved">Changes save automatically on this device.</div></aside></div>
+      </section>
+
+      <section class="view" id="view-connection">
+        <div class="page-title-row"><div><p class="eyebrow">PROJECT DATA SOURCE</p><h1>Supabase setup</h1><p class="subhead">Connect your project to view posts and activity here.</p></div><span class="connection-badge" id="connectionBadge"><span class="tiny-dot"></span> Not connected</span></div>
+        <div class="connect-layout"><div class="panel connect-form-panel"><div class="panel-heading"><div><p class="eyebrow">CONNECTION DETAILS</p><h2>Project connection</h2></div><span class="step-chip">01 / 02</span></div><p class="panel-intro">Find these in your Supabase dashboard under <b>Project Settings → API</b>. Use the Project URL and the <b>publishable</b> key (or legacy anon key).</p>
+          <form id="connectionForm" autocomplete="off">
+            <label class="field-label" for="projectUrl">PROJECT URL</label><input class="form-input" id="projectUrl" type="url" placeholder="https://your-project.supabase.co" spellcheck="false" required />
+            <label class="field-label" for="anonKey">PUBLISHABLE KEY <span class="label-hint">also called anon key</span></label><div class="key-input-wrap"><input class="form-input" id="anonKey" type="password" placeholder="sb_publishable_… or legacy anon key" spellcheck="false" required /><button type="button" class="show-key" id="toggleKey">Show</button></div>
+            <div class="form-divider"></div><div class="panel-heading table-config-heading"><div><p class="eyebrow">POSTS TABLE</p><h2>Where posts live</h2></div></div><p class="panel-intro">Enter the table or view that contains your community posts. The default name is <code>posts</code>.</p>
+            <label class="field-label" for="tableName">TABLE NAME</label><input class="form-input" id="tableName" type="text" value="posts" placeholder="posts" spellcheck="false" required />
+            <div class="form-error" id="connectionError" role="alert" hidden></div><div class="form-success" id="connectionSuccess" role="status" hidden></div>
+            <button class="button button-dark full-width connect-button" type="submit" id="connectButton">Test connection &amp; save <span>→</span></button>
+          </form>
+        </div>
+        <aside class="setup-aside"><div class="panel info-panel"><div class="info-icon">⌑</div><p class="eyebrow">KEY SAFETY</p><h2>Use the publishable key</h2><p>This dashboard connects directly from your browser. Use the publishable (anon) key and secure your tables with Row Level Security policies.</p><div class="warning-box"><strong>Never paste a service_role or secret key here.</strong><span>Those keys bypass your database protections. This dashboard will reject common secret-key formats.</span></div></div>
+          <div class="panel admin-panel"><div class="admin-icon">◎</div><p class="eyebrow">ADMIN ACCESS</p><h2>Need a signed-in session?</h2><p>If your posts table requires an authenticated admin under RLS, sign in with your Supabase Auth email and password below. Your session stays in this browser tab.</p><form id="authForm"><label class="field-label" for="adminEmail">ADMIN EMAIL</label><input class="form-input" id="adminEmail" type="email" placeholder="you@example.com" autocomplete="username" /><label class="field-label" for="adminPassword">PASSWORD</label><input class="form-input" id="adminPassword" type="password" placeholder="Supabase Auth password" autocomplete="current-password" /><div class="form-error" id="authError" role="alert" hidden></div><button class="button button-outline full-width" type="submit" id="authButton">Sign in to Supabase <span>→</span></button></form><button class="signout-link" id="signOut" hidden>Sign out of Supabase</button></div></aside></div>
+        <div class="connection-footnote"><span>🔒</span><span>Your URL and publishable key are stored only in this browser. Post access follows your Supabase policies. This dashboard reads posts; it does not edit or delete them.</span></div>
+      </section>
+    </main>
+  </div>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <script src="./app.js"></script>
+</body>
+</html>
