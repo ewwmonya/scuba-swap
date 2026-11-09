@@ -4,7 +4,7 @@ import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
 import NavbarServer from '@/components/navbar/NavbarServer';
 import Container from '@/components/globals/Container';
-import FeedSidebar from '@/components/posts-divelog/FeedSidebar';
+import FeedSidebar from '@/components/navigation/FeedSidebar';
 export default async function ProtectedLayout({
 	children,
 }: {
