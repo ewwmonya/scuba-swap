@@ -1,8 +1,7 @@
-export const dynamic = 'force-dynamic';
-
-import ForumCard from '@/components/forum/ForumCard';
+import { notFound } from 'next/navigation';
 import TimeAgo from '@/components/forum/TimeAgo';
-import { diveMetaType } from '@/components/posts-divelog/PostCard';
+import { DiverAvatar } from '@/components/posts-divelog/DiverAvatar';
+import PostCard from '@/components/posts-divelog/PostCard';
 import {
 	Breadcrumb,
 	BreadcrumbItem,
@@ -11,117 +10,100 @@ import {
 	BreadcrumbPage,
 	BreadcrumbSeparator,
 } from '@/components/ui/breadcrumb';
-
+import { diveCardInclude } from '@/lib/diveCards';
 import { prisma } from '@/lib/prismaActions';
-import Image from 'next/image';
+import { getCurrentUserProfile } from '@/lib/supabase/getCurrentUserProfile';
 
-async function page({ params }: { params: Promise<{ slug: string }> }) {
+export const dynamic = 'force-dynamic';
+
+export default async function DivePage({
+	params,
+}: {
+	params: Promise<{ slug: string }>;
+}) {
 	const { slug } = await params;
-	const data = await prisma.dives.findFirst({
-		where: {
-			id: slug,
+	const viewer = await getCurrentUserProfile();
+	const dive = await prisma.dives.findUnique({
+		where: { id: slug },
+		include: {
+			...diveCardInclude(viewer?.id),
+			comments: {
+				orderBy: { createdAt: 'desc' },
+				include: {
+					user: {
+						select: { username: true, avatar: { select: { url: true } } },
+					},
+				},
+			},
 		},
 	});
-	const comments = await prisma.diveComment.findMany({
-		where: {
-			diveId: slug,
-		},
-	});
-	const user = await prisma.user.findFirst({
-		where: {
-			id: data?.userId,
-		},
-	});
-	const caption = `Dive at ${data?.location}, at Max Depth of ${data?.maximum_depth}`;
-	const computedValues: Record<string, string> = {
-		caption: caption,
-	};
-	const diveMeta: Array<{
-		key: string;
-		label: string;
-		unit?: string;
-	}> = [
-		{ key: 'caption', label: 'Caption' },
-		{ key: 'dive_number', label: 'Dive Number' },
-		{ key: 'entry_time', label: 'Entry Time' },
-		{ key: 'exit_time', label: 'Exit Time' },
-		{ key: 'maximum_depth', label: 'Max Depth', unit: 'ft' },
-		{ key: 'bottom_time', label: 'Bottom Time', unit: 'min' },
-	];
+
+	if (!dive) notFound();
+
 	return (
-		<>
-			<Breadcrumb className='my-8'>
+		<div className='mx-auto max-w-4xl space-y-4 pb-8'>
+			<Breadcrumb>
 				<BreadcrumbList>
 					<BreadcrumbItem>
 						<BreadcrumbLink href='/'>Home</BreadcrumbLink>
 					</BreadcrumbItem>
 					<BreadcrumbSeparator />
 					<BreadcrumbItem>
-						<BreadcrumbLink href='/feed'>Feed</BreadcrumbLink>
+						<BreadcrumbLink href='/feed'>Dive Log Feed</BreadcrumbLink>
 					</BreadcrumbItem>
-					{user && (
-						<>
-							<BreadcrumbSeparator />
-							<BreadcrumbItem>
-								<BreadcrumbPage className='font-bold'>
-									<span className='tracking-wide opacity-65 font-light'>
-										Dive By:
-									</span>
-									{` ${user.username}`}
-								</BreadcrumbPage>
-							</BreadcrumbItem>
-						</>
-					)}
+					<BreadcrumbSeparator />
+					<BreadcrumbItem>
+						<BreadcrumbPage>Dive #{dive.dive_number}</BreadcrumbPage>
+					</BreadcrumbItem>
 				</BreadcrumbList>
 			</Breadcrumb>
-			<div className='flex-1 mb-4 min-h-screen grid grid-cols-1 lg:grid-cols-8'>
-				<div className='col-span-7 p-6 bg-white dark:bg-slate-800 rounded-xl shadow-sm '>
-					<div className='flex items-center gap-3'>
-						<div>
-							<p className='font-bold text-slate-800 dark:text-white'>
-								{` ${user?.username}`}
-							</p>
-						</div>
+			<h1 className='font-[family-name:var(--font-scuba-heading)] text-2xl font-bold wrap-anywhere text-slate-900 sm:text-4xl'>
+				Dive at {dive.location}
+			</h1>
+			<PostCard dive={dive} viewerId={viewer?.id}>
+				<section
+					id='dive-comments'
+					className='scroll-mt-20 space-y-4 border-t border-slate-200 bg-slate-50/80 p-4'
+				>
+					<div className='flex flex-wrap items-baseline justify-between gap-2'>
+						<h2 className='font-[family-name:var(--font-scuba-heading)] text-lg font-semibold'>
+							Dive Debrief &amp; Comments
+						</h2>
+						<span className='text-xs text-slate-600'>
+							{dive.comments.length}{' '}
+							{dive.comments.length === 1 ? 'response' : 'responses'}
+						</span>
 					</div>
-					<h1 className='mt-4 text-lg md:text-xl font-extrabold text-slate-900 dark:text-white'>
-						{caption}
-					</h1>
-					<div className='my-4 space-y-4 text-slate-600 dark:text-slate-300 prose prose-slate dark:prose-invert max-w-none'>
-						{diveMeta.map((field) => {
-							const value = data?.[field?.key as keyof typeof data];
-							if (!value) return null;
-							return (
-								<p key={field.key} className='text-gray-600 tracking-wide'>
-									<span className='font-black'>{field.label}:</span>
-									<br />
-									<span className='font-mono'>
-										{String(value)} {field.unit ?? ''}
-									</span>
-								</p>
-							);
-						})}
-					</div>
-				</div>
-
-				{comments.length <= 0 ?
-					<div className='h-1/3 w-full bg-sky-100 rounded-xl my-10 opacity-35 p-8'>
-						<p className='text-xl tracking-widest'>
-							This Forum Has No Comments Yet
-							<span className='animate-pulse'>...</span>
+					{dive.comments.length === 0 ? (
+						<p className='text-sm text-slate-600'>
+							No comments on this dive yet.
 						</p>
-					</div>
-				:	<>
-						{comments?.map((c) => {
-							return (
-								<section key={c.id} className='col-span-7'>
-									<ForumCard data={c} longDes={true} />
-								</section>
-							);
-						})}
-					</>
-				}
-			</div>
-		</>
+					) : (
+						<ul className='space-y-3'>
+							{dive.comments.map((comment) => (
+								<li key={comment.id} className='flex items-start gap-3'>
+									<DiverAvatar
+										username={comment.user.username}
+										url={comment.user.avatar?.url}
+										size={36}
+									/>
+									<div className='min-w-0 flex-1 rounded-xl border border-slate-200 bg-white p-3'>
+										<div className='flex flex-wrap items-baseline justify-between gap-x-3 gap-y-1'>
+											<p className='min-w-0 text-sm font-semibold wrap-anywhere text-sky-800'>
+												@{comment.user.username}
+											</p>
+											<TimeAgo data={comment.createdAt} />
+										</div>
+										<p className='mt-1 text-sm leading-relaxed wrap-anywhere whitespace-pre-wrap text-slate-700'>
+											{comment.content}
+										</p>
+									</div>
+								</li>
+							))}
+						</ul>
+					)}
+				</section>
+			</PostCard>
+		</div>
 	);
 }
-export default page;

@@ -1,42 +1,72 @@
 'use client';
-import { MdThumbUpOffAlt } from 'react-icons/md';
-import { Button } from '../ui/button';
-import { useEffect, useState } from 'react';
+
+import { Heart } from 'lucide-react';
+import { useRef, useState } from 'react';
+
 export function LikeBtn({
 	postId,
-	inintLikesCount,
+	initialCount,
+	initiallyLiked,
 	currentUserId,
 }: {
 	postId: string;
-	inintLikesCount: number;
+	initialCount: number;
+	initiallyLiked: boolean;
 	currentUserId: string;
 }) {
-	const [numbLikes, setNumbLikes] = useState(inintLikesCount);
-	const [liked, setLiked] = useState(Boolean);
+	const [count, setCount] = useState(initialCount);
+	const [liked, setLiked] = useState(initiallyLiked);
+	const [pending, setPending] = useState(false);
+	const [error, setError] = useState(false);
+	const requestInProgress = useRef(false);
 
-	const onClick = async () => {
-		const data = await fetch('/api/create-like', {
-			method: 'POST',
-			headers: { 'Content-Type': 'application/json' },
-			body: JSON.stringify({ postId, currentUserId }),
-		});
-		const { liked: currentLikeData, diveLikesCount } = await data.json();
-		setLiked(currentLikeData);
-		if (liked) {
-			setNumbLikes(diveLikesCount);
-			setLiked(false);
-		} else {
-			setNumbLikes(diveLikesCount);
-			setLiked(true);
+	async function toggleLike() {
+		if (requestInProgress.current) return;
+
+		requestInProgress.current = true;
+		setPending(true);
+		setError(false);
+
+		try {
+			const response = await fetch('/api/create-like', {
+				method: 'POST',
+				headers: { 'Content-Type': 'application/json' },
+				body: JSON.stringify({ postId, currentUserId }),
+			});
+			if (!response.ok) throw new Error('Could not update like');
+
+			const { liked: wasLiked, diveLikesCount } = await response.json();
+			setLiked(!wasLiked);
+			setCount(diveLikesCount);
+		} catch {
+			setError(true);
+		} finally {
+			requestInProgress.current = false;
+			setPending(false);
 		}
-	};
+	}
 
 	return (
-		<div className=''>
-			<Button variant={'link'} onClick={onClick}>
-				<MdThumbUpOffAlt /> {numbLikes == 0 ? ' ' : numbLikes}
-				{numbLikes <= 1 ? ' Like' : ' Likes'}
-			</Button>
-		</div>
+		<span className='inline-flex flex-wrap items-center gap-2'>
+			<button
+				type='button'
+				aria-label={`Like dive, ${count} ${count === 1 ? 'like' : 'likes'}`}
+				aria-pressed={liked}
+				disabled={pending}
+				onClick={toggleLike}
+				className='inline-flex min-h-11 cursor-pointer items-center gap-2 rounded-md px-2 text-sm font-semibold tabular-nums text-slate-700 hover:bg-rose-50 hover:text-rose-600 disabled:opacity-60'
+			>
+				<Heart
+					aria-hidden='true'
+					className={liked ? 'size-5 fill-current text-rose-600' : 'size-5'}
+				/>
+				{count}
+			</button>
+			{error && (
+				<span role='status' className='text-xs text-rose-700'>
+					Could not update like. Try again.
+				</span>
+			)}
+		</span>
 	);
 }

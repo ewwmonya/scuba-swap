@@ -1,45 +1,35 @@
-import PostCard, {
-	PostType,
-	UserType,
-} from '@/components/posts-divelog/PostCard';
-import { mockPosts } from '../../lib/posts';
-import { Card, CardContent } from '../ui/card';
+import PostCard from '@/components/posts-divelog/PostCard';
+import { diveCardInclude } from '@/lib/diveCards';
 import { prisma } from '@/lib/prismaActions';
 import { getCurrentUserProfile } from '@/lib/supabase/getCurrentUserProfile';
 
-// temp async / stuff
-const getFeed = async () => {
-	try {
-		const data = await prisma.dives.findMany();
-		// console.log(data);
-		return data;
-	} catch (error) {
-		return [];
-	}
-};
-
 async function Post() {
-	const userCurrentLike = await getCurrentUserProfile();
+	const viewer = await getCurrentUserProfile();
+	if (!viewer) return <p className='mt-20'>Please log in to view dive logs.</p>;
 
-	if (!userCurrentLike) {
-		return <p className='mt-20'>User not found... Please Log In</p>;
-	}
-
-	const data = await getFeed();
-	if (data.length > 0) {
+	let dives;
+	try {
+		dives = await prisma.dives.findMany({
+			include: diveCardInclude(viewer.id),
+		});
+	} catch {
 		return (
-			<article>
-				{/* mock */}
-
-				{data.map((post) => {
-					return (
-						<PostCard key={post.id} post={post} currentUser={userCurrentLike} />
-					);
-				})}
-			</article>
+			<p role='status' className='p-4 text-slate-700'>
+				Could not load dive logs. Try refreshing the page.
+			</p>
 		);
-	} else {
-		return <p className='mt-20'>Zero Post Found or Made...</p>;
 	}
+
+	if (!dives.length)
+		return <p className='p-4 text-slate-700'>No dive logs yet.</p>;
+
+	return (
+		<div className='grid min-w-0 gap-6'>
+			{dives.map((dive) => (
+				<PostCard key={dive.id} dive={dive} viewerId={viewer.id} />
+			))}
+		</div>
+	);
 }
+
 export default Post;

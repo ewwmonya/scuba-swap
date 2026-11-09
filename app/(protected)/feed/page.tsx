@@ -1,59 +1,29 @@
-export const dynamic = 'force-dynamic';
-import PageTitle from '@/components/globals/PageTitle';
 import Post from '@/components/posts-divelog/Post';
-import { PostFilter } from '@/components/posts-divelog/PostFilter';
-import PostAvatar from '@/components/posts-divelog/PostAvatar';
 import PostDrawer from '@/components/posts-divelog/PostDrawer';
-import {
-	Card,
-	CardAction,
-	CardContent,
-	CardHeader,
-} from '@/components/ui/card';
-import { Textarea } from '@/components/ui/textarea';
-const published = true;
+import { PostFilter } from '@/components/posts-divelog/PostFilter';
 
-function page() {
-	if (published) {
-		return (
-			<main className='p-12 min-h-lvh w-full bg-gray-50 rounded-2xl border border-slate-200 shadow-sm'>
-				<PageTitle text='Dive Log Feed' textColor='text-slate-800' />
-				<p className='text-medium-gray text-base font-normal leading-normal'>
-					Share and discover amazing dive sites from around the world.
-				</p>
-				<section className='grid grid-cols-1 lg:grid-cols-6 w-full  gap-8 mx-auto my-10'>
-					<div className='col-span-4  p-2 min-h-screen rounded-xl'>
-						<div className=''>
-							<div className='grid gap-4'>
-								<div className='lg:hidden block w-full'>
-									{/* <PostFilter /> */}
-								</div>
-								<Card>
-									<div className='flex gap-4 justify-between items-center'>
-										<CardHeader className='text-gray-900 tracking-wide '>
-											{/* <PostAvatar /> */}
-										</CardHeader>
-										<CardContent>
-											<CardAction className=' flex justify-end '>
-												<PostDrawer />
-											</CardAction>
-										</CardContent>
-									</div>
-								</Card>
-							</div>
+export const dynamic = 'force-dynamic';
 
-							<Post />
-						</div>
-					</div>
-					<div className='w-full h-full animate-pulse  col-span-2'>
-						<div className='lg:block hidden'>
-							<PostFilter />
-						</div>
-					</div>
-				</section>
-			</main>
-		);
-	} else
-		return <main className='min-h-[85vh] p-8 text-2xl'>Coming Soon...</main>;
+export default function FeedPage() {
+	return (
+		<div className='min-h-lvh space-y-6 pb-8'>
+			<header className='flex flex-wrap items-end justify-between gap-4'>
+				<div>
+					<h1 className='font-[family-name:var(--font-scuba-heading)] text-2xl font-bold text-slate-900 sm:text-4xl'>
+						Dive Log Feed
+					</h1>
+					<p className='mt-1 text-sm text-slate-600'>
+						Share and discover amazing dive sites from around the world.
+					</p>
+				</div>
+				<PostDrawer />
+			</header>
+			<div className='grid gap-6 xl:grid-cols-[minmax(0,2fr)_minmax(0,1fr)]'>
+				<Post />
+				<aside aria-label='Feed filters' className='hidden xl:block'>
+					<PostFilter />
+				</aside>
+			</div>
+		</div>
+	);
 }
-export default page;
