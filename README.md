@@ -90,3 +90,10 @@ Right now, this project is in **active development**.
 The goal is to have the base version live by the end of this sprint — with real posts, real comments, and real users.
 
 This is my starting line. From here, I’ll keep improving it piece by piece until it feels like a full platform.
+
+
+## Project Desk
+
+The ScubaSwap Project Desk is available at `/project-desk` after signing into the app. It reads posts, dive logs, and counts on the server through the existing Prisma connection (`DATABASE_URL` from your local `.env` or deployment environment). It does not use the Supabase Data API publishable key for admin reads, so no broad `anon` grants are needed. The paginated read-only posts endpoint also requires a signed-in Supabase Auth session. Project milestones are stored in the current browser.
+
+Keep `.env` local and never commit it. The repository's `.gitignore` excludes `.env*` files.
