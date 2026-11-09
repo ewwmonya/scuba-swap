@@ -1,6 +1,7 @@
 import Container from '@/components/globals/Container';
+import { Footer } from '@/components/globals/Footer';
 import NavbarServer from '@/components/navbar/NavbarServer';
-import Script from 'next/script';
+
 import { ReactNode } from 'react';
 
 export default async function PublicLayout({
@@ -12,6 +13,7 @@ export default async function PublicLayout({
 		<>
 			<NavbarServer />
 			<Container className='m-auto'>{children}</Container>
+			<Footer />
 		</>
 	);
 }

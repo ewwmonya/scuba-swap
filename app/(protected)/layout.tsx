@@ -6,6 +6,7 @@ import { redirect } from 'next/navigation';
 import NavbarServer from '@/components/navbar/NavbarServer';
 import Container from '@/components/globals/Container';
 import FeedSidebar from '@/components/navigation/FeedSidebar';
+import { Footer } from '@/components/globals/Footer';
 
 const scubaBody = Plus_Jakarta_Sans({
 	variable: '--font-scuba-body',
@@ -54,7 +55,9 @@ export default async function ProtectedLayout({
 	if (!session) redirect('/login');
 
 	return (
-		<div className={`${scubaBody.variable} ${scubaHeading.variable} bg-[#f8fafc]`}>
+		<div
+			className={`${scubaBody.variable} ${scubaHeading.variable} bg-[#f8fafc]`}
+		>
 			<div className='xl:sticky xl:top-0 xl:z-50'>
 				<NavbarServer withSidebar />
 			</div>
@@ -62,6 +65,7 @@ export default async function ProtectedLayout({
 				<FeedSidebar />
 				<Container className='mx-auto w-full min-w-0 max-w-[1340px] px-4 py-4 sm:px-6 xl:max-w-[1340px]'>
 					<Suspense fallback={'Loading...'}>{children}</Suspense>
+					<Footer />
 				</Container>
 			</div>
 		</div>

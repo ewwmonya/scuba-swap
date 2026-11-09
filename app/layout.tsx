@@ -55,7 +55,6 @@ export default function RootLayout({
 				<main className=''>
 					<Suspense fallback={'Loading...'}>{children}</Suspense>
 				</main>
-				<Footer />
 			</body>
 		</html>
 	);
