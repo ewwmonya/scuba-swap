@@ -2,16 +2,16 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-
 import {
 	BookOpen,
 	Compass,
+	Fish,
 	LifeBuoy,
 	MapPin,
 	MessageCircle,
 	ShieldCheck,
+	Waves,
 } from 'lucide-react';
-import { Button } from '../ui/button';
 
 const exploreLinks = [
 	{ href: '/feed', label: 'Dive Log Feed', icon: Compass },
@@ -19,66 +19,81 @@ const exploreLinks = [
 	{ href: '/blogs', label: 'Dive Gear Blogs', icon: BookOpen },
 ];
 
+const discoverItems = [
+	{ label: 'Dive Sites Map', icon: MapPin },
+	{ label: 'Marine Species Guide', icon: Fish },
+	{ label: 'Group Excursions', icon: Waves },
+];
+
+const rowClass = 'flex items-center gap-4 rounded-xl px-4 py-2';
+const labelClass =
+	'px-4 font-[family-name:var(--font-scuba-heading)] text-[11px] leading-[14px] font-semibold tracking-[0.05em] text-[#3f4850] uppercase';
+
 export default function FeedSidebar() {
 	const pathname = usePathname();
+
 	return (
 		<aside
 			aria-label='Feed sidebar'
-			className='hidden w-full space-y-19 lg:block bg-slate-50 p-4'
+			className='sticky top-16 hidden h-[calc(100dvh-4rem)] flex-col justify-between overflow-y-auto border-r border-[#e2e8f0] bg-white/80 p-4 font-[family-name:var(--font-scuba-body)] text-[#131b2e] backdrop-blur-lg xl:flex'
 		>
-			<section className='px-4'>
-				<h2 className='mb-4 text-sm font-semibold uppercase tracking-wider text-slate-500'>
-					Explore {pathname}
-				</h2>
-				<nav aria-label='Explore ScubaSwap' className='space-y-4'>
-					{exploreLinks.map(({ href, label, icon: Icon }) => (
-						<Button
-							key={href}
-							asChild
-							className={`${pathname !== href ? 'bg-blue-900 text-white text-md' : 'bg-sky-100 text-blue-900 text-xl tracking-wide'}  
-								 w-full text-left px-3 py-6  rounded-lg 
-								  font-medium  transition-colors hover:bg-sky-50
-								hover:text-sky-900 focus-visible:outline
-								focus-visible:outline-offset-2 focus-visible:outline-sky-600`}
-						>
+			<div className='flex flex-col gap-6'>
+				<nav aria-label='Explore ScubaSwap' className='flex flex-col gap-1'>
+					<h2 className={labelClass}>Explore</h2>
+					{exploreLinks.map(({ href, label, icon: Icon }) => {
+						const isCurrentPage = pathname === href;
+						const isActive = isCurrentPage || pathname.startsWith(`${href}/`);
+
+						return (
 							<Link
+								key={href}
 								href={href}
-								className='flex items-center gap-3 justify-start'
+								aria-current={isCurrentPage ? 'page' : isActive ? 'location' : undefined}
+								className={`${rowClass} transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#006194] ${
+									isActive
+										? 'bg-[#cce5ff] text-base leading-6 font-semibold text-[#004b73]'
+										: 'text-sm leading-[22px] text-[#3f4850] hover:bg-[#f1f5f9] hover:text-[#131b2e]'
+								}`}
 							>
-								<Icon aria-hidden='true' className='h-4 w-4' />
+								<Icon aria-hidden='true' className='size-5 shrink-0' />
 								{label}
 							</Link>
-						</Button>
-					))}
+						);
+					})}
 				</nav>
-			</section>
-			<div className='self-bottom'>
-				<section className='rounded-2xl border border-slate-200 bg-white p-5 shadow-sm'>
-					<div className='mb-3 flex items-center gap-2 text-slate-900'>
-						<LifeBuoy aria-hidden='true' className='h-5 w-5 text-sky-700' />
-						<h2 className='font-semibold'>Our Community</h2>
-					</div>
-					<p className='text-sm leading-6 text-slate-600'>
-						Share dive logs, ask questions, and connect with divers who love
-						exploring underwater.
+
+				<section className='flex flex-col gap-1'>
+					<h2 className={labelClass}>Discover</h2>
+					<ul className='flex flex-col gap-1'>
+						{discoverItems.map(({ label, icon: Icon }) => (
+							<li key={label} className={`${rowClass} text-sm leading-[22px] text-[#3f4850]`}>
+								<Icon aria-hidden='true' className='size-5 shrink-0' />
+								{label}
+								<span className='sr-only'> (coming soon)</span>
+							</li>
+						))}
+					</ul>
+				</section>
+			</div>
+
+			<div className='flex flex-col gap-4 pt-6'>
+				<section className='rounded-xl border border-[#e2e8f0] bg-white p-4'>
+					<h2 className='mb-1 flex items-center gap-1 font-[family-name:var(--font-scuba-heading)] text-[11px] leading-[14px] font-semibold tracking-[0.05em] text-[#006780] uppercase'>
+						<LifeBuoy aria-hidden='true' className='size-[18px]' />
+						Community Hub
+					</h2>
+					<p className='text-xs leading-[18px] text-[#3f4850]'>
+						Share dive logs, discover dive sites, and connect with other divers.
 					</p>
-					<Link
-						href='/forum'
-						className='mt-4 inline-flex items-center gap-2 text-sm font-semibold text-sky-800 hover:underline'
-					>
-						<MessageCircle aria-hidden='true' className='h-4 w-4' />
-						Visit the forum
-					</Link>
 				</section>
 
-				<section className='rounded-2xl border border-sky-100 bg-sky-50 p-5'>
-					<div className='mb-2 flex items-center gap-2 text-sky-900'>
-						<ShieldCheck aria-hidden='true' className='h-5 w-5' />
-						<h2 className='font-semibold'>Dive Tip</h2>
-					</div>
-					<p className='text-sm leading-6 text-sky-950/80'>
-						Plan your dive, dive your plan, and always stay within your training
-						and limits..
+				<section className='rounded-xl border border-[#e2e8f0] bg-[#f1f5f9] p-4'>
+					<h2 className='mb-1 flex items-center gap-1 font-[family-name:var(--font-scuba-heading)] text-[11px] leading-[14px] font-semibold tracking-[0.05em] text-[#006194] uppercase'>
+						<ShieldCheck aria-hidden='true' className='size-[18px]' />
+						NDL Safety Rule
+					</h2>
+					<p className='text-xs leading-[18px] text-[#3f4850]'>
+						Plan your dive, dive your plan, and stay within your no-decompression limits.
 					</p>
 				</section>
 			</div>

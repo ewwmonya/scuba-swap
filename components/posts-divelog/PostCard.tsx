@@ -45,14 +45,14 @@ export type PostType = {
 	content: string;
 	caption?: string;
 	likes?: [];
-	dive_image_url: string;
+	dive_image_url: string | null;
 };
 
 export type UserType = {
 	id: string;
 	email: string;
 	username: string;
-	userImageURL: '';
+	userImageURL?: string;
 };
 
 export type diveMetaType = {
