@@ -118,10 +118,6 @@ function DevelopmentHomepage() {
 }
 
 function page() {
-	if (process.env.NODE_ENV === 'production') {
-		return <main className='min-h-[90lvh]' aria-label='ScubaSwap development homepage' />;
-	}
-
 	return <DevelopmentHomepage />;
 }
 
