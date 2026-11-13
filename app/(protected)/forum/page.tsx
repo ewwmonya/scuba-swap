@@ -13,6 +13,10 @@ const chambers = [
 ];
 
 export default async function ForumPage() {
+  const categories = await prisma.category.findMany({
+    select: { id: true, name: true },
+    orderBy: { name: 'asc' },
+  });
   const stats = await Promise.allSettled([prisma.post.count(), prisma.postComment.count(), prisma.user.count()]);
   const metrics = [
     { title: 'Forum Threads', value: stats[0].status === 'fulfilled' ? stats[0].value.toLocaleString() : '—', icon: MessageCircle },
@@ -31,7 +35,7 @@ export default async function ForumPage() {
       <div className="grid grid-cols-1 items-start gap-7 lg:grid-cols-12">
         <div className="min-w-0 space-y-8 lg:col-span-8">
           <section aria-label="Create a forum discussion" className="rounded-2xl border border-slate-100 bg-white p-4 shadow-sm sm:p-5">
-            <SubmitForum />
+            <SubmitForum categories={categories} />
           </section>
 
           <section aria-labelledby="latest-threads-heading">
