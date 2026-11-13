@@ -15,6 +15,7 @@ type ForumCardProps = {
   };
   longDes?: boolean;
   username?: string;
+  categoryName?: string;
   replyCount?: number;
 };
 
@@ -22,6 +23,7 @@ export default async function ForumCard({
   data,
   longDes = false,
   username,
+  categoryName,
   replyCount,
 }: ForumCardProps) {
   // The thread page also reuses this card for replies, so allow fallback lookup.
@@ -42,7 +44,7 @@ export default async function ForumCard({
       </div>
       <div className="min-w-0 flex-1 space-y-1.5">
         <div className="flex flex-wrap items-center gap-2 text-xs">
-          <span className="rounded-full bg-slate-100 px-2 py-1 font-semibold text-sky-900">Community Discussion</span>
+          <span className="rounded-full bg-slate-100 px-2 py-1 font-semibold text-sky-900">{categoryName ?? 'Community Discussion'}</span>
           <span className="text-slate-500">Started by</span>
           <span className="font-semibold text-slate-800">{author}</span>
         </div>
