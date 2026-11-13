@@ -64,9 +64,9 @@ export default async function DivePage({
 			<PostCard dive={dive} viewerId={viewer?.id}>
 				<section
 					id='dive-comments'
-					className='scroll-mt-20 space-y-4 border-t border-slate-200 bg-slate-50/80 p-4'
+					className='scroll-mt-20 my-20 space-y-4 border-t border-slate-200 bg-slate-50/80 p-4'
 				>
-					<div className='flex flex-wrap items-baseline justify-between gap-2'>
+					<div className=' mb-30 flex flex-wrap items-baseline justify-between gap-2'>
 						<h2 className='font-[family-name:var(--font-scuba-heading)] text-lg font-semibold'>
 							Dive Debrief &amp; Comments
 						</h2>
@@ -82,7 +82,7 @@ export default async function DivePage({
 							</p>
 							<PostComment divePostId={dive.id} commentType='DiveFeed' />
 						</>
-					:	<ul className='space-y-3 flex flex-col'>
+					:	<ul className='space-y-3  flex flex-col'>
 							{dive.comments.map((comment) => (
 								<li
 									id={comment.id}

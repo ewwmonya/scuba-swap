@@ -47,7 +47,7 @@ export function PostComment({
 		});
 		const { id } = await commentData.json();
 		reset({ comment });
-		redirect(`#${id}#`);
+		redirect(`/`);
 	}
 
 	return (
