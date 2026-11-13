@@ -7,6 +7,7 @@ async function getFeed() {
     return await prisma.post.findMany({
       include: {
         user: { select: { username: true } },
+        category: { select: { name: true } },
         _count: { select: { comments: true } },
       },
       orderBy: { createdAt: 'desc' },
@@ -34,7 +35,7 @@ export async function ForumFeed() {
         const slug = post.caption.replaceAll(' ', '-');
         return (
           <Link key={post.id} href={`/forum/${slug}`} className="block rounded-2xl focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cyan-600">
-            <ForumCard data={post} username={post.user.username} replyCount={post._count.comments} longDes />
+            <ForumCard data={post} username={post.user.username} categoryName={post.category?.name ?? 'General Discussion'} replyCount={post._count.comments} longDes />
           </Link>
         );
       })}
