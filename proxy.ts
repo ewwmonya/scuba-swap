@@ -1,11 +1,7 @@
-import { type NextRequest, NextResponse } from 'next/server';
+import { type NextRequest } from 'next/server';
 import { updateSession } from '@/lib/supabase/proxy';
 
 export async function proxy(request: NextRequest) {
-	if (process.env.NODE_ENV === 'production' && request.nextUrl.pathname !== '/') {
-		return NextResponse.redirect(new URL('/', request.url));
-	}
-
 	return await updateSession(request);
 }
 
