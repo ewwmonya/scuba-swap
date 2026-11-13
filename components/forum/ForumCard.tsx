@@ -1,94 +1,66 @@
-import {
-	Item,
-	ItemActions,
-	ItemContent,
-	ItemDescription,
-	ItemTitle,
-} from '@/components/ui/item';
-import { MdRemoveRedEye } from 'react-icons/md';
-import { MdOutlineMessage } from 'react-icons/md';
+import { Clock3, MessageCircle } from 'lucide-react';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
-import PostAvatar from '@/components/posts-divelog/PostAvatar';
-import Link from 'next/link';
-import { Button } from '../ui/button';
-import { redirect } from 'next/navigation';
 import { prisma } from '@/lib/prismaActions';
-type UserDataType = {
-	id: string;
-	email: string;
-	createdAt: Date;
-	username: string;
-	uuID_auth: string;
-};
-dayjs.extend(relativeTime);
-const getuser = async (uID: string) => {
-	try {
-		const data = await prisma.user.findFirst({
-			where: {
-				id: uID,
-			},
-		});
-		if (data) return data;
-	} catch (error) {
-		return null;
-	}
-};
-async function ForumCard({
-	longDes = false || true,
-	data,
-}: {
-	data: {
-		caption?: string;
-		id: string;
-		content: string;
-		createdAt: Date;
-		userId: string;
-	};
-	longDes?: boolean;
-}) {
-	const userData = await getuser(data?.userId);
-	const time = dayjs(data.createdAt).fromNow();
-	return (
-		<div id={data?.id} className='flex  flex-col gap-6 my-4'>
-			<Item variant='outline' className=' bg-white'>
-				<ItemContent className='mx-2'>
-					<div className='flex gap-4'>
-						{userData && <PostAvatar name={userData.username} />}
-						{userData && (
-							<ItemTitle className='font-bold'>{userData.username}</ItemTitle>
-						)}
-					</div>
-					{data?.caption && <ItemTitle className=''>{data?.caption}</ItemTitle>}
 
-					{time && (
-						<ItemTitle className='tracking-widest text-sm text-gray-400'>
-							{time}
-						</ItemTitle>
-					)}
-					{longDes == false ?
-						<ItemDescription className='  leading-8'>
-							{data?.content}
-						</ItemDescription>
-					:	<ItemDescription className=' wrap-anywhere'>
-							{data?.content}
-						</ItemDescription>
-					}
-				</ItemContent>
-				<ItemActions>
-					<div className='flex gap-4 justify-between'>
-						{/* <p className='  text-md text-slate-800'>
-							<MdRemoveRedEye />
-							<span>3k</span>
-						</p>
-						<p className='  text-md text-slate-800'>
-							<MdOutlineMessage />
-							<span>30</span>
-						</p> */}
-					</div>
-				</ItemActions>
-			</Item>
-		</div>
-	);
+dayjs.extend(relativeTime);
+
+type ForumCardProps = {
+  data: {
+    id: string;
+    content: string;
+    createdAt: Date;
+    userId: string;
+    caption?: string;
+  };
+  longDes?: boolean;
+  username?: string;
+  replyCount?: number;
+};
+
+export default async function ForumCard({
+  data,
+  longDes = false,
+  username,
+  replyCount,
+}: ForumCardProps) {
+  // The thread page also reuses this card for replies, so allow fallback lookup.
+  let author = username;
+  if (!author) {
+    const user = await prisma.user.findUnique({
+      where: { id: data.userId },
+      select: { username: true },
+    });
+    author = user?.username ?? 'Diver';
+  }
+
+  const initials = author.trim().split(/\s+/).slice(0, 2).map((part) => part[0]).join('').toUpperCase();
+  return (
+    <article id={data.id} className="group flex min-w-0 items-start gap-4 rounded-2xl border border-slate-100 bg-white p-4 shadow-sm transition-all hover:border-cyan-200 hover:bg-cyan-50/30 hover:shadow-md sm:p-5">
+      <div aria-hidden="true" className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-cyan-100 text-sm font-bold text-sky-900">
+        {initials || 'D'}
+      </div>
+      <div className="min-w-0 flex-1 space-y-1.5">
+        <div className="flex flex-wrap items-center gap-2 text-xs">
+          <span className="rounded-full bg-slate-100 px-2 py-1 font-semibold text-sky-900">Community Discussion</span>
+          <span className="text-slate-500">Started by</span>
+          <span className="font-semibold text-slate-800">{author}</span>
+        </div>
+        {data.caption && (
+          <h3 className="wrap-break-word text-base font-bold leading-snug text-sky-950 transition-colors group-hover:text-cyan-700 sm:text-lg">
+            {data.caption}
+          </h3>
+        )}
+        <p className={`wrap-break-word text-sm leading-relaxed text-slate-600 ${longDes ? 'line-clamp-2' : 'whitespace-pre-line'}`}>
+          {data.content}
+        </p>
+        <div className="flex flex-wrap items-center gap-4 pt-2 text-xs text-slate-500">
+          <span className="inline-flex items-center gap-1.5"><Clock3 size={14} />{dayjs(data.createdAt).fromNow()}</span>
+          {replyCount !== undefined && (
+            <span className="inline-flex items-center gap-1.5"><MessageCircle size={14} />{replyCount} {replyCount === 1 ? 'reply' : 'replies'}</span>
+          )}
+        </div>
+      </div>
+    </article>
+  );
 }
-export default ForumCard;
