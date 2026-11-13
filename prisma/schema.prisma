@@ -43,10 +43,13 @@ model Post {
   imageUrl  String?
   userId    String
   caption   String
+  categoryId String?
+  category  Category? @relation(fields: [categoryId], references: [id], onDelete: SetNull)
   user      User          @relation(fields: [userId], references: [id], onDelete: Cascade)
   comments  PostComment[]
   likes     PostLike[]
 
+  @@index([categoryId])
   @@schema("public")
 }
 
@@ -140,5 +143,17 @@ model DiveTestfordev {
   bottom_time   Int
   user          User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 
+  @@schema("public")
+}
+
+model Category {
+  id          String   @id
+  name        String   @unique
+  slug        String   @unique
+  description String?
+  createdAt   DateTime @default(now())
+  posts       Post[]
+
+  @@map("categories")
   @@schema("public")
 }
