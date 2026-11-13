@@ -1,11 +1,9 @@
 import { MdOutlineScubaDiving } from 'react-icons/md';
 import Link from 'next/link';
+import { cn } from '@/lib/utils';
 import { Button } from '../ui/button';
-import Search from './Search';
-import Notifications from './Notifications';
 import Profile from './Profile';
 import Menu, { LinkType } from './Menu';
-import SignInSignUpSignOut from './LogoutBtn';
 
 type DATA = {
 	name: string;
@@ -15,17 +13,6 @@ const profileLinks: LinkType[] = [
 	// { link: '/account', text: 'account' },
 	// { link: '/profile', text: 'profile' },
 ];
-const notifications: LinkType[] = [
-	{
-		link: '/messages/293493wewe402sd9309trt2340923',
-		text: 'Lorem ipsum dolor sit amet consectetur Lorem ipsum dolor sit amet consectetur adipisicing elit....',
-	},
-	{
-		link: '/messages/2934wew93402aassmjt93092340eerer923',
-		text: 'Lorem ipsum dolor sit amet consectetur adipisicing elit....',
-	},
-];
-
 const navLink: DATA[] = [
 	// { name: 'marketplace', url: '/marketplace' },
 	{ name: 'feed', url: '/feed' },
@@ -36,13 +23,25 @@ const navLink: DATA[] = [
 	// { name: 'shop gear', url: '/gear' },
 ];
 
-function Navbar({ username, view }: { username?: string; view: true | false }) {
+function Navbar({
+	username,
+	withSidebar = false,
+}: {
+	username?: string;
+	view: boolean;
+	withSidebar?: boolean;
+}) {
 	return (
 		<nav>
 			<header>
-				<div className='bg-white items-center lg:flex flex-nowrap justify-around grid w-full border-b-2 border-gray-200 shadow-xs py-4 px-8'>
-					<div className=' grid lg:flex lg:flex-row lg:flex-wrap shrink-2 gap-6'>
-						<Link href={'/'} className='flex flex-nowrap gap-2 lg:pl-8 pl-2'>
+				<div
+					className={cn(
+						'grid w-full grid-cols-7 border-b-2 border-gray-200 bg-white px-8 py-8 shadow-xs',
+						withSidebar && 'xl:flex xl:h-16 xl:items-center xl:justify-between xl:border-b xl:border-[#e2e8f0] xl:bg-white/80 xl:px-6 xl:py-0 xl:backdrop-blur-lg',
+					)}
+				>
+					<div className=' grid lg:flex lg:flex-row lg:flex-wrap shrink-2 content-center gap-6 col-span-5'>
+						<Link href={'/'} className='flex flex-nowrap gap-2 '>
 							<MdOutlineScubaDiving
 								className='text-4xl lg:text-3xl text-slate-800 '
 								width={20}
@@ -50,7 +49,12 @@ function Navbar({ username, view }: { username?: string; view: true | false }) {
 							/>
 							<h1 className='text-3xl text-slate-800 font-bold'>ScubaSwap</h1>
 						</Link>
-						<ul className='flex gap-4 lg:grid lg:grid-flow-col grid-cols-3 lg:grid-cols-1'>
+						<ul
+							className={cn(
+								'flex gap-4 lg:grid lg:grid-flow-col grid-cols-3 lg:grid-cols-1',
+								withSidebar && 'xl:hidden',
+							)}
+						>
 							{navLink.map((l) => {
 								return (
 									<li
@@ -68,10 +72,7 @@ function Navbar({ username, view }: { username?: string; view: true | false }) {
 						</ul>
 					</div>
 					<div className='hidden lg:flex flex-wrap lg:flex-nowrap lg:gap-8 gap-6 '>
-						<div className='lg:w-sm w-full'>{/* <Search /> */}</div>
-						{/* <Menu links={notifications}>
-							<Notifications />
-						</Menu> */}
+						<div className={cn('lg:w-sm w-full', withSidebar && 'xl:hidden')} />
 						{username ?
 							<Menu links={profileLinks}>
 								<Profile src={username} />

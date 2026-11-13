@@ -1,9 +1,22 @@
 import { ReactNode, Suspense } from 'react';
 import { createServerClient } from '@supabase/ssr';
 import { cookies } from 'next/headers';
+import { Plus_Jakarta_Sans, Space_Grotesk } from 'next/font/google';
 import { redirect } from 'next/navigation';
 import NavbarServer from '@/components/navbar/NavbarServer';
 import Container from '@/components/globals/Container';
+import FeedSidebar from '@/components/navigation/FeedSidebar';
+import { Footer } from '@/components/globals/Footer';
+
+const scubaBody = Plus_Jakarta_Sans({
+	variable: '--font-scuba-body',
+	subsets: ['latin'],
+});
+
+const scubaHeading = Space_Grotesk({
+	variable: '--font-scuba-heading',
+	subsets: ['latin'],
+});
 
 export default async function ProtectedLayout({
 	children,
@@ -42,11 +55,19 @@ export default async function ProtectedLayout({
 	if (!session) redirect('/login');
 
 	return (
-		<>
-			<NavbarServer />
-			<Container>
-				<Suspense fallback={'Loading...'}>{children}</Suspense>
-			</Container>
-		</>
+		<div
+			className={`${scubaBody.variable} ${scubaHeading.variable} bg-[#f8fafc]`}
+		>
+			<div className='xl:sticky xl:top-0 xl:z-50'>
+				<NavbarServer withSidebar />
+			</div>
+			<div className='xl:grid xl:grid-cols-[18rem_minmax(0,1fr)]'>
+				<FeedSidebar />
+				<Container className='mx-auto w-full min-w-0 max-w-[1340px] px-4 py-4 sm:px-6 xl:max-w-[1340px]'>
+					<Suspense fallback={'Loading...'}>{children}</Suspense>
+					<Footer />
+				</Container>
+			</div>
+		</div>
 	);
 }

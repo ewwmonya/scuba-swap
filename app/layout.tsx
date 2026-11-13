@@ -52,10 +52,9 @@ export default function RootLayout({
 			<body
 				className={`${geistSans.variable} ${geistMono.variable} antialiased  bg-gray-100`}
 			>
-				<main className='px-2'>
+				<main className=''>
 					<Suspense fallback={'Loading...'}>{children}</Suspense>
 				</main>
-				<Footer />
 			</body>
 		</html>
 	);

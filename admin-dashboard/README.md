@@ -1,0 +1,1 @@
+This standalone dashboard was moved into the ScubaSwap Next.js app so it can use the existing server-side Prisma connection. After switching to this branch and running the app, open `/project-desk` while signed in. Keep `.env` out of Git.

@@ -6,6 +6,7 @@ import {
 	CardContent,
 	CardFooter,
 } from '@/components/ui/card';
+import PostAvatar from '@/components/posts-divelog/PostAvatar';
 import { Textarea } from '@/components/ui/textarea';
 import { Button } from '@/components/ui/button';
 import { Input } from '../ui/input';
@@ -19,7 +20,13 @@ const forumCommentSchema = z.object({
 	comment: z.string().min(1, 'Please Enter a Comment'),
 });
 
-export function ForumComment({ postId }: { postId: string }) {
+export function ForumComment({
+	postId,
+	commentType,
+}: {
+	postId: string;
+	commentType: 'DiveFeed' | 'Form';
+}) {
 	const {
 		handleSubmit,
 		register,
@@ -36,7 +43,7 @@ export function ForumComment({ postId }: { postId: string }) {
 		const commentData = await fetch('/api/create-comment', {
 			method: 'POST',
 			headers: { 'Content-Type': 'application/json' },
-			body: JSON.stringify({ comment, postId }),
+			body: JSON.stringify({ comment, postId, commentType }),
 		});
 		const { id } = await commentData.json();
 		reset({ comment });
@@ -48,7 +55,7 @@ export function ForumComment({ postId }: { postId: string }) {
 			<Card>
 				<CardContent>
 					<div className='flex gap-4'>
-						{/* <PostAvatar src='https://github.com/shadcn.png' /> */}
+						<PostAvatar name='' />
 						<div className='w-full '>
 							<Textarea
 								minLength={10}

@@ -94,25 +94,27 @@ async function page({ params }: { params: Promise<{ slug: string }> }) {
 				<div
 					className={`flex ${comments.length <= 10 ? 'flex-col' : 'flex-col-reverse'} `}
 				>
-					{comments.length <= 0 ?
-						<div className='h-1/3 w-full bg-sky-50 rounded-xl my-10 opacity-35 p-8'>
-							<p className='text-xl tracking-widest'>
-								This Forum Has No Comments Yet
-								<span className='animate-pulse'>...</span>
-							</p>
-						</div>
-					:	<>
-							{comments?.map((c) => {
-								return (
-									<section className='' key={c.id}>
-										<ForumCard data={c} longDes={true} />
-									</section>
-								);
-							})}
-						</>
-					}
+					<div className=''>
+						{comments.length <= 0 ?
+							<div className='h-1/3 w-full bg-sky-50 rounded-xl my-10 opacity-35 p-8 mt-4'>
+								<p className='text-xl tracking-widest'>
+									This Forum Has No Comments Yet
+									<span className='animate-pulse'>...</span>
+								</p>
+							</div>
+						:	<>
+								{comments?.map((c) => {
+									return (
+										<section id={c.id} className='my-4' key={c.id}>
+											<ForumCard data={c} longDes={true} />
+										</section>
+									);
+								})}
+							</>
+						}
+					</div>
 					<div className='pt-4'>
-						<ForumComment postId={data?.id} />
+						<ForumComment postId={data?.id} commentType={'Form'} />
 					</div>
 				</div>
 			</main>

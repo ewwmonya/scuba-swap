@@ -10,7 +10,16 @@ function Profile({ name }: { name?: string }) {
 				variant={'ghost'}
 				className='bg-orange-100 rounded-full uppercase font-semibold font-mono text-md'
 			>
-				{name !== undefined ? name.slice(0, 2) : 'YU'}
+				{name == '' ?
+					'YU'
+				:	<Image
+						className={'rounded-full'}
+						src={'https://github.com/shadcn.png'}
+						width={200}
+						height={200}
+						alt='alt'
+					/>
+				}
 			</Button>
 		</>
 	);

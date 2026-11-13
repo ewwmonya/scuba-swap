@@ -1,39 +1,47 @@
 import { prisma } from '@/lib/prismaActions';
 import { getCurrentUserProfile } from '@/lib/supabase/getCurrentUserProfile';
+import { z } from 'zod';
+
+const createForumSchema = z.object({
+  caption: z.string().trim().min(10).max(200),
+  content: z.string().trim().min(10),
+  categoryId: z.string().min(1),
+});
 
 export async function POST(req: Request) {
-	// Get user logged in
-	const resp = await getCurrentUserProfile();
-	// Set user variable
-	const user = resp;
+  const user = await getCurrentUserProfile();
+  if (!user) return Response.json({ error: 'Unauthorized' }, { status: 401 });
 
-	// if the user is defined do below
-	if (user != null) {
-		const body = await req.json();
-		console.log(body, user);
+  let body: unknown;
+  try {
+    body = await req.json();
+  } catch {
+    return Response.json({ error: 'Invalid JSON' }, { status: 400 });
+  }
 
-		try {
-			// set new user count. Later in life this will need to scale
-			const newIdNumber = (await prisma.post.count()) + 1000;
-			console.log(newIdNumber);
+  const parsed = createForumSchema.safeParse(body);
+  if (!parsed.success) {
+    return Response.json({ error: 'Invalid forum post', details: parsed.error.flatten() }, { status: 400 });
+  }
 
-			const resp = await prisma.post.create({
-				data: {
-					userId: user?.id,
-					caption: body?.caption,
-					content: body?.content,
-				},
-			});
-			return new Response(JSON.stringify(resp), {
-				status: 201,
-				headers: { 'Content-Type': 'application/json' },
-			});
-		} catch (error) {
-			console.error('ERROR creating dive log:', error);
-			return new Response(JSON.stringify({ error: 'Server error' }), {
-				status: 500,
-				headers: { 'Content-Type': 'application/json' },
-			});
-		}
-	}
+  try {
+    const category = await prisma.category.findUnique({
+      where: { id: parsed.data.categoryId },
+      select: { id: true },
+    });
+    if (!category) return Response.json({ error: 'Invalid category' }, { status: 400 });
+
+    const post = await prisma.post.create({
+      data: {
+        userId: user.id,
+        caption: parsed.data.caption.replaceAll('-', ' '),
+        content: parsed.data.content,
+        categoryId: category.id,
+      },
+    });
+    return Response.json(post, { status: 201 });
+  } catch (error) {
+    console.error('Error creating forum post:', error);
+    return Response.json({ error: 'Server error' }, { status: 500 });
+  }
 }
