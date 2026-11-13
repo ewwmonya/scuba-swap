@@ -62,11 +62,9 @@ export default function PostCard({
 			icon: Gauge,
 			value: pressure,
 			unit:
-				start != null && end == null
-					? 'start'
-					: start == null && end != null
-						? 'end'
-						: undefined,
+				start != null && end == null ? 'start'
+				: start == null && end != null ? 'end'
+				: undefined,
 		},
 		{ label: 'Dive number', icon: Hash, value: dive.dive_number },
 	].filter(({ value }) => value != null && value !== '');
@@ -84,7 +82,7 @@ export default function PostCard({
 		{ label: 'Visibility', icon: Eye, value: visibility },
 		{ label: 'Current', icon: Waves, value: current },
 	].filter(({ value }) => value != null && value !== '');
-
+	console.log(dive.user.avatar?.url);
 	return (
 		<article
 			aria-label={`Dive ${dive.dive_number} at ${dive.location}`}
@@ -216,19 +214,18 @@ export default function PostCard({
 
 			<div className='flex flex-wrap items-center justify-between gap-x-4 gap-y-1 border-t border-slate-100 bg-slate-50/80 px-3 py-1'>
 				<div className='flex flex-wrap items-center gap-1'>
-					{viewerId ? (
+					{viewerId ?
 						<LikeBtn
 							postId={dive.id}
 							initialCount={dive._count.likes}
 							initiallyLiked={dive.likes.length > 0}
 							currentUserId={viewerId}
 						/>
-					) : (
-						<span className='inline-flex min-h-11 items-center gap-2 px-2 text-sm font-semibold text-slate-700'>
+					:	<span className='inline-flex min-h-11 items-center gap-2 px-2 text-sm font-semibold text-slate-700'>
 							<Heart aria-hidden='true' className='size-5' />
 							{dive._count.likes} {dive._count.likes === 1 ? 'like' : 'likes'}
 						</span>
-					)}
+					}
 					<Link
 						href={children ? '#dive-comments' : `${href}#dive-comments`}
 						aria-label={`${dive._count.comments} ${dive._count.comments === 1 ? 'comment' : 'comments'}`}
@@ -252,6 +249,7 @@ export default function PostCard({
 			{dive.content.trim() && (
 				<p className='border-t border-slate-100 p-4 text-sm leading-relaxed wrap-anywhere whitespace-pre-wrap text-slate-700'>
 					<span className='mr-1 font-semibold text-slate-900'>@{username}</span>
+					<br />
 					{dive.content}
 				</p>
 			)}

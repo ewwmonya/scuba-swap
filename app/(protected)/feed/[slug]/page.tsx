@@ -13,6 +13,7 @@ import {
 import { diveCardInclude } from '@/lib/diveCards';
 import { prisma } from '@/lib/prismaActions';
 import { getCurrentUserProfile } from '@/lib/supabase/getCurrentUserProfile';
+import { PostComment } from '@/components/posts-divelog/PostComment';
 
 export const dynamic = 'force-dynamic';
 
@@ -41,8 +42,8 @@ export default async function DivePage({
 	if (!dive) notFound();
 
 	return (
-		<div className='mx-auto max-w-4xl space-y-4 pb-8'>
-			<Breadcrumb>
+		<div className=' pb-8'>
+			<Breadcrumb className='my-4'>
 				<BreadcrumbList>
 					<BreadcrumbItem>
 						<BreadcrumbLink href='/'>Home</BreadcrumbLink>
@@ -57,7 +58,7 @@ export default async function DivePage({
 					</BreadcrumbItem>
 				</BreadcrumbList>
 			</Breadcrumb>
-			<h1 className='font-[family-name:var(--font-scuba-heading)] text-2xl font-bold wrap-anywhere text-slate-900 sm:text-4xl'>
+			<h1 className='font-[family-name:var(--font-scuba-heading)] text-2xl font-bold wrap-anywhere text-slate-900 sm:text-4xl my-6'>
 				Dive at {dive.location}
 			</h1>
 			<PostCard dive={dive} viewerId={viewer?.id}>
@@ -74,14 +75,20 @@ export default async function DivePage({
 							{dive.comments.length === 1 ? 'response' : 'responses'}
 						</span>
 					</div>
-					{dive.comments.length === 0 ? (
-						<p className='text-sm text-slate-600'>
-							No comments on this dive yet.
-						</p>
-					) : (
-						<ul className='space-y-3'>
+					{dive.comments.length === 0 ?
+						<>
+							<p className='text-sm text-slate-600'>
+								No comments on this dive yet.
+							</p>
+							<PostComment divePostId={dive.id} commentType='DiveFeed' />
+						</>
+					:	<ul className='space-y-3 flex flex-col'>
 							{dive.comments.map((comment) => (
-								<li key={comment.id} className='flex items-start gap-3'>
+								<li
+									id={comment.id}
+									key={comment.id}
+									className='flex items-start gap-3'
+								>
 									<DiverAvatar
 										username={comment.user.username}
 										url={comment.user.avatar?.url}
@@ -100,8 +107,11 @@ export default async function DivePage({
 									</div>
 								</li>
 							))}
+							<li>
+								<PostComment divePostId={dive.id} commentType='DiveFeed' />
+							</li>
 						</ul>
-					)}
+					}
 				</section>
 			</PostCard>
 		</div>

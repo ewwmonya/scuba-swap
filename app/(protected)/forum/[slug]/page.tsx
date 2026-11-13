@@ -112,7 +112,7 @@ async function page({ params }: { params: Promise<{ slug: string }> }) {
 						</>
 					}
 					<div className='pt-4'>
-						<ForumComment postId={data?.id} />
+						<ForumComment postId={data?.id} commentType={'Form'} />
 					</div>
 				</div>
 			</main>

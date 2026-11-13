@@ -20,7 +20,13 @@ const forumCommentSchema = z.object({
 	comment: z.string().min(1, 'Please Enter a Comment'),
 });
 
-export function ForumComment({ postId }: { postId: string }) {
+export function ForumComment({
+	postId,
+	commentType,
+}: {
+	postId: string;
+	commentType: 'DiveFeed' | 'Form';
+}) {
 	const {
 		handleSubmit,
 		register,
@@ -37,7 +43,7 @@ export function ForumComment({ postId }: { postId: string }) {
 		const commentData = await fetch('/api/create-comment', {
 			method: 'POST',
 			headers: { 'Content-Type': 'application/json' },
-			body: JSON.stringify({ comment, postId }),
+			body: JSON.stringify({ comment, postId, commentType }),
 		});
 		const { id } = await commentData.json();
 		reset({ comment });
