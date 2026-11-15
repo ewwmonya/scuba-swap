@@ -45,7 +45,7 @@ export async function updateSession(request: NextRequest) {
 
 	const isProtectedRoutes =
 		pathname.startsWith('/feed') ||
-		pathname.startsWith('/profile') ||
+		pathname.startsWith('/account') ||
 		pathname.startsWith('/marketplace') ||
 		pathname.startsWith('/create-log') ||
 		pathname.startsWith('/create-forum') ||
