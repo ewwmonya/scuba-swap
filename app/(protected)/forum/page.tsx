@@ -13,6 +13,8 @@ import {
 import { ForumFeed } from '@/components/forum/ForumFeed';
 import { SubmitForum } from '@/components/forum/SubmitForum';
 import { prisma } from '@/lib/prismaActions';
+import { ForumChambers } from '@/components/globals/ForumChambers';
+import Link from 'next/link';
 
 const chambers = [
 	{
@@ -21,6 +23,7 @@ const chambers = [
 			'Gear, regulators, dive computers, BCDs and equipment maintenance.',
 		icon: Wrench,
 		color: 'bg-sky-100 text-sky-800',
+		slug: 'equipment-lab-tech',
 	},
 	{
 		title: 'Regional & Travel',
@@ -28,18 +31,21 @@ const chambers = [
 			'Local dive sites, destinations, liveaboards and trip reports.',
 		icon: Compass,
 		color: 'bg-cyan-100 text-cyan-800',
+		slug: 'regional-travel',
 	},
 	{
 		title: 'Diving Medicine & Safety',
 		description: 'Safety practices, training and diving physiology.',
 		icon: HeartPulse,
 		color: 'bg-rose-100 text-rose-800',
+		slug: 'diving-medicine-safety',
 	},
 	{
 		title: 'Underwater Photo & Video',
 		description: 'Cameras, strobes, lighting and underwater photography.',
 		icon: Camera,
 		color: 'bg-indigo-100 text-indigo-800',
+		slug: 'underwater-photo-video',
 	},
 ];
 
@@ -69,7 +75,9 @@ export default async function ForumPage() {
 		{
 			title: 'Registered Divers',
 			value:
-				stats[2].status === 'fulfilled' ? stats[2].value.toLocaleString() : '—',
+				stats[2].status === 'fulfilled' ?
+					(stats[2].value - 1).toLocaleString()
+				:	'—',
 			icon: Users,
 		},
 	];
@@ -116,37 +124,7 @@ export default async function ForumPage() {
 						<ForumFeed />
 					</section>
 
-					<section aria-labelledby='chambers-heading' className='space-y-4'>
-						<h2
-							id='chambers-heading'
-							className='px-1 text-xl font-bold text-slate-900'
-						>
-							Explore Forum Chambers
-						</h2>
-						<div className='grid grid-cols-1 gap-4 sm:grid-cols-2'>
-							{chambers.map(({ title, description, icon: Icon, color }) => (
-								<article
-									key={title}
-									className='flex gap-4 rounded-2xl border border-slate-100 bg-white p-5 shadow-sm'
-								>
-									<div
-										className={`flex h-12 w-12 shrink-0 items-center justify-center rounded-xl ${color}`}
-									>
-										<Icon size={24} />
-									</div>
-									<div>
-										<h3 className='font-bold text-sky-950'>{title}</h3>
-										<p className='mt-1 text-sm leading-relaxed text-slate-600'>
-											{description}
-										</p>
-									</div>
-								</article>
-							))}
-						</div>
-						<p className='px-1 text-xs text-slate-500'>
-							Category browsing is coming next; these are layout previews.
-						</p>
-					</section>
+					<ForumChambers />
 				</div>
 
 				<aside aria-label='Forum sidebar' className='space-y-6 lg:col-span-4'>
@@ -176,21 +154,23 @@ export default async function ForumPage() {
 						</p>
 					</section>
 
-					<section className='rounded-2xl border border-slate-100 bg-white p-5 shadow-sm sm:p-6'>
+					<section className='rounded-2xl border border-slate-100 bg-white  p-5 shadow-sm sm:p-6'>
 						<h2 className='mb-4 text-lg font-bold text-sky-950'>
 							Discover More Topics
 						</h2>
 						<div className='space-y-2'>
-							{chambers.map(({ title, icon: Icon }) => (
+							{chambers.map(({ title, icon: Icon, slug }) => (
 								<div
 									key={title}
-									className='flex items-center justify-between gap-3 rounded-xl bg-slate-50 px-3 py-3 text-sm font-medium text-slate-700'
+									className='flex items-center justify-between gap-3 rounded-xl hover:bg-slate-100 hover:border-cyan-300 bg-slate-50 px-3 py-3 text-sm font-medium text-slate-700'
 								>
-									<div className='flex min-w-0 items-center gap-3'>
-										<Icon size={18} className='shrink-0 text-cyan-700' />
-										<span>{title}</span>
-									</div>
-									<span className='text-xs text-slate-400'>Soon</span>
+									<Link href={`/forum/category/${slug}`}>
+										<div className='flex min-w-0 items-center gap-3'>
+											<Icon size={18} className='shrink-0 text-cyan-700' />
+											<span>{title}</span>
+										</div>
+									</Link>
+									{/* <span className='text-xs text-slate-400'>Soon</span> */}
 								</div>
 							))}
 						</div>

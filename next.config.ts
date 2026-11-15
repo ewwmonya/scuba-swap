@@ -30,6 +30,20 @@ const nextConfig: NextConfig = {
 			},
 		],
 	},
+	async redirects() {
+		return [
+			{
+				source: '/forum/category',
+				destination: '/forum',
+				permanent: true,
+			},
+			{
+				source: '/category/:path*',
+				destination: '/forum',
+				permanent: true,
+			},
+		];
+	},
 };
 
 export default nextConfig;

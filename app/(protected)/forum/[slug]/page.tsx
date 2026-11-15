@@ -18,7 +18,6 @@ import { prisma } from '@/lib/prismaActions';
 
 async function page({ params }: { params: Promise<{ slug: string }> }) {
 	const { slug } = await params;
-	console.log(slug);
 	const data = await prisma.post.findFirst({
 		where: {
 			caption: slug.replaceAll('-', ' '),
