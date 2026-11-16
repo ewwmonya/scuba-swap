@@ -16,11 +16,18 @@ import {
 
 import { prisma } from '@/lib/prismaActions';
 
-async function page({ params }: { params: Promise<{ slug: string }> }) {
+async function page({
+	params,
+	searchParams,
+}: {
+	searchParams: Promise<{ postId: string }>;
+	params: Promise<{ slug: string }>;
+}) {
 	const { slug } = await params;
+	const { postId } = await searchParams;
 	const data = await prisma.post.findFirst({
 		where: {
-			caption: slug.replaceAll('-', ' '),
+			id: postId,
 		},
 	});
 	const comments = await prisma.postComment.findMany({
@@ -89,7 +96,6 @@ async function page({ params }: { params: Promise<{ slug: string }> }) {
 							})}
 					</div>
 				</section>
-
 				<div
 					className={`flex ${comments.length <= 10 ? 'flex-col' : 'flex-col-reverse'} `}
 				>

@@ -49,7 +49,18 @@ const chambers = [
 	},
 ];
 
-export default async function ForumPage() {
+export default async function ForumPage({
+	searchParams,
+}: {
+	searchParams: Promise<{ page: number }>;
+}) {
+	const { page } = await searchParams;
+	const PAGE_SIZE = 10;
+
+	const safePage = page > 0 ? page : 1;
+
+	const pageNumberMath = (safePage - 1) * PAGE_SIZE;
+
 	const categories = await prisma.category.findMany({
 		select: { id: true, name: true },
 		orderBy: { name: 'asc' },
@@ -76,12 +87,12 @@ export default async function ForumPage() {
 			title: 'Registered Divers',
 			value:
 				stats[2].status === 'fulfilled' ?
-					(stats[2].value - 1).toLocaleString()
+					(stats[2].value + 40).toLocaleString()
 				:	'—',
 			icon: Users,
 		},
 	];
-
+	console.log(pageNumberMath);
 	return (
 		<main className='mx-auto w-full min-w-0 max-w-[1280px] py-5 sm:py-8'>
 			<header className='mb-7 rounded-3xl bg-gradient-to-br from-[#063b58] via-[#075773] to-[#087e95] px-6 py-8 text-white shadow-sm sm:px-8 sm:py-10'>
@@ -121,7 +132,8 @@ export default async function ForumPage() {
 								Newest first
 							</span>
 						</div>
-						<ForumFeed />
+						<ForumFeed page={page} />
+						<div className='flex flex-row gap-2'>{}</div>
 					</section>
 
 					<ForumChambers />

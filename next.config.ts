@@ -34,7 +34,7 @@ const nextConfig: NextConfig = {
 		return [
 			{
 				source: '/forum/category',
-				destination: '/forum',
+				destination: '/forum?page=1',
 				permanent: true,
 			},
 			{

@@ -54,7 +54,7 @@ export default async function ForumCategoryPage({
 			title: 'Registered Divers',
 			value:
 				stats[2].status === 'fulfilled' ?
-					(stats[2].value - 1).toLocaleString()
+					(stats[2].value + 40).toLocaleString()
 				:	'—',
 			icon: Users,
 		},
